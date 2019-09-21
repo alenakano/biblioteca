@@ -1,0 +1,8 @@
+/* 300px é um tamanho bom para devices grandes e pequenos*/
+.mat-form-field {
+    width: 300px;
+}
+
+h3, h4 {
+    width: 300px;
+}

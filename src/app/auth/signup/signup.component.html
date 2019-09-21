@@ -1,1 +1,85 @@
-<p>signup works!</p>
+<section class="cadastro-form">
+    <!-- fxLayout definido como padrão row, mas usaremos column pq queremos de cima para baixo -->
+    <!-- fxLayoutAlign para centralizar. o primeiro center é na direção do main axis (no caso, column) p segundo é no crossAxis -->
+    <!-- ngSubmit captura os dados guardados na variáverl f do ngForm que foram guardados pelo ngModel dos elementos com essa diretiva e os nomes dos elementos HTML -->    
+    <form fxLayout="column" fxLayoutAlign="center center" #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <h3 class="mat-h2">Formulário:</h3>
+        <mat-form-field hintLabel="Digite o nome completo.">
+            <input 
+                ngModel 
+                matInput
+                required
+                name="nome" 
+                type="text" 
+                placeholder="Digite o nome"
+            >
+        </mat-form-field>
+        <mat-form-field>
+            <!-- Diretiva e-mail é do Angular -->
+            <input 
+                ngModel 
+                matInput 
+                email
+                required
+                name="email" 
+                type="email" 
+                placeholder="Digite o e-mail"
+                #emailInput="ngModel"
+            >
+            <mat-error *ngIf="emailInput.hasError('required')">Campo não pode estar vazio.</mat-error>
+            <mat-error *ngIf="!emailInput.hasError('required')">E-mail é inválido.</mat-error>
+        </mat-form-field>
+        <mat-form-field hintLabel="Deve ter pelo menos 6 caracteres.">
+            <input 
+                ngModel
+                matInput
+                required
+                #pwInput="ngModel"
+                minlength="6"
+                name="senha" 
+                type="password" 
+                placeholder="Digite a senha"
+            >
+            <!-- Não precisamos importar mat-hint pq é do mat-form-field -->
+            <mat-hint align="end">{{pwInput.value?.length}}/6</mat-hint>
+            <mat-error>Deve possuir no mínimo 6 dígitos</mat-error>
+        </mat-form-field>
+        <h4 class="mat-h4">Endereço</h4>
+        <mat-form-field>
+            <input 
+                ngModel 
+                matInput
+                required
+                name="rua" 
+                type="text" 
+                placeholder="Digite o endereço"
+            >
+        </mat-form-field>
+        <mat-form-field>
+            <input 
+                ngModel 
+                matInput 
+                name="complemento"  
+                type="text" 
+                placeholder="Complemento"
+            >
+        </mat-form-field>
+        <mat-form-field>
+            <input 
+                ngModel 
+                matInput
+                required
+                name="cidade" 
+                type="text" 
+                placeholder="Cidade"
+            >
+        </mat-form-field>
+        <button 
+            mat-raised-button 
+            type="submit" 
+            color="primary"
+        >
+            Cadastrar
+        </button>
+    </form>
+</section>
