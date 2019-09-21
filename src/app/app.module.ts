@@ -13,12 +13,13 @@ import { LoginComponent } from './auth/login/login.component';
 import { MaterialModule } from './material.module';
 import { NovaComponent } from './pesquisa/nova/nova.component';
 import { PesquisaComponent } from './pesquisa/pesquisa.component';
-import { CadastrosComponent } from './auth/cadastros/cadastros.component';
+import { CadastrosComponent } from './cadastros/cadastros.component';
 
 import { MAT_DATE_LOCALE } from '@angular/material';
-import { ValidaCpf } from './auth/cadastros/validaCPF.directive';
+import { ValidaCpfDirective} from './cadastros/usuarios/validaCPF.directive';
 import { HeaderComponent } from './navegacao/header/header.component';
 import { SidenavListComponent } from './navegacao/sidenav-list/sidenav-list.component';
+import { UsuariosComponent } from './cadastros/usuarios/usuarios.component';
 
 @NgModule({
   declarations: [
@@ -29,9 +30,10 @@ import { SidenavListComponent } from './navegacao/sidenav-list/sidenav-list.comp
     NovaComponent,
     EmprestimoComponent,
     HomeComponent,
-    ValidaCpf,
+    ValidaCpfDirective,
     HeaderComponent,
     SidenavListComponent,
+    UsuariosComponent,
   ],
   imports: [
     AppRoutingModule ,
