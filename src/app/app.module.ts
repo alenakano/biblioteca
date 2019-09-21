@@ -15,6 +15,9 @@ import { NovaComponent } from './pesquisa/nova/nova.component';
 import { PesquisaComponent } from './pesquisa/pesquisa.component';
 import { SignupComponent } from './auth/signup/signup.component';
 
+import { MAT_DATE_LOCALE } from '@angular/material';
+import { ValidaCpf } from './auth/signup/validaCPF.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +26,8 @@ import { SignupComponent } from './auth/signup/signup.component';
     PesquisaComponent,
     NovaComponent,
     EmprestimoComponent,
-    HomeComponent
+    HomeComponent,
+    ValidaCpf,
   ],
   imports: [
     AppRoutingModule ,
@@ -33,7 +37,9 @@ import { SignupComponent } from './auth/signup/signup.component';
     FormsModule,
     MaterialModule,
   ],
-  providers: [],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
