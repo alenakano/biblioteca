@@ -19,6 +19,7 @@ import { MAT_DATE_LOCALE } from '@angular/material';
 import { ValidaCpfDirective} from './cadastros/usuarios/validaCPF.directive';
 import { HeaderComponent } from './navegacao/header/header.component';
 import { SidenavListComponent } from './navegacao/sidenav-list/sidenav-list.component';
+import { ObrasComponent } from './cadastros/obras/obras.component';
 import { UsuariosComponent } from './cadastros/usuarios/usuarios.component';
 
 @NgModule({
@@ -33,6 +34,7 @@ import { UsuariosComponent } from './cadastros/usuarios/usuarios.component';
     ValidaCpfDirective,
     HeaderComponent,
     SidenavListComponent,
+    ObrasComponent,
     UsuariosComponent,
   ],
   imports: [
