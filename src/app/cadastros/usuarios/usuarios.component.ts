@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  selector: 'app-usuarios',
+  templateUrl: './usuarios.component.html',
+  styleUrls: ['./usuarios.component.css']
 })
-export class SignupComponent implements OnInit {
+export class UsuariosComponent implements OnInit {
 
   public maxDate;
 
@@ -21,5 +21,6 @@ export class SignupComponent implements OnInit {
   onSubmit(form: NgForm) {
     console.log(form)
   }
+
 
 }

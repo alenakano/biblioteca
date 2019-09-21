@@ -13,21 +13,29 @@ import { LoginComponent } from './auth/login/login.component';
 import { MaterialModule } from './material.module';
 import { NovaComponent } from './pesquisa/nova/nova.component';
 import { PesquisaComponent } from './pesquisa/pesquisa.component';
-import { SignupComponent } from './auth/signup/signup.component';
+import { CadastrosComponent } from './cadastros/cadastros.component';
 
 import { MAT_DATE_LOCALE } from '@angular/material';
-import { ValidaCpf } from './auth/signup/validaCPF.directive';
+import { ValidaCpfDirective} from './cadastros/usuarios/validaCPF.directive';
+import { HeaderComponent } from './navegacao/header/header.component';
+import { SidenavListComponent } from './navegacao/sidenav-list/sidenav-list.component';
+import { ObrasComponent } from './cadastros/obras/obras.component';
+import { UsuariosComponent } from './cadastros/usuarios/usuarios.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SignupComponent,
+    CadastrosComponent,
     LoginComponent,
     PesquisaComponent,
     NovaComponent,
     EmprestimoComponent,
     HomeComponent,
-    ValidaCpf,
+    ValidaCpfDirective,
+    HeaderComponent,
+    SidenavListComponent,
+    ObrasComponent,
+    UsuariosComponent,
   ],
   imports: [
     AppRoutingModule ,

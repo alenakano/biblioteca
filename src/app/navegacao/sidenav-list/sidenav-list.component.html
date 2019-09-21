@@ -1,0 +1,27 @@
+<mat-nav-list>
+    <!--Setou um layout com distância de 10px entre cada elemento-->
+    <a mat-list-item routerLink="/cadastros" (click)="onClose()">
+        <mat-icon>face</mat-icon>
+        <span class="nav-caption">
+            Cadastros
+        </span>
+    </a>
+    <a mat-list-item routerLink="/pesquisa" (click)="onClose()">
+        <mat-icon>search</mat-icon>
+        <span class="nav-caption">
+            Pesquisar
+        </span>
+    </a>
+    <a mat-list-item routerLink="/login" (click)="onClose()">
+        <mat-icon>input</mat-icon>
+        <span class="nav-caption">
+            Login
+        </span>
+    </a>
+    <mat-list-item>
+        <button mat-icon-button>
+            <mat-icon>eject</mat-icon>
+            Logout
+        </button>
+    </mat-list-item>
+</mat-nav-list>
