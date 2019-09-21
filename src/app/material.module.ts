@@ -8,6 +8,7 @@ import {
     MatInputModule,
     MatListModule,
     MatSidenavModule,
+    MatTabsModule,
     MatToolbarModule,
 } from '@angular/material';
 
@@ -24,6 +25,7 @@ import { MatMomentDateModule } from "@angular/material-moment-adapter"
         MatListModule,
         MatMomentDateModule,
         MatSidenavModule,
+        MatTabsModule,
         MatToolbarModule,
     ],
     exports: [
@@ -36,6 +38,7 @@ import { MatMomentDateModule } from "@angular/material-moment-adapter"
         MatListModule,
         MatMomentDateModule,
         MatSidenavModule,
+        MatTabsModule,
         MatToolbarModule,
 
     ]
