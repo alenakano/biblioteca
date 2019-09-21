@@ -1,7 +1,8 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout'
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +15,9 @@ import { NovaComponent } from './pesquisa/nova/nova.component';
 import { PesquisaComponent } from './pesquisa/pesquisa.component';
 import { SignupComponent } from './auth/signup/signup.component';
 
+import { MAT_DATE_LOCALE } from '@angular/material';
+import { ValidaCpf } from './auth/signup/validaCPF.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,16 +26,20 @@ import { SignupComponent } from './auth/signup/signup.component';
     PesquisaComponent,
     NovaComponent,
     EmprestimoComponent,
-    HomeComponent
+    HomeComponent,
+    ValidaCpf,
   ],
   imports: [
     AppRoutingModule ,
     BrowserAnimationsModule,
     BrowserModule,
     FlexLayoutModule,
+    FormsModule,
     MaterialModule,
   ],
-  providers: [],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
