@@ -17,6 +17,8 @@ import { SignupComponent } from './auth/signup/signup.component';
 
 import { MAT_DATE_LOCALE } from '@angular/material';
 import { ValidaCpf } from './auth/signup/validaCPF.directive';
+import { HeaderComponent } from './navegacao/header/header.component';
+import { SidenavListComponent } from './navegacao/sidenav-list/sidenav-list.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { ValidaCpf } from './auth/signup/validaCPF.directive';
     EmprestimoComponent,
     HomeComponent,
     ValidaCpf,
+    HeaderComponent,
+    SidenavListComponent,
   ],
   imports: [
     AppRoutingModule ,

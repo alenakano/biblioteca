@@ -1,38 +1,13 @@
 <mat-sidenav-container>
     <mat-sidenav  #sidenav role="navigation">
-        Olha eu aqui!
+        <app-sidenav-list
+            (sidenavClose)="sidenav.close()"
+        ></app-sidenav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-        <mat-toolbar color="primary">
-            <div fxHide.gt-xs>
-                <button mat-icon-button (click)="sidenav.toggle()">
-                    <mat-icon>menu</mat-icon>
-                </button>
-            </div>
-            <div>
-                <a routerLink="/">
-                    LOGO
-                </a>
-            </div>
-            <!--Ele está sendo um flex container e um flex element ao mesmo tempo-->
-            <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
-                <!--Setou um layout com distância de 10px entre cada elemento-->
-                <ul fxLayout fxLayoutGap="10px" class="navegacao">
-                    <li>
-                        <a routerLink="/signup">Cadastro</a>
-                    </li>
-                    <li>
-                        <a routerLink="/login">Login</a>
-                    </li>
-                    <li>
-                        <a routerLink="/pesquisa">Pesquisa</a>
-                    </li>
-
-                </ul>
-                
-
-            </div>
-        </mat-toolbar>
+        <app-header 
+            (sidenavToggle)="sidenav.toggle()"
+        ></app-header>
         <main>
             <router-outlet></router-outlet>
         </main>
