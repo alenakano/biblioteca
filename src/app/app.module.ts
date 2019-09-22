@@ -14,6 +14,7 @@ import { MAT_DATE_LOCALE } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { AuthService } from './auth/auth.service';
 import { CadastrosComponent } from './cadastros/cadastros.component';
 import { EmprestimoComponent } from './emprestimo/emprestimo.component';
 import { HeaderComponent } from './navegacao/header/header.component';
@@ -63,6 +64,7 @@ import { ValidaCpfDirective} from './cadastros/usuarios/validaCPF.directive';
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
+    AuthService,
   ],
   bootstrap: [AppComponent]
 })
