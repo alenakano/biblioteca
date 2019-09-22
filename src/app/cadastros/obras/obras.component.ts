@@ -7,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ObrasComponent implements OnInit {
 
+  public passo = 'opcoes';
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onBackOptions(): void {
+    this.passo = 'opcoes';
+  }
+
+  onTypeSelected(tipo: string): void {
+    this.passo = tipo;
   }
 
 }

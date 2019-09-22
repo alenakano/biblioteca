@@ -1,0 +1,110 @@
+<section class="outras" fxLayout fxLayoutAlign="center">
+    <mat-card fxFlex.xs="100%" fxFlex="400px">
+        <mat-card-title fxLayoutAlign="center">
+            Cadastro de outra:
+        </mat-card-title>
+        <!--Se tirar o fxLayoutAlign abaixo, os campos ficam mais largos-->
+        <!--Se tirar o fxLayoutAlign abaixo, os campos ficam mais largos-->
+        <form fxLayoutAlign="center center" [formGroup]="grupoOutra" #ngForm="ngForm" (ngSubmit)="onFormOpcoesSubmit(grupoOutra.value)">
+            <mat-card-content fxLayout="column" fxLayoutAlign="center">
+                <mat-form-field>
+                    <input 
+                        matInput
+                        required
+                        formControlName= "nomeOutra"
+                        name="nomeOutra" 
+                        type="text" 
+                        placeholder="Digite o título outra"
+                    >
+                    <mat-error>Preencha o campo</mat-error>
+                </mat-form-field>
+                <mat-form-field >
+                    <input 
+                        matInput
+                        required
+                        formControlName= "nomeAutor"
+                        name="nomeAutor" 
+                        type="text" 
+                        placeholder="Digite o nome do autor"
+                    >
+                    <mat-error>Preencha o campo</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
+                        matInput
+                        required
+                        formControlName="local"
+                        name="local" 
+                        type="text" 
+                        placeholder="Código de localização"
+                    >
+                    <mat-error>Preencha o campo</mat-error>            
+                </mat-form-field>
+                <mat-form-field>
+                    <input
+                        matInput
+                        required
+                        formControlName="data"
+                        [matDatepicker]="picker"
+                        name="data"
+                        placeholder="Data de aquisição"
+                        >
+                    <mat-datepicker-toggle 
+                        matSuffix 
+                        [for]="picker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error>Selecione a data de aquisição</mat-error>
+                </mat-form-field>
+                <mat-form-field >
+                    <!--Nome da variável para formControlName inicializado no constructor-->
+                    <mat-select formControlName="categoria" placeholder="Tipo de obra" [(value)]="selected">
+                        Selecione categoria:
+                        <mat-option *ngFor="let l of lista" value={{l.nome}}>
+                            {{l.nome}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>  
+                        <span *ngIf="!grupoOutra.get('categoria').valid && grupoOutra.get('categoria').touched || ngForm.submitted">Escolha uma opção</span>  
+                    </mat-error>  
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
+                        matInput 
+                        required  
+                        formControlName="pais"
+                        name="pais"
+                        type="text" 
+                        placeholder="País"
+                    >
+                    <mat-error>Preencha o campo</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
+                        matInput
+                        name="obs" 
+                        type="text" 
+                        placeholder="Observações"
+                    >
+                </mat-form-field>
+                <mat-card-actions fxLayoutAlign="center" fxLayoutGap="20px">
+                    <button 
+                        mat-raised-button
+                        type="button" 
+                        color="primary"
+                        (click)="voltar()"
+                    >
+                        Voltar
+                    </button>
+                    <button 
+                        mat-raised-button 
+                        type="submit" 
+                        color="primary"
+                    >
+                        Cadastrar
+                    </button>
+                </mat-card-actions>
+            </mat-card-content>
+        </form>
+    </mat-card>
+</section>
