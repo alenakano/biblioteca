@@ -1,11 +1,17 @@
-import { User } from './user.model';
-import { AuthData } from './auth-data.model';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 
+import { User } from './user.model';
+import { AuthData } from './auth-data.model';
 
+
+@Injectable()
 export class AuthService {
     authChange = new Subject<boolean>();
     private user: User;
+
+    constructor(private router: Router) {}
 
     registerUser(authData: AuthData) {
         this.user = {
@@ -14,6 +20,7 @@ export class AuthService {
         };
         // O subject "emite o evento" que pode ser capturado, no caso informando ser logado
         this.authChange.next(true);
+        this.router.navigate(['/cadastro']);
     }
 
     login(authData: AuthData) {
@@ -21,10 +28,14 @@ export class AuthService {
             email: authData.email,
             userId: Math.round(Math.random() * 10000).toString()
         };
+        this.authChange.next(true);
+        this.router.navigate(['/']);
     }
 
     logout() {
         this.user = null;
+        this.authChange.next(false);
+        this.router.navigate(['/']);
     }
 
     getUser() {
@@ -32,6 +43,6 @@ export class AuthService {
     }
 
     isAuth() {
-        return this.user !== null;
+        return this.user != null;
     }
 }

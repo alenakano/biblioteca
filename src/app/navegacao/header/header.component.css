@@ -5,7 +5,8 @@ a {
 
 a:hover,
 a:active{
-    color: lightgray
+    color: lightgray;
+    cursor: pointer;
 }
 
 /*Separar um pouco o ícone do texto*/

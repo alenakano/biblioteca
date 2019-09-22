@@ -6,16 +6,21 @@ import { LoginComponent } from './auth/login/login.component';
 import { PesquisaComponent } from './pesquisa/pesquisa.component';
 import { CadastrosComponent } from './cadastros/cadastros.component';
 
+import { AuthGuard } from './auth/auth-guard';
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'cadastros', component: CadastrosComponent },
+  // o path cadastro está protegido pela classe authguard. Somente logados podem ver
+  { path: 'cadastros', component: CadastrosComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'pesquisa', component: PesquisaComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  // Esse guard pode ser apenas declarados no providers do routing module.
+  providers: [AuthGuard]
 })
 export class AppRoutingModule { }

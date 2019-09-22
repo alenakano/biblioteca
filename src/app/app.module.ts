@@ -32,6 +32,7 @@ import { PesquisaComponent } from './pesquisa/pesquisa.component';
 import { SidenavListComponent } from './navegacao/sidenav-list/sidenav-list.component';
 import { UsuariosComponent } from './cadastros/usuarios/usuarios.component';
 import { ValidaCpfDirective} from './cadastros/usuarios/validaCPF.directive';
+import { ResultadosComponent } from './pesquisa/resultados/resultados.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { ValidaCpfDirective} from './cadastros/usuarios/validaCPF.directive';
     SidenavListComponent,
     UsuariosComponent,
     ValidaCpfDirective,
+    ResultadosComponent,
   ],
   imports: [
     AppRoutingModule ,

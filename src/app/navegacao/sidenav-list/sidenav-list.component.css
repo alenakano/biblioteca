@@ -7,3 +7,8 @@ a:hover,
 a:active{
     color: lightgray
 }
+
+button:hover
+{
+    cursor: pointer;
+}
