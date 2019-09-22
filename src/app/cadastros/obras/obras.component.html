@@ -1,15 +1,20 @@
-<section class="obras" fxLayout fxLayoutAlign="center">
-    <!--Fixando Card em 400px-->
-    <mat-card fxFlex="400px">
-        <mat-card-title>
-            Cadastramento de obras
-        </mat-card-title>
-        <mat-card-content>
-            Selecione o tipo de obra que deseja cadastrar:
-        </mat-card-content>
-        
-        <mat-card-actions>
-            <button type="submit" color="primary" mat-button>Ir</button>
-        </mat-card-actions>
-    </mat-card>
-</section>
+<ng-container [ngSwitch]="passo">
+    <section *ngSwitchCase="'opcoes'">
+        <app-obras-opcoes (selection)="onTypeSelected($event)"></app-obras-opcoes>
+    </section>
+    <section *ngSwitchCase="'livro'">
+        <app-livro></app-livro>
+    </section>
+    <section *ngSwitchCase="'periodico'">
+        <app-periodico></app-periodico>
+    </section>
+    <section *ngSwitchCase="'midia'">
+        <app-midia></app-midia>
+    </section>
+    <section *ngSwitchCase="'outras'">
+        <app-outras-obras></app-outras-obras>
+    </section>
+    <section *ngSwitchCase="'mapa'">
+        <app-mapa></app-mapa>
+    </section>
+</ng-container>

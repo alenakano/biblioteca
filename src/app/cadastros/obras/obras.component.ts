@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ObrasComponent implements OnInit {
 
+  public passo = 'opcoes';
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onTypeSelected(tipo: string): void {
+    this.passo = tipo;
+    console.log ('PASSO', this.passo)
   }
 
 }

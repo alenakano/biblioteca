@@ -2,7 +2,7 @@
 <!-- fxLayout definido como padrão row, mas usaremos column pq queremos de cima para baixo -->
 <!-- fxLayoutAlign para centralizar. o primeiro center é na direção do main axis (no caso, column) p segundo é no crossAxis -->
 <!-- ngSubmit captura os dados guardados na variáverl f do ngForm que foram guardados pelo ngModel dos elementos com essa diretiva e os nomes dos elementos HTML -->    
-<form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px"#f="ngForm" (ngSubmit)="onSubmit(f)">
+<form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" #f="ngForm" (ngSubmit)="onSubmit(f)">
     <h3 class="mat-h2">Formulário de cadastro:</h3>
     <mat-form-field hintLabel="Digite o nome completo.">
         <input 
