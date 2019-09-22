@@ -1,0 +1,31 @@
+<mat-form-field fxLayout fxLayoutAlign="end">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtre sua pesquisa">
+</mat-form-field>
+
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    
+    <ng-container matColumnDef="nomeObra">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome da obra </th>
+        <td mat-cell *matCellDef="let element"> {{element.nomeObra}} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="nomeAutor">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome do Autor </th>
+        <td mat-cell *matCellDef="let element"> {{element.nomeAutor}} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="tipoObra">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo de obra </th>
+        <td mat-cell *matCellDef="let element"> {{element.tipoObra}} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="situacao">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Situação </th>
+        <td mat-cell *matCellDef="let element"> {{element.situacao}} </td>
+    </ng-container>
+    
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

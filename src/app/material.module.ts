@@ -9,9 +9,12 @@ import {
     MatInputModule,
     MatListModule,
     MatSidenavModule,
+    MatTableModule,
     MatTabsModule,
     MatToolbarModule,
     MatSelectModule,
+    MatSortModule,
+    MatPaginatorModule,
 } from '@angular/material';
 
 import { MatMomentDateModule } from "@angular/material-moment-adapter"
@@ -27,11 +30,13 @@ import { MatMomentDateModule } from "@angular/material-moment-adapter"
         MatInputModule,
         MatListModule,
         MatMomentDateModule,
-        MatSidenavModule,
-        MatTabsModule,
-        MatToolbarModule,
+        MatPaginatorModule,
         MatSelectModule,
-
+        MatSidenavModule,
+        MatSortModule,
+        MatTabsModule,
+        MatTableModule,
+        MatToolbarModule,
     ],
     exports: [
         MatButtonModule,
@@ -43,11 +48,13 @@ import { MatMomentDateModule } from "@angular/material-moment-adapter"
         MatInputModule,
         MatListModule,
         MatMomentDateModule,
+        MatPaginatorModule,
+        MatSelectModule,
         MatSidenavModule,
+        MatSortModule,
+        MatTableModule,
         MatTabsModule,
         MatToolbarModule,
-        MatSelectModule,
-
     ]
 })
 export class MaterialModule {}
