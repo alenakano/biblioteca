@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 import { AuthData } from './auth-data.model';
+import { SubscriptionHandlerService } from '../subscriptionsHandler.service';
 
 
 @Injectable()
@@ -11,7 +12,11 @@ export class AuthService {
     authChange = new Subject<boolean>();
     private isAuthenticated: boolean;
 
-    constructor(private router: Router, private afAuth: AngularFireAuth) {}
+    constructor(
+        private router: Router,
+        private afAuth: AngularFireAuth,
+        private subHandlerService: SubscriptionHandlerService,
+    ) {}
 
     registerUser(authData: AuthData) {
         this.afAuth.auth
@@ -46,6 +51,7 @@ export class AuthService {
     }
 
     logout() {
+        this.subHandlerService.clearSubscriptions();
         this.afAuth.auth.signOut();
         this.authChange.next(false);
         this.router.navigate(['/']);

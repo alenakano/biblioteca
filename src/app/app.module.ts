@@ -40,6 +40,7 @@ import { SidenavListComponent } from './navegacao/sidenav-list/sidenav-list.comp
 import { UsuariosComponent } from './cadastros/usuarios/usuarios.component';
 import { ValidaCpfDirective} from './cadastros/usuarios/validaCPF.directive';
 import { ResultadosComponent } from './pesquisa/resultados/resultados.component';
+import { SubscriptionHandlerService } from './subscriptionsHandler.service';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { ResultadosComponent } from './pesquisa/resultados/resultados.component'
     {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
     AuthService,
     LivroService,
+    SubscriptionHandlerService,
   ],
   bootstrap: [AppComponent]
 })
