@@ -4,6 +4,7 @@
         <mat-card-title fxLayoutAlign="center">
             Cadastramento de obras
         </mat-card-title>
+        <!--Se tirar o fxLayoutAlign abaixo, os campos ficam mais largos-->
         <!--Solução de captura de valor de formulário com select REACTIVE FORM-->
         <form [formGroup]="grupo" #ngForm="ngForm" (ngSubmit)="onFormOpcoesSubmit(grupo.value)">
             <mat-card-content fxLayoutAlign="center">
@@ -16,9 +17,6 @@
                             </mat-option>
                             <mat-option value="periodico">
                                 Periódico
-                            </mat-option>
-                            <mat-option value="mapa">
-                                Mapa
                             </mat-option>
                             <mat-option value="midia">
                                 Mídia
