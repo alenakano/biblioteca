@@ -1,1 +1,115 @@
-<p>periodico works!</p>
+<section class="periodicos" fxLayout fxLayoutAlign="center">
+    <section class="periodico-form">
+    <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup]="grupoPeriodico" #ngForm="ngForm" (ngSubmit)="onFormOpcoesSubmit(grupoPeriodico.value)">
+        <h3 class="mat-h2">Cadastro de periodico:</h3>
+        <mat-form-field>
+            <input 
+                matInput
+                required
+                formControlName= "nomePeriodico"
+                name="nomePeriodico" 
+                type="text" 
+                placeholder="Digite o nome do periódico"
+            >
+            <mat-error>Preencha o campo</mat-error>
+        </mat-form-field>
+        <mat-form-field >
+            <input 
+                matInput
+                required
+                formControlName= "nomeEditora"
+                name="nomeEditora" 
+                type="text" 
+                placeholder="Digite a editora"
+            >
+            <mat-error>Preencha o campo</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input 
+                matInput
+                required
+                formControlName="isbn"
+                name="issn" 
+                type="text" 
+                placeholder="Digite o ISSN"
+            >
+            <mat-error>Preencha o campo</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input 
+                matInput
+                required
+                formControlName="local"
+                name="local" 
+                type="text" 
+                placeholder="Código de localização"
+            >
+            <mat-error>Preencha o campo</mat-error>            
+        </mat-form-field>
+        <mat-form-field>
+            <input
+                matInput
+                required
+                formControlName="data"
+                [matDatepicker]="picker"
+                name="data"
+                placeholder="Data de aquisição"
+                >
+            <mat-datepicker-toggle 
+                matSuffix 
+                [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error>Selecione a data de aquisição</mat-error>
+        </mat-form-field>
+        <mat-form-field >
+            <!--Nome da variável para formControlName inicializado no constructor-->
+            <mat-select formControlName="categoria" placeholder="Tipo de obra" [(value)]="selected">
+                Selecione categoria:
+                <mat-option *ngFor="let l of lista" value={{l.nome}}>
+                    {{l.nome}}
+                </mat-option>
+            </mat-select>
+            <mat-error>  
+                <span *ngIf="!grupoPeriodico.get('categoria').valid && grupoPeriodico.get('categoria').touched || ngForm.submitted">Escolha uma opção</span>  
+            </mat-error>  
+        </mat-form-field>
+        <mat-form-field>
+            <input 
+                matInput 
+                required  
+                formControlName="pais"
+                name="pais"
+                type="text" 
+                placeholder="País"
+            >
+            <mat-error>Preencha o campo</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input 
+                matInput
+                formControlName="obs"
+                name="obs" 
+                type="text" 
+                placeholder="Observações"
+            >
+        </mat-form-field>
+        <div fxLayoutAlign="center" fxLayoutGap="20px">
+            <button 
+                mat-raised-button 
+                type="button"
+                color="primary"
+                (click)="voltar()"
+            >
+                Voltar
+            </button>
+            <button 
+                mat-raised-button 
+                type="submit" 
+                color="primary"
+            >
+                Cadastrar
+            </button>
+        </div>
+    </form>
+</section>

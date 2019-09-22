@@ -20,7 +20,6 @@ import { HeaderComponent } from './navegacao/header/header.component';
 import { HomeComponent } from './home/home.component';
 import { LivroComponent } from './cadastros/obras/livro/livro.component';
 import { LoginComponent } from './auth/login/login.component';
-import { MapaComponent } from './cadastros/obras/mapa/mapa.component';
 import { MaterialModule } from './material.module';
 import { MidiaComponent } from './cadastros/obras/midia/midia.component';
 import { NovaComponent } from './pesquisa/nova/nova.component';
@@ -43,7 +42,6 @@ import { ValidaCpfDirective} from './cadastros/usuarios/validaCPF.directive';
     HeaderComponent,
     HomeComponent,
     ObrasComponent,
-    MapaComponent,
     MidiaComponent,
     NovaComponent,
     ObrasOpcoesComponent,

@@ -14,9 +14,12 @@ export class ObrasComponent implements OnInit {
   ngOnInit() {
   }
 
+  onBackOptions(): void {
+    this.passo = 'opcoes';
+  }
+
   onTypeSelected(tipo: string): void {
     this.passo = tipo;
-    console.log ('PASSO', this.passo)
   }
 
 }

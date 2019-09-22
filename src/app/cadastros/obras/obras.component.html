@@ -3,18 +3,23 @@
         <app-obras-opcoes (selection)="onTypeSelected($event)"></app-obras-opcoes>
     </section>
     <section *ngSwitchCase="'livro'">
-        <app-livro></app-livro>
+        <app-livro
+            (backOptions)="onBackOptions()"
+        ></app-livro>
     </section>
     <section *ngSwitchCase="'periodico'">
-        <app-periodico></app-periodico>
+        <app-periodico
+            (backOptions)="onBackOptions()"
+        ></app-periodico>
     </section>
     <section *ngSwitchCase="'midia'">
-        <app-midia></app-midia>
+        <app-midia
+            (backOptions)="onBackOptions()"    
+        ></app-midia>
     </section>
     <section *ngSwitchCase="'outras'">
-        <app-outras-obras></app-outras-obras>
-    </section>
-    <section *ngSwitchCase="'mapa'">
-        <app-mapa></app-mapa>
+        <app-outras-obras
+            (backOptions)="onBackOptions()"
+        ></app-outras-obras>
     </section>
 </ng-container>
