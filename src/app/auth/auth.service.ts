@@ -1,48 +1,58 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { AngularFireAuth } from 'angularfire2/auth';
 
-import { User } from './user.model';
 import { AuthData } from './auth-data.model';
 
 
 @Injectable()
 export class AuthService {
     authChange = new Subject<boolean>();
-    private user: User;
+    private isAuthenticated: boolean;
 
-    constructor(private router: Router) {}
+    constructor(private router: Router, private afAuth: AngularFireAuth) {}
 
     registerUser(authData: AuthData) {
-        this.user = {
-            email: authData.email,
-            userId: Math.round(Math.random() * 10000).toString()
-        };
-        // O subject "emite o evento" que pode ser capturado, no caso informando ser logado
-        this.authChange.next(true);
-        this.router.navigate(['/cadastro']);
+        this.afAuth.auth
+        .createUserWithEmailAndPassword(
+            authData.email,
+            authData.password)
+        .then(result => {
+            console.log(result);
+            this.isAuthenticated = true;
+            this.authChange.next(true);
+            this.router.navigate(['/cadastro']);
+        })
+        .catch(error => {
+            console.log(error);
+        });
     }
 
     login(authData: AuthData) {
-        this.user = {
-            email: authData.email,
-            userId: Math.round(Math.random() * 10000).toString()
-        };
-        this.authChange.next(true);
-        this.router.navigate(['/']);
+        this.afAuth.auth
+        .signInWithEmailAndPassword(
+            authData.email,
+            authData.password)
+        .then(result => {
+            console.log(result);
+            this.isAuthenticated = true;
+            this.authChange.next(true);
+            this.router.navigate(['/']);
+        })
+        .catch(error => {
+            console.log(error);
+        });
     }
 
     logout() {
-        this.user = null;
+        this.afAuth.auth.signOut();
         this.authChange.next(false);
         this.router.navigate(['/']);
-    }
-
-    getUser() {
-        return { ...this.user };
+        this.isAuthenticated = false;
     }
 
     isAuth() {
-        return this.user != null;
+        return this.isAuthenticated === true;
     }
 }
