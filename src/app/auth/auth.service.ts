@@ -18,16 +18,27 @@ export class AuthService {
         private subHandlerService: SubscriptionHandlerService,
     ) {}
 
+    initAuthentication(): void {
+        this.afAuth.authState.subscribe(user => {
+            if (user) {
+                this.isAuthenticated = true;
+                this.authChange.next(true);
+                this.router.navigate(['/']);
+            } else {
+                this.subHandlerService.clearSubscriptions();
+                this.authChange.next(false);
+                this.router.navigate(['/']);
+                this.isAuthenticated = false;
+            }
+        });
+    }
+
     registerUser(authData: AuthData) {
         this.afAuth.auth
         .createUserWithEmailAndPassword(
             authData.email,
             authData.password)
         .then(result => {
-            console.log(result);
-            this.isAuthenticated = true;
-            this.authChange.next(true);
-            this.router.navigate(['/cadastro']);
         })
         .catch(error => {
             console.log(error);
@@ -40,10 +51,6 @@ export class AuthService {
             authData.email,
             authData.password)
         .then(result => {
-            console.log(result);
-            this.isAuthenticated = true;
-            this.authChange.next(true);
-            this.router.navigate(['/']);
         })
         .catch(error => {
             console.log(error);
@@ -51,11 +58,7 @@ export class AuthService {
     }
 
     logout() {
-        this.subHandlerService.clearSubscriptions();
         this.afAuth.auth.signOut();
-        this.authChange.next(false);
-        this.router.navigate(['/']);
-        this.isAuthenticated = false;
     }
 
     isAuth() {
