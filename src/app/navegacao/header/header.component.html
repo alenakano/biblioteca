@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" class="mat-elevation-z2">
     <div fxHide.gt-xs>
         <button mat-icon-button (click)="onToggleSidenav()">
             <mat-icon>menu</mat-icon>
@@ -12,7 +12,10 @@
     <!--Ele está sendo um flex container e um flex element ao mesmo tempo-->
     <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
         <!--Setou um layout com distância de 10px entre cada elemento-->
-        <ul fxLayout fxLayoutGap="10px" class="navegacao">
+        <ul fxLayout fxLayoutGap="20px" class="navegacao">
+            <li *ngIf="isAuth">
+                <a routerLink="/emprestimos">Empréstimos</a>
+            </li>
             <li *ngIf="isAuth">
                 <a routerLink="/cadastros">Cadastros</a>
             </li>
