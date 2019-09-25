@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { MatSnackBar } from '@angular/material';
 
 import { AuthData } from './auth-data.model';
 import { SubscriptionHandlerService } from '../subscriptionsHandler.service';
@@ -16,6 +17,7 @@ export class AuthService {
         private router: Router,
         private afAuth: AngularFireAuth,
         private subHandlerService: SubscriptionHandlerService,
+        private snackBar: MatSnackBar,
     ) {}
 
     initAuthentication(): void {
@@ -41,7 +43,11 @@ export class AuthService {
         .then(result => {
         })
         .catch(error => {
-            console.log(error);
+            this.snackBar.open(
+                'Falha ao cadastrar. Por favor, tente novamente mais tarde.',
+                null,
+                { duration: 3000 }
+            );
         });
     }
 
@@ -53,7 +59,11 @@ export class AuthService {
         .then(result => {
         })
         .catch(error => {
-            console.log(error);
+            this.snackBar.open(
+                'Falha ao logar. Por favor, tente novamente mais tarde.',
+                null,
+                { duration: 3000 }
+            );
         });
     }
 
