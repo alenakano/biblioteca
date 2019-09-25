@@ -22,6 +22,8 @@ import { environment } from 'src/environments/environment';
 
 import { AuthService } from './auth/auth.service';
 import { CadastrosComponent } from './cadastros/cadastros.component';
+import { DevolverComponent } from './emprestimo/devolver/devolver.component';
+import { EmprestarComponent } from './emprestimo/emprestar/emprestar.component';
 import { EmprestimoComponent } from './emprestimo/emprestimo.component';
 import { HeaderComponent } from './navegacao/header/header.component';
 import { HomeComponent } from './home/home.component';
@@ -38,9 +40,11 @@ import { PeriodicoComponent } from './cadastros/obras/periodico/periodico.compon
 import { PesquisaComponent } from './pesquisa/pesquisa.component';
 import { SidenavListComponent } from './navegacao/sidenav-list/sidenav-list.component';
 import { UsuariosComponent } from './cadastros/usuarios/usuarios.component';
-import { ValidaCpfDirective} from './cadastros/usuarios/validaCPF.directive';
+import { ValidaCpfDirective} from './util/validaCPF.directive';
 import { ResultadosComponent } from './pesquisa/resultados/resultados.component';
 import { SubscriptionHandlerService } from './subscriptionsHandler.service';
+import { SituacaoComponent } from './emprestimo/situacao/situacao.component';
+import { ConfirmacaoComponent } from './emprestimo/confirmacao/confirmacao.component';
 
 @NgModule({
   declarations: [
@@ -60,8 +64,12 @@ import { SubscriptionHandlerService } from './subscriptionsHandler.service';
     PesquisaComponent,
     SidenavListComponent,
     UsuariosComponent,
-    ValidaCpfDirective,
     ResultadosComponent,
+    EmprestarComponent,
+    DevolverComponent,
+    SituacaoComponent,
+    ValidaCpfDirective,
+    ConfirmacaoComponent,
   ],
   imports: [
     AngularFireAuthModule,

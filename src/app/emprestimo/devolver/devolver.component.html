@@ -1,0 +1,28 @@
+<section class="pesquisa" fxLayout fxLayoutAlign="center">
+    <mat-card class="mat-elevation-z3" fxFlex.xs="100%" fxFlex="400px">
+        <form #f="ngForm" (ngSubmit)="onSubmit(f)"> 
+            <mat-card-title fxLayoutAlign="center">
+                Devolução:
+            </mat-card-title>
+            <mat-card-content fxLayout="column" fxLayoutAlign="center" fxLayoutGap="10px">
+                <mat-form-field>
+                    <input matInput ngModel name="Usuário" placeholder="Digite CPF do usuário" required>
+                    <mat-error>Campo obrigatório</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput ngModel name="Usuário" placeholder="Digite o código da obra" required>
+                    <mat-error>Campo obrigatório</mat-error>
+                </mat-form-field>
+                <mat-card-actions fxLayoutAlign="center">
+                    <button 
+                        mat-raised-button 
+                        type="submit" 
+                        color="primary"
+                    >
+                        Devolver
+                </button>
+                </mat-card-actions>
+            </mat-card-content>
+        </form>    
+    </mat-card>
+</section>
