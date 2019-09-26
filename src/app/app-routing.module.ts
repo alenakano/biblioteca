@@ -1,22 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CadastrosComponent } from './cadastros/cadastros.component';
-import { EmprestimoComponent } from './emprestimo/emprestimo.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './auth/login/login.component';
-import { PesquisaComponent } from './pesquisa/pesquisa.component';
 
 import { AuthGuard } from './auth/auth-guard';
 
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  // o path cadastro está protegido pela classe authguard. Somente logados podem ver
-  { path: 'cadastros', component: CadastrosComponent, canActivate: [AuthGuard] },
-  { path: 'emprestimos', component: EmprestimoComponent, canActivate: [AuthGuard] },
+  { path: 'cadastros', loadChildren: './cadastros/cadastros.module#CadastrosModule', canLoad: [AuthGuard] },
+  { path: 'emprestimos', loadChildren: './emprestimo/emprestimo.module#EmprestimoModule', canLoad: [AuthGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'pesquisa', component: PesquisaComponent },
+  { path: 'pesquisa', loadChildren: './pesquisa/pesquisa.module#PesquisaModule' },
 ];
 
 @NgModule({

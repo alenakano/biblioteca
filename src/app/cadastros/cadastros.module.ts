@@ -8,6 +8,7 @@ import { OutrasObrasComponent } from './obras/outras-obras/outras-obras.componen
 import { PeriodicoComponent } from './obras/periodico/periodico.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { SharedModule } from '../util/shared.module';
+import { CadastroRoutingModule } from './cadastro-routing.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { SharedModule } from '../util/shared.module';
     UsuariosComponent,
   ],
   imports: [
-    SharedModule
+    SharedModule,
+    CadastroRoutingModule
   ],
   exports: [
     CadastrosComponent,

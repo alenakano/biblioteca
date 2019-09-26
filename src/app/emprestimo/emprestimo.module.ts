@@ -4,6 +4,7 @@ import { ConfirmacaoComponent } from './confirmacao/confirmacao.component';
 import { DevolverComponent } from './devolver/devolver.component';
 import { EmprestarComponent } from './emprestar/emprestar.component';
 import { EmprestimoComponent } from './emprestimo.component';
+import { EmprestimoRoutingModule } from './emprestimo-routing.module'
 import { SituacaoComponent } from './situacao/situacao.component';
 import { SharedModule } from '../util/shared.module';
 
@@ -17,6 +18,7 @@ import { SharedModule } from '../util/shared.module';
   ],
   imports: [
     SharedModule,
+    EmprestimoRoutingModule,
   ],
   exports: [
     ConfirmacaoComponent,

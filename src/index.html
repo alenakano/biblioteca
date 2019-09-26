@@ -5,11 +5,24 @@
   <title>Biblioteca</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="book.ico">
+  <link rel="icon" href="./assets/book.png" type="image/png">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
 </head>
 <body>
-  <app-root></app-root>
+  <app-root>
+    <style>
+      app-root {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      span.image {
+        content: url("./assets/booklg.gif")
+      }
+    </style>
+    <span class="image"></span>
+  </app-root>
 </body>
 </html>
