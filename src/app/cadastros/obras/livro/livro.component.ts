@@ -42,7 +42,9 @@ export class LivroComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.listaSubscription.unsubscribe();
+    if (this.listaSubscription) {
+      this.listaSubscription.unsubscribe();
+    }
   }
 
   onFormOpcoesSubmit(cadastro: any) {
