@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material';
 
 import { AuthData } from './auth-data.model';
 import { SubscriptionHandlerService } from '../subscriptionsHandler.service';
+import { UIService } from '../util/ui.service';
 
 
 @Injectable()
@@ -18,6 +19,7 @@ export class AuthService {
         private afAuth: AngularFireAuth,
         private subHandlerService: SubscriptionHandlerService,
         private snackBar: MatSnackBar,
+        private uiService: UIService,
     ) {}
 
     initAuthentication(): void {
@@ -36,34 +38,32 @@ export class AuthService {
     }
 
     registerUser(authData: AuthData) {
+        this.uiService.loadingStateChanged.next(true);
         this.afAuth.auth
         .createUserWithEmailAndPassword(
             authData.email,
             authData.password)
         .then(result => {
+            this.uiService.loadingStateChanged.next(false);
         })
         .catch(error => {
-            this.snackBar.open(
-                'Falha ao cadastrar. Por favor, tente novamente mais tarde.',
-                null,
-                { duration: 3000 }
-            );
+            this.uiService.loadingStateChanged.next(false);
+            this.uiService.showSnackbar(error.message, null, { duration: 3000 });
         });
     }
 
     login(authData: AuthData) {
+        this.uiService.loadingStateChanged.next(true);
         this.afAuth.auth
         .signInWithEmailAndPassword(
             authData.email,
             authData.password)
         .then(result => {
+            this.uiService.loadingStateChanged.next(false);
         })
         .catch(error => {
-            this.snackBar.open(
-                'Falha ao logar. Por favor, tente novamente mais tarde.',
-                null,
-                { duration: 3000 }
-            );
+            this.uiService.loadingStateChanged.next(false);
+            this.uiService.showSnackbar(error.message, null, { duration: 3000 });
         });
     }
 

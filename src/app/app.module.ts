@@ -21,55 +21,27 @@ import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
 
 import { AuthService } from './auth/auth.service';
-import { CadastrosComponent } from './cadastros/cadastros.component';
-import { DevolverComponent } from './emprestimo/devolver/devolver.component';
-import { EmprestarComponent } from './emprestimo/emprestar/emprestar.component';
-import { EmprestimoComponent } from './emprestimo/emprestimo.component';
 import { HeaderComponent } from './navegacao/header/header.component';
 import { HomeComponent } from './home/home.component';
-import { LivroComponent } from './cadastros/obras/livro/livro.component';
 import { LivroService } from './cadastros/obras/livro/livro.service';
 import { LoginComponent } from './auth/login/login.component';
 import { MaterialModule } from './material.module';
-import { MidiaComponent } from './cadastros/obras/midia/midia.component';
-import { NovaComponent } from './pesquisa/nova/nova.component';
-import { ObrasComponent } from './cadastros/obras/obras.component';
-import { ObrasOpcoesComponent } from './cadastros/obras/obras-opcoes/obras-opcoes.component';
-import { OutrasObrasComponent } from './cadastros/obras/outras-obras/outras-obras.component';
-import { PeriodicoComponent } from './cadastros/obras/periodico/periodico.component';
-import { PesquisaComponent } from './pesquisa/pesquisa.component';
 import { SidenavListComponent } from './navegacao/sidenav-list/sidenav-list.component';
-import { UsuariosComponent } from './cadastros/usuarios/usuarios.component';
 import { ValidaCpfDirective} from './util/validaCPF.directive';
-import { ResultadosComponent } from './pesquisa/resultados/resultados.component';
 import { SubscriptionHandlerService } from './subscriptionsHandler.service';
-import { SituacaoComponent } from './emprestimo/situacao/situacao.component';
-import { ConfirmacaoComponent } from './emprestimo/confirmacao/confirmacao.component';
+import { UIService } from './util/ui.service';
+import { CadastrosModule } from './cadastros/cadastros.module';
+import { EmprestimoModule } from './emprestimo/emprestimo.module';
+import { PesquisaModule } from './pesquisa/pesquisa.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CadastrosComponent,
-    EmprestimoComponent,
     LoginComponent,
-    LivroComponent,
     HeaderComponent,
     HomeComponent,
-    ObrasComponent,
-    MidiaComponent,
-    NovaComponent,
-    ObrasOpcoesComponent,
-    OutrasObrasComponent,
-    PeriodicoComponent,
-    PesquisaComponent,
     SidenavListComponent,
-    UsuariosComponent,
-    ResultadosComponent,
-    EmprestarComponent,
-    DevolverComponent,
-    SituacaoComponent,
     ValidaCpfDirective,
-    ConfirmacaoComponent,
   ],
   imports: [
     AngularFireAuthModule,
@@ -78,9 +50,12 @@ import { ConfirmacaoComponent } from './emprestimo/confirmacao/confirmacao.compo
     AppRoutingModule ,
     BrowserAnimationsModule,
     BrowserModule,
+    CadastrosModule,
+    EmprestimoModule,
     FlexLayoutModule,
     FormsModule,
     MaterialModule,
+    PesquisaModule,
     ReactiveFormsModule
   ],
   providers: [
@@ -88,6 +63,7 @@ import { ConfirmacaoComponent } from './emprestimo/confirmacao/confirmacao.compo
     AuthService,
     LivroService,
     SubscriptionHandlerService,
+    UIService,
   ],
   bootstrap: [AppComponent]
 })
