@@ -3,6 +3,8 @@ import morgan from 'morgan';
 
 // Declaração das rotas no INDEX.ROUTES
 import IndexRoutes from './routes/index.routes';
+import PostRoutes from './routes/post.routes';
+
 
 export class App {
 
@@ -23,10 +25,13 @@ export class App {
     public middlewares() {
         // logando quando há um requisição
         this.app.use(morgan('dev'));
+        this.app.use(express.json());
+        this.app.use(express.urlencoded({extended: false}));
     }
 
     public routes() {
         this.app.use(IndexRoutes);
+        this.app.use('/posts', PostRoutes);
     }
 
     async listen() {
