@@ -8,7 +8,7 @@ import {
 import { Store } from '@ngrx/store';
 
 import { AuthService } from 'src/app/auth/auth.service';
-import { Subscription, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import * as fromRoot from '../../app.reducer';
 
 @Component({
@@ -19,7 +19,6 @@ import * as fromRoot from '../../app.reducer';
 export class HeaderComponent implements OnInit {
 
   isAuth$: Observable<boolean>;
-  authSubscription: Subscription;
 
   constructor(
     private authService: AuthService,
