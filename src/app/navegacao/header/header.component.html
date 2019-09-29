@@ -1,12 +1,12 @@
 <mat-toolbar color="primary" class="mat-elevation-z2">
-    <div fxHide.gt-xs>
-        <button mat-icon-button (click)="onToggleSidenav()">
-            <mat-icon>menu</mat-icon>
-        </button>
-    </div>
-    <div>
-        <a routerLink="/">
-            LOGO
+    <div fxLayout="row">
+        <div fxHide.gt-xs>
+            <button mat-icon-button (click)="onToggleSidenav()">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </div>
+        <a fxLayoutAlign.xs="end" fxLayoutAlign="start center" routerLink="/">
+            <img class="logo" src="../../../assets/book.png">
         </a>
     </div>
     <!--Ele está sendo um flex container e um flex element ao mesmo tempo-->
