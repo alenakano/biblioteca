@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { StoreModule } from '@ngrx/store';
 
 import { MAT_DATE_LOCALE } from '@angular/material';
 
@@ -12,6 +13,7 @@ import { AppComponent } from './app.component';
 
 import { environment } from 'src/environments/environment';
 
+import { appReducer } from './app.reducer';
 import { AuthService } from './auth/auth.service';
 import { HeaderComponent } from './navegacao/header/header.component';
 import { HomeComponent } from './home/home.component';
@@ -46,6 +48,7 @@ import { SharedModule } from './util/shared.module';
     EmprestimoModule,
     PesquisaModule,
     SharedModule,
+    StoreModule.forRoot({ui: appReducer})
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
