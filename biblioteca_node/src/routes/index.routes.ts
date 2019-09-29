@@ -1,9 +1,10 @@
 import { Router } from 'express';
+import { indexWelcome } from '../controllers/index.controller'
 
 const router = Router();
 
 router.route('/')
-    .get((req, res) => res.json('Ola mundo!'));
+    .get(indexWelcome);
 
 
 export default router;
