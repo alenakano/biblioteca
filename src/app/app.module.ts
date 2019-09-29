@@ -13,7 +13,7 @@ import { AppComponent } from './app.component';
 
 import { environment } from 'src/environments/environment';
 
-import { appReducer } from './app.reducer';
+import { reducers } from './app.reducer';
 import { AuthService } from './auth/auth.service';
 import { HeaderComponent } from './navegacao/header/header.component';
 import { HomeComponent } from './home/home.component';
@@ -48,7 +48,7 @@ import { SharedModule } from './util/shared.module';
     EmprestimoModule,
     PesquisaModule,
     SharedModule,
-    StoreModule.forRoot({ui: appReducer})
+    StoreModule.forRoot(reducers)
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
