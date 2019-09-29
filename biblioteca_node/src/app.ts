@@ -1,6 +1,8 @@
 import express, { Application } from 'express';
+import morgan from 'morgan';
 
-
+// Declaração das rotas no INDEX.ROUTES
+import IndexRoutes from './routes/index.routes';
 
 export class App {
 
@@ -10,10 +12,21 @@ export class App {
     constructor(private port?: number | string) {
         this.app = express();
         this.settings();
+        this.middlewares();
+        this.routes();
     }
 
-    settings() {
+    public settings() {
         this.app.set('port', this.port || process.env.PORT || 3000);
+    }
+
+    public middlewares() {
+        // logando quando há um requisição
+        this.app.use(morgan('dev'));
+    }
+
+    public routes() {
+        this.app.use(IndexRoutes);
     }
 
     async listen() {
