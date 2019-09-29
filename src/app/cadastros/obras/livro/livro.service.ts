@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { CategoriaLivros } from './CategoriaLivros';
 import { Subject } from 'rxjs';
 import { SubscriptionHandlerService } from 'src/app/subscriptionsHandler.service';
+
+import * as categorias from './livro.actions';
+import * as fromCategoriaLivro from './livro.reducer';
+import { Store } from '@ngrx/store';
+
 
 @Injectable()
 export class LivroService {
@@ -13,7 +18,8 @@ export class LivroService {
 
     constructor(
         private db: AngularFirestore,
-        private subHandlerService: SubscriptionHandlerService
+        private subHandlerService: SubscriptionHandlerService,
+        private store: Store<fromCategoriaLivro.State>,
     ) { }
 
     fetchLivros() {
@@ -29,12 +35,11 @@ export class LivroService {
                     };
                 });
             }))
-            .subscribe((livros: CategoriaLivros[]) => {
+            .pipe(take(1)).subscribe((livros: CategoriaLivros[]) => {
                 this.livros = livros;
-                this.catLivros.next([...this.livros]);
+                this.store.dispatch(new categorias.SetCategoriasLivro(livros));
             })
         );
 
     }
-
 }

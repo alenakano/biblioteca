@@ -1,12 +1,12 @@
 <mat-nav-list>
     <!--Setou um layout com distância de 10px entre cada elemento-->
-    <a mat-list-item routerLink="/cadastros" (click)="onClose()" *ngIf="isAuth">
+    <a mat-list-item routerLink="/cadastros" (click)="onClose()" *ngIf="isAuth$ | async">
         <mat-icon>view_agenda</mat-icon>
         <span class="nav-caption">
             Cadastros
         </span>
     </a>
-    <a mat-list-item routerLink="/emprestimos" (click)="onClose()" *ngIf="isAuth">
+    <a mat-list-item routerLink="/emprestimos" (click)="onClose()" *ngIf="isAuth$ | async">
         <mat-icon>book</mat-icon>
         <span class="nav-caption">
             Empréstimos
@@ -18,7 +18,7 @@
             Pesquisar
         </span>
     </a>
-    <a mat-list-item routerLink="/login" (click)="onClose()" *ngIf="!isAuth">
+    <a mat-list-item routerLink="/login" (click)="onClose()" *ngIf="!(isAuth$ | async)">
         <mat-icon>input</mat-icon>
         <span class="nav-caption">
             Login
