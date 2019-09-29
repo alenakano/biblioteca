@@ -10,6 +10,10 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { SharedModule } from '../util/shared.module';
 import { CadastroRoutingModule } from './cadastro-routing.module';
 
+
+import { livroReducer } from './obras/livro/livro.reducer'
+import { StoreModule } from '@ngrx/store';
+
 @NgModule({
   declarations: [
     CadastrosComponent,
@@ -23,7 +27,9 @@ import { CadastroRoutingModule } from './cadastro-routing.module';
   ],
   imports: [
     SharedModule,
-    CadastroRoutingModule
+    CadastroRoutingModule,
+    // Reduce para feature -> tratamento para Lazy Load
+    StoreModule.forFeature('categoria', livroReducer)
   ],
   exports: [
     CadastrosComponent,

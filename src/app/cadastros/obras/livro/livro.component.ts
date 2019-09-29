@@ -1,26 +1,33 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+
 
 import { CategoriaLivros } from './CategoriaLivros';
 import { LivroService } from './livro.service';
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
+import * as fromCategoria from './livro.reducer';
+
 
 @Component({
   selector: 'app-livro',
   templateUrl: './livro.component.html',
   styleUrls: ['./livro.component.css']
 })
-export class LivroComponent implements OnInit, OnDestroy {
+export class LivroComponent implements OnInit {
 
   @Output() backOptions: EventEmitter<void> = new EventEmitter<void>();
-  listaSubscription: Subscription;
+  livrosCategoria$: Observable<CategoriaLivros[]>;
 
   grupoLivro: FormGroup;
-  lista: Array<any>;
 
   public selected: string;
 
-  constructor(private fb: FormBuilder, private livroService: LivroService) {
+  constructor(
+    private fb: FormBuilder,
+    private livroService: LivroService,
+    private store: Store<fromCategoria.State>
+  ) {
     this.grupoLivro = fb.group({
       nomeLivro: [null, Validators.required],
       nomeAutor: [null, Validators.required],
@@ -36,15 +43,7 @@ export class LivroComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.livroService.fetchLivros();
-    this.listaSubscription = this.livroService.catLivros.subscribe(res =>
-      this.lista = res
-    );
-  }
-
-  ngOnDestroy(): void {
-    if (this.listaSubscription) {
-      this.listaSubscription.unsubscribe();
-    }
+    this.livrosCategoria$ = this.store.select(fromCategoria.getCategoriasLivro);
   }
 
   onFormOpcoesSubmit(cadastro: any) {
