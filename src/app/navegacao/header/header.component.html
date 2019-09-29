@@ -13,19 +13,19 @@
     <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
         <!--Setou um layout com distância de 10px entre cada elemento-->
         <ul fxLayout fxLayoutGap="20px" class="navegacao">
-            <li *ngIf="isAuth">
+            <li *ngIf="isAuth$ | async">
                 <a routerLink="/emprestimos">Empréstimos</a>
             </li>
-            <li *ngIf="isAuth">
+            <li *ngIf="isAuth$ | async">
                 <a routerLink="/cadastros">Cadastros</a>
             </li>
-            <li *ngIf="!isAuth">
+            <li *ngIf="!(isAuth$ | async)">
                 <a routerLink="/login">Login</a>
             </li>
             <li>
                 <a routerLink="/pesquisa">Pesquisar</a>
             </li>
-            <li *ngIf="isAuth">
+            <li *ngIf="isAuth$ | async">
                 <a (click)="onLogout()">Logout</a>
             </li>
         </ul>
