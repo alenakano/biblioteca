@@ -44,3 +44,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+/biblioteca_node/node_modules/*
+/biblioteca_node/dist/*
