@@ -1,44 +1,82 @@
 import { Request, Response } from 'express';
-import { connect } from '../database';
-import { Post } from '../interfaces/post.interface'
 
-export async function getPosts(req: Request, res: Response): Promise<Response> {
-    const conn = await connect();
-    const posts = await conn.query('SELECT * FROM posts');
-    return res.json(posts[0]);
+import {
+    createPostsDAO,
+    getPostDAO,
+    getPostsDAO,
+    deletePostsDAO,
+    updatePostsDAO,
+} from '../infrastructure/postsDAO';
+
+import HttpException from '../exceptions/httpException';
+
+import { NextFunction } from 'connect';
+
+export async function getPosts(req: Request, res: Response, next: NextFunction): Promise<any> {
+    try {
+        return res.json(await getPostsDAO());
+    } catch (error) {
+        next(new HttpException(404, 'Deu ruim'));
+    }
 }
 
-export async function createPost(req: Request, res: Response): Promise<Response> {
-    const newPost: Post = req.body;
-    const conn = await connect();
-    conn.query('INSERT INTO posts SET ?', [ newPost ]);
-    return res.json ({
-        message: 'POST CREATED'
-    });
+export async function createPost(req: Request, res: Response, next: NextFunction): Promise<any> {
+    try {
+        const createQueryResult = await createPostsDAO(req);
+        if (createQueryResult[0].affectedRows) {
+            return res.json ({
+                message: 'POST CREATED'
+            });
+        } else {
+            return res.json ({
+                message: 'POST NOT CREATED'
+            });
+        }
+
+    } catch (error) {
+        next(new HttpException(404, 'Deu ruim'));
+    }
 }
 
-export async function getPost(req: Request, res: Response): Promise<Response> {
-    const id = req.params.postId;
-    const conn = await connect();
-    const posts = await conn.query('SELECT * FROM posts WHERE id = ?', [id]);
-    return res.json(posts[0]);
+export async function getPost(req: Request, res: Response, next: NextFunction): Promise<any> {
+    try {
+        return res.json(await getPostDAO(req.params.postId));
+    } catch (error) {
+        next(new HttpException(404, 'Deu ruim'));
+    }
 }
 
-export async function deletePost(req: Request, res: Response): Promise<Response> {
-    const id = req.params.postId;
-    const conn = await connect();
-    await conn.query('DELETE FROM posts WHERE id = ?', [id]);
-    return res.json ({
-        message: 'POST DELETED'
-    });
+export async function deletePost(req: Request, res: Response, next: NextFunction): Promise<any> {
+    try {
+        const deleteQueryResult = await deletePostsDAO(req.params.postId);
+        if (deleteQueryResult[0].affectedRows) {
+            return res.json ({
+                message: 'POST DELETED'
+            });
+        } else {
+            return res.json ({
+                message: 'NO POST DELETED'
+            });
+        }
+    } catch (error) {
+        next(new HttpException(404, 'Deu ruim'));
+    }
 }
 
-export async function updatePost(req: Request, res: Response) {
-    const id = req.params.postId;
-    const updatePost = req.body;
-    const conn = await connect();
-    await conn.query('UPDATE posts set ? WHERE id = ?', [updatePost, id]);
-    return res.json ({
-        message: 'POST UPDATED'
-    });
+export async function updatePost(req: Request, res: Response, next: NextFunction) {
+    try {
+        const updateQueryResult = await updatePostsDAO(req);
+        if (updateQueryResult[0].affectedRows) {
+            return res.json ({
+                message: 'POST UPDATED'
+            });
+        } else {
+            return res.json ({
+                message: 'NO POSTS UPDATED'
+            });
+        }
+
+    } catch (error) {
+        next(new HttpException(404, 'Deu ruim'));
+    }
 }
