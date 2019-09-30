@@ -9,6 +9,7 @@ import {
 } from '../infrastructure/postsDAO';
 
 import HttpException from '../exceptions/httpException';
+import ValidationException from '../exceptions/validationException';
 
 import { NextFunction } from 'connect';
 
@@ -77,6 +78,8 @@ export async function updatePost(req: Request, res: Response, next: NextFunction
         }
 
     } catch (error) {
-        next(new HttpException(404, 'Deu ruim'));
+        const id: string = req.params.postId;
+        // testando criação de outras exceptions
+        next(new ValidationException(id));
     }
 }
