@@ -9,3 +9,16 @@ CREATE TABLE posts(
 );
 
 DESCRIBE posts;
+
+CREATE TABLE livros(
+    isbn VARCHAR(13) NOT NULL PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    author VARCHAR(200) NOT NULL,   
+    location TEXT NOT NULL,
+    date_acquisition DATE NOT NULL,
+    type_book TINYINT NOT NULL,   
+    country VARCHAR(20) NOT NULL,
+    description TEXT NOT NULL
+);
+
+DESCRIBE livros;

@@ -1,10 +1,13 @@
 import express, { Application } from 'express';
 import morgan from 'morgan';
 import errorMiddleware from './middleware/errorsMiddleware';
+import cors from 'cors';
 
 // Declaração das rotas no INDEX.ROUTES
 import IndexRoutes from './routes/index.routes';
 import PostRoutes from './routes/post.routes';
+import LivrosRoutes from './routes/livros.routes';
+
 
 
 export class App {
@@ -26,6 +29,7 @@ export class App {
     public middlewares() {
         // logando quando há um requisição
         this.app.use(morgan('dev'));
+        this.app.use(cors());
         this.app.use(express.json());
         this.app.use(express.urlencoded({extended: false}));
         this.app.use(errorMiddleware);
@@ -34,6 +38,7 @@ export class App {
     public routes() {
         this.app.use(IndexRoutes);
         this.app.use('/posts', PostRoutes);
+        this.app.use('/livros', LivrosRoutes);
     }
 
     async listen() {
