@@ -1,12 +1,14 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, Form } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 
 import { CategoriaLivros } from './CategoriaLivros';
 import { LivroService } from './livro.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import * as fromCategoria from './livro.reducer';
+import { LivroCadastro } from './livroCadastro';
+import { UIService } from 'src/app/util/ui.service';
 
 
 @Component({
@@ -14,30 +16,33 @@ import * as fromCategoria from './livro.reducer';
   templateUrl: './livro.component.html',
   styleUrls: ['./livro.component.css']
 })
-export class LivroComponent implements OnInit {
+export class LivroComponent implements OnInit, OnDestroy {
 
   @Output() backOptions: EventEmitter<void> = new EventEmitter<void>();
+  @ViewChild('ngForm', null) form;
+
   livrosCategoria$: Observable<CategoriaLivros[]>;
 
   grupoLivro: FormGroup;
+  cadastroSubscription: Subscription;
 
   public selected: string;
 
   constructor(
     private fb: FormBuilder,
     private livroService: LivroService,
-    private store: Store<fromCategoria.State>
+    private store: Store<fromCategoria.State>,
+    private uiService: UIService,
   ) {
     this.grupoLivro = fb.group({
-      nomeLivro: [null, Validators.required],
-      nomeAutor: [null, Validators.required],
-      cat: [null, Validators.required],
+      title: [null, Validators.required],
+      author: [null, Validators.required],
       isbn: [null, Validators.required],
-      local: [null, Validators.required],
-      data: [null, Validators.required],
-      categoria: [null, Validators.required],
-      pais: [null, Validators.required],
-      obs: [null, null],
+      location: [null, Validators.required],
+      date_acquisition: [null, Validators.required],
+      type_book: [null, Validators.required],
+      country: [null, Validators.required],
+      description: [null, null],
     });
    }
 
@@ -46,8 +51,19 @@ export class LivroComponent implements OnInit {
     this.livrosCategoria$ = this.store.select(fromCategoria.getCategoriasLivro);
   }
 
-  onFormOpcoesSubmit(cadastro: any) {
-    console.log(cadastro);
+  ngOnDestroy(): void {
+    this.cadastroSubscription.unsubscribe();
+  }
+
+  onFormOpcoesSubmit(cad: Form | any) {
+    const cadastro: LivroCadastro = cad;
+    cadastro.date_acquisition = cad.date_acquisition.format('YYYY-MM-DD');
+    this.cadastroSubscription = this.livroService.cadastrar(cadastro).subscribe(
+      msg => {
+        this.uiService.showSnackbar(msg.message, null, {duration: 3000});
+        this.form.resetForm();
+      }
+    );
   }
 
   voltar(): void {

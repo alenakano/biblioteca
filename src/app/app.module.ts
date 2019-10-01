@@ -27,6 +27,7 @@ import { CadastrosModule } from './cadastros/cadastros.module';
 import { EmprestimoModule } from './emprestimo/emprestimo.module';
 import { PesquisaModule } from './pesquisa/pesquisa.module';
 import { SharedModule } from './util/shared.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { SharedModule } from './util/shared.module';
     BrowserModule,
     CadastrosModule,
     EmprestimoModule,
+    HttpClientModule,
     PesquisaModule,
     SharedModule,
     StoreModule.forRoot(reducers)

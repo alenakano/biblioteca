@@ -10,8 +10,8 @@
                     <input 
                         matInput
                         required
-                        formControlName= "nomeLivro"
-                        name="nomeLivro" 
+                        formControlName= "title"
+                        name="title" 
                         type="text" 
                         placeholder="Digite o nome do livro"
                     >
@@ -21,8 +21,8 @@
                     <input 
                         matInput
                         required
-                        formControlName= "nomeAutor"
-                        name="nomeAutor" 
+                        formControlName= "author"
+                        name="author" 
                         type="text" 
                         placeholder="Digite o nome do autor"
                     >
@@ -43,8 +43,8 @@
                     <input 
                         matInput
                         required
-                        formControlName="local"
-                        name="local" 
+                        formControlName="location"
+                        name="location" 
                         type="text" 
                         placeholder="Código de localização"
                     >
@@ -54,9 +54,9 @@
                     <input
                         matInput
                         required
-                        formControlName="data"
+                        formControlName="date_acquisition"
                         [matDatepicker]="picker"
-                        name="data"
+                        name="date_acquisition"
                         placeholder="Data de aquisição"
                         >
                     <mat-datepicker-toggle 
@@ -68,22 +68,22 @@
                 </mat-form-field>
                 <mat-form-field >
                     <!--Nome da variável para formControlName inicializado no constructor-->
-                    <mat-select formControlName="categoria" placeholder="Tipo de obra" [(value)]="selected">
+                    <mat-select formControlName="type_book" placeholder="Tipo de obra" [(value)]="selected">
                         Selecione categoria:
-                        <mat-option *ngFor="let l of livrosCategoria$ | async" value={{l.nome}}>
+                        <mat-option *ngFor="let l of livrosCategoria$ | async" value={{l.id}}>
                             {{l.nome}}
                         </mat-option>
                     </mat-select>
                     <mat-error>  
-                        <span *ngIf="!grupoLivro.get('categoria').valid && grupoLivro.get('categoria').touched || ngForm.submitted">Escolha uma opção</span>  
+                        <span *ngIf="!grupoLivro.get('type_book').valid && grupoLivro.get('type_book').touched || ngForm.submitted">Escolha uma opção</span>  
                     </mat-error>  
                 </mat-form-field>
                 <mat-form-field>
                     <input 
                         matInput 
                         required  
-                        formControlName="pais"
-                        name="pais"
+                        formControlName="country"
+                        name="country"
                         type="text" 
                         placeholder="País"
                     >
@@ -92,7 +92,8 @@
                 <mat-form-field>
                     <input 
                         matInput
-                        name="obs" 
+                        formControlName="description"
+                        name="description" 
                         type="text" 
                         placeholder="Observações"
                     >
