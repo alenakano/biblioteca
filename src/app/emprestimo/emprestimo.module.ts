@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { ConfirmacaoComponent } from './confirmacao/confirmacao.component';
+import { CommonModule } from '../common/common.module';
 import { DevolverComponent } from './devolver/devolver.component';
 import { EmprestarComponent } from './emprestar/emprestar.component';
 import { EmprestimoComponent } from './emprestimo.component';
@@ -10,7 +10,6 @@ import { SharedModule } from '../util/shared.module';
 
 @NgModule({
   declarations: [
-    ConfirmacaoComponent,
     DevolverComponent,
     EmprestarComponent,
     EmprestimoComponent,
@@ -18,10 +17,10 @@ import { SharedModule } from '../util/shared.module';
   ],
   imports: [
     SharedModule,
+    CommonModule,
     EmprestimoRoutingModule,
   ],
   exports: [
-    ConfirmacaoComponent,
     DevolverComponent,
     EmprestarComponent,
     EmprestimoComponent,

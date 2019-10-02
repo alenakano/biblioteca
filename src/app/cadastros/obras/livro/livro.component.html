@@ -4,7 +4,7 @@
             Cadastro de livro:
         </mat-card-title>
         <!--Se tirar o fxLayoutAlign abaixo, os campos ficam mais largos-->
-        <form fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup]="grupoLivro" #ngForm="ngForm" (ngSubmit)="onFormOpcoesSubmit(grupoLivro.value)">
+        <form *ngIf="!hideForm" fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup]="grupoLivro" #ngForm="ngForm" (ngSubmit)="onFormOpcoesSubmit(grupoLivro.value)">
             <mat-card-content fxLayout="column" fxLayoutAlign="center">
                 <mat-form-field>
                     <input 
@@ -91,6 +91,17 @@
                 </mat-form-field>
                 <mat-form-field>
                     <input 
+                        matInput 
+                        required  
+                        formControlName="qtd"
+                        name="qtd"
+                        type="number" 
+                        placeholder="Quantidade"
+                    >
+                    <mat-error>Preencha o campo</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
                         matInput
                         formControlName="description"
                         name="description" 
@@ -118,4 +129,10 @@
             </mat-card-content>
         </form>
     </mat-card>
+</section>
+<section>
+    <app-confirmacao
+        [mensagem]="'Livro já cadastrado! Gostaria de editar o cadastro?'"
+        (confirmacao)="onConfirmacao($event)"
+    ></app-confirmacao>
 </section>

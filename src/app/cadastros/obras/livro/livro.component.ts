@@ -25,6 +25,7 @@ export class LivroComponent implements OnInit, OnDestroy {
 
   grupoLivro: FormGroup;
   cadastroSubscription: Subscription;
+  hideForm = false;
 
   public selected: string;
 
@@ -42,6 +43,7 @@ export class LivroComponent implements OnInit, OnDestroy {
       date_acquisition: [null, Validators.required],
       type_book: [null, Validators.required],
       country: [null, Validators.required],
+      qtd: [null, Validators.required],
       description: [null, null],
     });
    }
@@ -52,7 +54,9 @@ export class LivroComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.cadastroSubscription.unsubscribe();
+    if (this.cadastroSubscription) {
+      this.cadastroSubscription.unsubscribe();
+    }
   }
 
   onFormOpcoesSubmit(cad: Form | any) {
@@ -62,8 +66,24 @@ export class LivroComponent implements OnInit, OnDestroy {
       msg => {
         this.uiService.showSnackbar(msg.message, null, {duration: 3000});
         this.form.resetForm();
-      }
+      },
+      error => this.onServiceCreateError(error)
     );
+  }
+
+  onConfirmacao(evento) {
+    console.log(evento)
+  }
+
+  public onServiceCreateError(error) {
+    this.form.resetForm();
+    if (error.status === 412) {
+      this.hideForm = true;
+      this.uiService.showSnackbar(error.error.message, null, {duration: 3000});
+    } else {
+      this.uiService.showSnackbar(error.error.message, null, {duration: 3000});
+      this.form.resetForm();
+    }
   }
 
   voltar(): void {

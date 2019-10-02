@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CadastrosComponent } from './cadastros.component';
+import { CommonModule } from '../common/common.module';
 import { LivroComponent } from './obras/livro/livro.component';
 import { MidiaComponent } from './obras/midia/midia.component';
 import { ObrasComponent } from './obras/obras.component';
@@ -26,6 +27,7 @@ import { StoreModule } from '@ngrx/store';
     UsuariosComponent,
   ],
   imports: [
+    CommonModule,
     SharedModule,
     CadastroRoutingModule,
     // Reduce para feature -> tratamento para Lazy Load

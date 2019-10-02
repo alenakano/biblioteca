@@ -8,5 +8,6 @@ export interface LivroCadastro {
     date_acquisition: string;
     type_book: string;
     country: string;
+    qtd: number;
     description: string;
 }
