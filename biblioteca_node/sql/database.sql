@@ -18,6 +18,7 @@ CREATE TABLE livros(
     date_acquisition DATE NOT NULL,
     type_book TINYINT NOT NULL,   
     country VARCHAR(20) NOT NULL,
+    qtd TINYINT NOT NULL,
     description TEXT NOT NULL
 );
 

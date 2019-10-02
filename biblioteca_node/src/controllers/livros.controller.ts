@@ -10,6 +10,7 @@ import {
 
 import HttpException from '../exceptions/httpException';
 import ValidationException from '../exceptions/validationException';
+import { resolveError } from '../exceptions/resolveError';
 
 import { NextFunction } from 'connect';
 
@@ -35,7 +36,7 @@ export async function createLivro(req: Request, res: Response, next: NextFunctio
         }
 
     } catch (error) {
-        next(new HttpException(404, 'Deu ruim'));
+        resolveError(error, res);
     }
 }
 
