@@ -24,14 +24,14 @@ export async function createLivrosDAO(req: Request): Promise<any> {
 export async function deleteLivrosDAO(id: string): Promise<any> {
     const deleteId = id;
     const connDeleteLivros = await openConnection();
-    const deleteLivros = await connDeleteLivros.query('DELETE FROM livros WHERE id = ?', [ deleteId ]);
+    const deleteLivros = await connDeleteLivros.query('DELETE FROM livros WHERE isbn = ?', [ deleteId ]);
     return deleteLivros;
 }
 
 export async function getLivroDAO(id: string): Promise<any> {
     const getId = id;
     const connGetLivros = await openConnection();
-    const getLivros = await connGetLivros.query('SELECT * FROM livros WHERE id = ?', [ getId ]);
+    const getLivros = await connGetLivros.query('SELECT * FROM livros WHERE isbn = ?', [ getId ]);
     return getLivros[0];
 }
 
@@ -39,6 +39,6 @@ export async function updateLivrosDAO(req: Request): Promise<any> {
     const upLivros: Livros = req.body;
     const upId = req.params.LivrosId;
     const connUpdateLivros = await openConnection();
-    const updateLivros = await connUpdateLivros.query('UPDATE livros set ? WHERE id = ?', [upLivros, upId]);
+    const updateLivros = await connUpdateLivros.query('UPDATE livros set ? WHERE isbn = ?', [upLivros, upId]);
     return updateLivros;
 }
