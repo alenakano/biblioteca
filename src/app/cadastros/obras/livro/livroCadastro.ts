@@ -1,6 +1,4 @@
-import { Moment } from 'moment';
-
-export interface LivroCadastro {
+export class LivroCadastro {
     isbn: string;
     title: string;
     author: string;

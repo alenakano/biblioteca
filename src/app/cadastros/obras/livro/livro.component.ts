@@ -23,11 +23,11 @@ export class LivroComponent implements OnInit, OnDestroy {
 
   livrosCategoria$: Observable<CategoriaLivros[]>;
 
+  public cadastro: LivroCadastro = new LivroCadastro();
   grupoLivro: FormGroup;
   cadastroSubscription: Subscription;
   hideForm = false;
 
-  public selected: string;
 
   constructor(
     private fb: FormBuilder,
@@ -35,7 +35,7 @@ export class LivroComponent implements OnInit, OnDestroy {
     private store: Store<fromCategoria.State>,
     private uiService: UIService,
   ) {
-    this.grupoLivro = fb.group({
+    this.grupoLivro = this.fb.group({
       title: [null, Validators.required],
       author: [null, Validators.required],
       isbn: [null, Validators.required],
@@ -59,10 +59,16 @@ export class LivroComponent implements OnInit, OnDestroy {
     }
   }
 
+  compareObjects(o1: any, o2: any): boolean {
+    if (o2) {
+      return  o1.id === o2.id;
+    }
+  }
+
   onFormOpcoesSubmit(cad: Form | any) {
-    const cadastro: LivroCadastro = cad;
-    cadastro.date_acquisition = cad.date_acquisition.format('YYYY-MM-DD');
-    this.cadastroSubscription = this.livroService.cadastrar(cadastro).subscribe(
+    this.cadastro = cad;
+    this.cadastro.date_acquisition = cad.date_acquisition.format('YYYY-MM-DD');
+    this.cadastroSubscription = this.livroService.cadastrar(this.cadastro).subscribe(
       msg => {
         this.uiService.showSnackbar(msg.message, null, {duration: 3000});
         this.form.resetForm();
@@ -71,8 +77,28 @@ export class LivroComponent implements OnInit, OnDestroy {
     );
   }
 
-  onConfirmacao(evento) {
-    console.log(evento)
+  onConfirmacao(evento: boolean) {
+    if (evento) {
+      this.livroService.pesquisar(this.cadastro).subscribe(
+        res => {
+          this.cadastro = res[0];
+          this.hideForm = false;
+          this.grupoLivro = this.fb.group({
+            title: [res[0].title, Validators.required],
+            author: [res[0].author, Validators.required],
+            isbn: [res[0].isbn, Validators.required],
+            location: [res[0].location, Validators.required],
+            date_acquisition: [res[0].date_acquisition, Validators.required],
+            type_book: [res[0].type_book, Validators.required],
+            country: [res[0].country, Validators.required],
+            qtd: [res[0].qtd, Validators.required],
+            description: [res[0].description, null],
+          });
+        }
+      );
+    } else {
+      this.hideForm = false;
+    }
   }
 
   public onServiceCreateError(error) {

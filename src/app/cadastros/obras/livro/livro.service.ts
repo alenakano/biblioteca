@@ -62,4 +62,10 @@ export class LivroService {
             .post(request, body);
     }
 
+    pesquisar(livro: LivroCadastro): Observable<any> {
+        const request = this.url + '/' + livro.isbn;
+        return this.http
+            .get(request);
+    }
+
 }

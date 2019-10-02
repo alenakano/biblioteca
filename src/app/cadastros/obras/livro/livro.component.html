@@ -68,7 +68,7 @@
                 </mat-form-field>
                 <mat-form-field >
                     <!--Nome da variável para formControlName inicializado no constructor-->
-                    <mat-select formControlName="type_book" placeholder="Tipo de obra" [(value)]="selected">
+                    <mat-select formControlName="type_book" placeholder="Tipo de obra" [(ngModel)]="cadastro.type_book" [compareWith]="compareObjects">
                         Selecione categoria:
                         <mat-option *ngFor="let l of livrosCategoria$ | async" value={{l.id}}>
                             {{l.nome}}
@@ -132,6 +132,7 @@
 </section>
 <section>
     <app-confirmacao
+        *ngIf="hideForm"
         [mensagem]="'Livro já cadastrado! Gostaria de editar o cadastro?'"
         (confirmacao)="onConfirmacao($event)"
     ></app-confirmacao>

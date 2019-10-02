@@ -6,5 +6,5 @@ export interface Livros {
     date_acquisition: Date;
     type_book: string;
     country: string;
-    description: string;
+    description?: string;
 }
