@@ -37,7 +37,7 @@ export async function getLivroDAO(id: string): Promise<any> {
 
 export async function updateLivrosDAO(req: Request): Promise<any> {
     const upLivros: Livros = req.body;
-    const upId = req.params.LivrosId;
+    const upId = req.params.livroId;
     const connUpdateLivros = await openConnection();
     const updateLivros = await connUpdateLivros.query('UPDATE livros set ? WHERE isbn = ?', [upLivros, upId]);
     return updateLivros;
