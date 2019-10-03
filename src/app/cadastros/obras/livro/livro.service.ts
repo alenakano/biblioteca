@@ -68,4 +68,11 @@ export class LivroService {
             .get(request);
     }
 
+    atualizar(livro: LivroCadastro): Observable<any> {
+        const body = livro;
+        const request = this.url + '/' + livro.isbn;
+        console.log('atualizar')
+        return this.http.put(request, body);
+    }
+
 }
