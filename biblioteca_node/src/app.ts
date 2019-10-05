@@ -8,7 +8,7 @@ import IndexRoutes from './routes/index.routes';
 import PostRoutes from './routes/post.routes';
 import LivrosRoutes from './routes/livros.routes';
 import PeriodicosRoutes from './routes/periodicos.routes';
-
+import MidiasRoutes from './routes/midias.routes';
 
 export class App {
 
@@ -40,6 +40,7 @@ export class App {
         this.app.use('/posts', PostRoutes);
         this.app.use('/livros', LivrosRoutes);
         this.app.use('/periodicos', PeriodicosRoutes);
+        this.app.use('/midias', MidiasRoutes);
     }
 
     async listen() {

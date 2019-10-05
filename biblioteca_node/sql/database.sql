@@ -20,6 +20,8 @@ CREATE TABLE obras(
     publisher VARCHAR(200) NOT NULL,
     local VARCHAR(200),
     type_mag VARCHAR(200),
+    type_midia VARCHAR(200),
+    type_other VARCHAR(200),
     author VARCHAR(200) NOT NULL,   
     location TEXT NOT NULL,
     date_acquisition DATE NOT NULL,
