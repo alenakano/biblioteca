@@ -4,14 +4,14 @@
             Cadastro de periodico:
         </mat-card-title>
         <!--Se tirar o fxLayoutAlign abaixo, os campos ficam mais largos-->
-        <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup]="grupoPeriodico" #ngForm="ngForm" (ngSubmit)="onFormOpcoesSubmit(grupoPeriodico.value)">
+        <form *ngIf="!hideForm" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup]="grupoPeriodico" #ngForm="ngForm" (ngSubmit)="onFormOpcoesSubmit(grupoPeriodico.value)">
             <mat-card-content fxLayout="column" fxLayoutAlign="center">
                 <mat-form-field>
                     <input 
                         matInput
                         required
-                        formControlName= "nomePeriodico"
-                        name="nomePeriodico" 
+                        formControlName= "title"
+                        name="title" 
                         type="text" 
                         placeholder="Digite o nome do periódico"
                     >
@@ -21,8 +21,8 @@
                     <input 
                         matInput
                         required
-                        formControlName= "nomeEditora"
-                        name="nomeEditora" 
+                        formControlName= "publisher"
+                        name="publisher" 
                         type="text" 
                         placeholder="Digite a editora"
                     >
@@ -32,7 +32,7 @@
                     <input 
                         matInput
                         required
-                        formControlName="isbn"
+                        formControlName="issn"
                         name="issn" 
                         type="text" 
                         placeholder="Digite o ISSN"
@@ -54,9 +54,9 @@
                     <input
                         matInput
                         required
-                        formControlName="data"
+                        formControlName="date_acquisition"
                         [matDatepicker]="picker"
-                        name="data"
+                        name="date_acquisition"
                         placeholder="Data de aquisição"
                         >
                     <mat-datepicker-toggle 
@@ -68,22 +68,22 @@
                 </mat-form-field>
                 <mat-form-field >
                     <!--Nome da variável para formControlName inicializado no constructor-->
-                    <mat-select formControlName="categoria" placeholder="Tipo de obra" [(value)]="selected">
+                    <mat-select formControlName="type_mag" placeholder="Tipo de obra" [(ngModel)]="cadastro.type_mag" [compareWith]="compareObjects">
                         Selecione categoria:
                         <mat-option *ngFor="let l of lista" value={{l.nome}}>
                             {{l.nome}}
                         </mat-option>
                     </mat-select>
                     <mat-error>  
-                        <span *ngIf="!grupoPeriodico.get('categoria').valid && grupoPeriodico.get('categoria').touched || ngForm.submitted">Escolha uma opção</span>  
+                        <span *ngIf="!grupoPeriodico.get('type_mag').valid && grupoPeriodico.get('type_mag').touched || ngForm.submitted">Escolha uma opção</span>  
                     </mat-error>  
                 </mat-form-field>
                 <mat-form-field>
                     <input 
                         matInput 
                         required  
-                        formControlName="pais"
-                        name="pais"
+                        formControlName="country"
+                        name="country"
                         type="text" 
                         placeholder="País"
                     >
@@ -91,9 +91,20 @@
                 </mat-form-field>
                 <mat-form-field>
                     <input 
+                        matInput 
+                        required  
+                        formControlName="qtd"
+                        name="qtd"
+                        type="number" 
+                        placeholder="Quantidade"
+                    >
+                    <mat-error>Preencha o campo</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
                         matInput
-                        formControlName="obs"
-                        name="obs" 
+                        formControlName="description"
+                        name="description" 
                         type="text" 
                         placeholder="Observações"
                     >
@@ -118,4 +129,12 @@
             </mat-card-content>
         </form>
     </mat-card>
+</section>
+
+<section>
+    <app-confirmacao
+        *ngIf="hideForm"
+        [mensagem]="'Revista já cadastrada! Gostaria de editar o cadastro?'"
+        (confirmacao)="onConfirmacao($event)"
+    ></app-confirmacao>
 </section>

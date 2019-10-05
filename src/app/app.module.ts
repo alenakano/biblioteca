@@ -25,6 +25,7 @@ import { SubscriptionHandlerService } from './subscriptionsHandler.service';
 import { UIService } from './util/ui.service';
 import { CadastrosModule } from './cadastros/cadastros.module';
 import { EmprestimoModule } from './emprestimo/emprestimo.module';
+import { PeriodicoService } from './cadastros/obras/periodico/periodico.service';
 import { PesquisaModule } from './pesquisa/pesquisa.module';
 import { SharedModule } from './util/shared.module';
 import { HttpClientModule } from '@angular/common/http';
@@ -56,6 +57,7 @@ import { HttpClientModule } from '@angular/common/http';
     {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
     AuthService,
     LivroService,
+    PeriodicoService,
     SubscriptionHandlerService,
     UIService,
   ],
