@@ -29,6 +29,7 @@ import { PeriodicoService } from './cadastros/obras/periodico/periodico.service'
 import { PesquisaModule } from './pesquisa/pesquisa.module';
 import { SharedModule } from './util/shared.module';
 import { HttpClientModule } from '@angular/common/http';
+import { MidiaService } from './cadastros/obras/midia/midia.service';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { HttpClientModule } from '@angular/common/http';
     AuthService,
     LivroService,
     PeriodicoService,
+    MidiaService,
     SubscriptionHandlerService,
     UIService,
   ],

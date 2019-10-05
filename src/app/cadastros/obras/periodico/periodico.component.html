@@ -70,7 +70,7 @@
                     <!--Nome da variável para formControlName inicializado no constructor-->
                     <mat-select formControlName="type_mag" placeholder="Tipo de obra" [(ngModel)]="cadastro.type_mag" [compareWith]="compareObjects">
                         Selecione categoria:
-                        <mat-option *ngFor="let l of lista" value={{l.nome}}>
+                        <mat-option *ngFor="let l of lista" value={{l.id}}>
                             {{l.nome}}
                         </mat-option>
                     </mat-select>

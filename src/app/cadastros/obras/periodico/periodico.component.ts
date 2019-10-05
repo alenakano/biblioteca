@@ -80,7 +80,6 @@ export class PeriodicoComponent implements OnInit {
     if (evento) {
       this.periodicoService.pesquisar(this.cadastro).subscribe(
         res => {
-          console.log(res)
           this.updateDB = true;
           this.cadastro = res[0];
           this.hideForm = false;
