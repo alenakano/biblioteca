@@ -2,12 +2,11 @@ import { Response } from 'express';
 
 
 export function resolveError(error: any, res: Response) {
-    console.log(error.constructor.name);
-
+    console.log(error)
     switch (error.errno) {
         case 1062: {
             res.status(412).json({
-                message: 'Livro já cadastrado, tente novamente'
+                message: 'Obra já cadastrada, tente novamente'
             });
             break;
         }

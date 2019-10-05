@@ -7,7 +7,7 @@ import cors from 'cors';
 import IndexRoutes from './routes/index.routes';
 import PostRoutes from './routes/post.routes';
 import LivrosRoutes from './routes/livros.routes';
-
+import PeriodicosRoutes from './routes/periodicos.routes';
 
 
 export class App {
@@ -39,6 +39,7 @@ export class App {
         this.app.use(IndexRoutes);
         this.app.use('/posts', PostRoutes);
         this.app.use('/livros', LivrosRoutes);
+        this.app.use('/periodicos', PeriodicosRoutes);
     }
 
     async listen() {

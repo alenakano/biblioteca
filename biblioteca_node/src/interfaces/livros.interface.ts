@@ -1,5 +1,7 @@
 export interface Livros {
+    id: string;
     isbn: string;
+    category: '1';
     title: string;
     author: string;
     location: string;

@@ -10,9 +10,16 @@ CREATE TABLE posts(
 
 DESCRIBE posts;
 
-CREATE TABLE livros(
-    isbn VARCHAR(13) NOT NULL PRIMARY KEY,
+CREATE TABLE obras(
+    id BIGINT NOT NULL PRIMARY KEY,
+    isbn VARCHAR(13),
+    issn VARCHAR(8),
+    doi VARCHAR(11),
+    category TINYINT NOT NULL,
     title VARCHAR(200) NOT NULL,
+    publisher VARCHAR(200) NOT NULL,
+    local VARCHAR(200),
+    type_mag VARCHAR(200),
     author VARCHAR(200) NOT NULL,   
     location TEXT NOT NULL,
     date_acquisition DATE NOT NULL,
@@ -22,4 +29,4 @@ CREATE TABLE livros(
     description TEXT
 );
 
-DESCRIBE livros;
+DESCRIBE obras;
