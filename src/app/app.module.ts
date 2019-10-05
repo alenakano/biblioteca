@@ -30,6 +30,7 @@ import { PesquisaModule } from './pesquisa/pesquisa.module';
 import { SharedModule } from './util/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { MidiaService } from './cadastros/obras/midia/midia.service';
+import { OutrasObrasService } from './cadastros/obras/outras-obras/outras-obras-service';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { MidiaService } from './cadastros/obras/midia/midia.service';
     LivroService,
     PeriodicoService,
     MidiaService,
+    OutrasObrasService,
     SubscriptionHandlerService,
     UIService,
   ],
