@@ -18,6 +18,7 @@ CREATE TABLE obras(
     category TINYINT NOT NULL,
     title VARCHAR(200) NOT NULL,
     publisher VARCHAR(200) NOT NULL,
+    controlId VARCHAR(13),
     local VARCHAR(200),
     type_mag VARCHAR(200),
     type_midia VARCHAR(200),
