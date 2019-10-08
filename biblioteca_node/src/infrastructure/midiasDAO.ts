@@ -30,7 +30,6 @@ export async function deleteMidiasDAO(id: string): Promise<any> {
 
 export async function getMidiaDAO(id: string): Promise<any> {
     const getId = id;
-    console.log(getId)
     const connGetMidias = await openConnection();
     const getMidias = await connGetMidias.query('SELECT * FROM obras WHERE doi = ?', [ getId ]);
     return getMidias[0];

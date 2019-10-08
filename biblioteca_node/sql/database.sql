@@ -1,14 +1,20 @@
 CREATE DATABASE node_mysql_ts;
 
-CREATE TABLE posts(
+CREATE TABLE usuarios(
     id INT (11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(200) NOT NULL,
-    description TEXT NOT NULL,
-    image_url TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    name VARCHAR(100) NOT NULL,
+    cpf VARCHAR(100) NOT NULL,
+    birthdate DATE NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    address VARCHAR(200) NOT NULL,
+    complement VARCHAR(100),
+    city VARCHAR(100) NOT NULL,
+    blocked BOOLEAN NOT NULL,
+    date_block DATE,
+    date_unblock DATE,
 );
 
-DESCRIBE posts;
+DESCRIBE usuarios;
 
 CREATE TABLE obras(
     id BIGINT NOT NULL PRIMARY KEY,
