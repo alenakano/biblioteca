@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm, FormBuilder, FormGroup, Validators, Form } from '@angular/forms';
 import { AuthService } from 'src/app/auth/auth.service';
+import { UIService } from 'src/app/util/ui.service';
+import { UsuariosService } from './usuarios.service';
+import { Subscription } from 'rxjs';
+import { UsuariosCadastro } from './usuariosCadastro';
 
 @Component({
   selector: 'app-usuarios',
@@ -10,8 +14,32 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class UsuariosComponent implements OnInit {
 
   public maxDate;
+  lista: Array<any>;
+  public cadastro: UsuariosCadastro = new UsuariosCadastro();
 
-  constructor(private authService: AuthService) { }
+  public updateDB = false;
+  public grupoUsuarios: FormGroup;
+  public hideForm = false;
+
+  cadastroSubscription: Subscription;
+  updateSubscription: Subscription;
+
+  constructor(
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private uiService: UIService,
+    private usuariosService: UsuariosService,
+  ) {
+    this.grupoUsuarios = fb.group({
+      name: [null, Validators.required],
+      cpf: [null, Validators.required],
+      datebirth: [null, Validators.required],
+      email: [null, Validators.required],
+      address: [null, Validators.required],
+      complement: [null, Validators.required],
+      city: [null, Validators.required],
+    });
+  }
 
   ngOnInit() {
     this.maxDate = new Date();
@@ -20,10 +48,57 @@ export class UsuariosComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    this.authService.registerUser({
-      email: form.value.email,
-      password: form.value.password
-    });
+    if (!this.updateDB) {
+      this.cadastroUsuario();
+    } else {
+      this.updateUsuario(form);
+    }
+  }
+
+
+  public cadastroUsuario(): void {
+    this.cadastroSubscription = this.usuariosService.cadastrar(this.cadastro).subscribe(
+      msg => {
+        this.uiService.showSnackbar(msg.message, null, {duration: 3000});
+      },
+      error => this.onServiceCreateError(error)
+    );
+  }
+
+  onConfirmacao(evento: boolean) {
+    if (evento) {
+      this.usuariosService.pesquisar(this.cadastro).subscribe(
+        res => {
+          this.updateDB = true;
+          console.log(res)
+          this.cadastro = res[0];
+          this.hideForm = false;
+          this.grupoUsuarios = res;
+          });
+      } else {
+      this.hideForm = false;
+    }
+  }
+
+  public onServiceCreateError(error) {
+    if (error.status === 412) {
+      this.hideForm = true;
+      this.uiService.showSnackbar(error.error.message, null, {duration: 3000});
+    } else {
+      this.uiService.showSnackbar('Erro de conexão. Por favor, tente mais tarde', null, {duration: 3000});
+      this.cadastro.clearUser();
+    }
+  }
+
+  public updateUsuario(form: NgForm): void {
+    this.updateDB = false;
+    this.updateSubscription = this.usuariosService.atualizar(this.cadastro).subscribe(
+      msg => {
+        this.uiService.showSnackbar(msg.message, null, {duration: 3000});
+        form.resetForm();
+      },
+      error => this.onServiceCreateError(error)
+    );
   }
 
 }

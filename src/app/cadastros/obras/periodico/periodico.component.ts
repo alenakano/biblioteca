@@ -14,7 +14,7 @@ import { UIService } from 'src/app/util/ui.service';
 export class PeriodicoComponent implements OnInit {
 
   @Output() backOptions: EventEmitter<void> = new EventEmitter<void>();
-  @ViewChild('ngForm', null) form;
+  @ViewChild('f', null) form;
 
   lista: Array<any>;
 

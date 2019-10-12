@@ -31,6 +31,7 @@ import { SharedModule } from './util/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { MidiaService } from './cadastros/obras/midia/midia.service';
 import { OutrasObrasService } from './cadastros/obras/outras-obras/outras-obras-service';
+import { UsuariosService } from './cadastros/usuarios/usuarios.service';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { OutrasObrasService } from './cadastros/obras/outras-obras/outras-obras-
     MidiaService,
     OutrasObrasService,
     SubscriptionHandlerService,
+    UsuariosService,
     UIService,
   ],
   bootstrap: [AppComponent]
