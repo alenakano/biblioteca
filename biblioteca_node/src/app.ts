@@ -11,6 +11,7 @@ import PeriodicosRoutes from './routes/periodicos.routes';
 import MidiasRoutes from './routes/midias.routes';
 import OutrasRoutes from './routes/outras.routes';
 import UsuariosRoutes from './routes/usuarios.routes';
+import BloqueioRoutes from './routes/bloqueio.routes';
 
 
 export class App {
@@ -46,6 +47,7 @@ export class App {
         this.app.use('/midias', MidiasRoutes);
         this.app.use('/outras', OutrasRoutes);
         this.app.use('/usuarios', UsuariosRoutes);
+        this.app.use('/bloqueios', BloqueioRoutes);
     }
 
     async listen() {

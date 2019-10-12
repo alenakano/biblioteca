@@ -11,8 +11,8 @@ CREATE TABLE usuarios(
     city VARCHAR(100) NOT NULL,
     blocked BOOLEAN NOT NULL,
     date_block DATE,
-    date_unblock DATE,
-);
+    date_unblock DATE
+) ENGINE=InnoDB;
 
 DESCRIBE usuarios;
 
