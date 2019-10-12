@@ -1,4 +1,4 @@
-<section class="situacao" fxLayout fxLayoutAlign="center">
+<section *ngIf="!showSituacao" class="situacao" fxLayout fxLayoutAlign="center">
     <mat-card fxFlex.xs="100%" fxFlex="400px">
         <form #f="ngForm" (ngSubmit)="onSubmit(f)"> 
             <mat-card-title fxLayoutAlign="center">
@@ -27,6 +27,7 @@
                         mat-raised-button 
                         type="submit" 
                         color="primary"
+                        [disabled]="f.invalid"
                     >
                         Pesquisar
                 </button>
@@ -35,3 +36,90 @@
         </form>    
     </mat-card>
 </section>
+
+
+<section *ngIf="showSituacao" class="situacao" fxLayout fxLayoutAlign="center">
+    <mat-card fxFlex.xs="100%" fxFlex="400px">
+        <form #fInfos="ngForm" [formGroup]="situacao" (ngSubmit)="onSituacaoSubmit(fInfos.value)"> 
+            <mat-card-title fxLayoutAlign="center">
+                Usuário:
+            </mat-card-title>
+            <mat-card-content fxLayout="column" fxLayoutAlign="center" fxLayoutGap="10px">
+                
+                <mat-form-field>
+                    <input 
+                        matInput
+                        required
+                        formControlName= "cpf"
+                        name="cpf" 
+                        type="text" 
+                        disabled
+                    >
+                </mat-form-field>
+                
+                <div fxLayout fxLayoutGap="10px">
+                    <label>Bloqueado: </label>
+                    <mat-radio-group formControlName="blocked" fxLayout fxLayoutGap="10px">
+                        <mat-radio-button [value]="1">Sim</mat-radio-button>
+                        <mat-radio-button [value]="0">Não</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+                <mat-form-field>
+                    <input
+                        matInput
+                        required
+                        [matDatepicker]="picker"
+                        [max]="maxDate"
+                        formControlName="date_block"
+                        name="date_block"
+                        placeholder="Data de bloqueio"
+                        >
+                    <mat-datepicker-toggle 
+                        matSuffix 
+                        [for]="picker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error>Selecione a data de nascimento.</mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input
+                        matInput
+                        required
+                        formControlName="date_unblock"
+                        [matDatepicker]="picker2"
+                        name="date_unblock"
+                        placeholder="Data de desbloqueio"
+                        >
+                    <mat-datepicker-toggle 
+                        matSuffix 
+                        [for]="picker2"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                    <mat-error>Selecione a data de nascimento.</mat-error>
+                </mat-form-field>
+
+                <mat-card-actions fxLayoutAlign="center">
+                    <button 
+                        mat-raised-button
+                        type="button" 
+                        color="primary"
+                        (click)="voltar()"
+                    >
+                        Voltar
+                    </button>
+                    <button 
+                        mat-raised-button 
+                        type="submit" 
+                        color="primary"
+                        [disabled]="fInfos.invalid"
+                    >
+                        Atualizar
+                </button>
+                </mat-card-actions>
+            </mat-card-content>
+        </form>    
+    </mat-card>
+</section>
+                    

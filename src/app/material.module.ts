@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { 
+import {
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
@@ -8,15 +8,16 @@ import {
     MatIconModule,
     MatInputModule,
     MatListModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatRadioModule,
+    MatSelectModule,
     MatSidenavModule,
+    MatSnackBarModule,
+    MatSortModule,
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
-    MatSelectModule,
-    MatSnackBarModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatProgressSpinnerModule,
 } from '@angular/material';
 
 import { MatMomentDateModule } from "@angular/material-moment-adapter"
@@ -33,6 +34,7 @@ import { MatMomentDateModule } from "@angular/material-moment-adapter"
         MatListModule,
         MatMomentDateModule,
         MatPaginatorModule,
+        MatRadioModule,
         MatSelectModule,
         MatSidenavModule,
         MatSortModule,
@@ -53,6 +55,7 @@ import { MatMomentDateModule } from "@angular/material-moment-adapter"
         MatListModule,
         MatMomentDateModule,
         MatPaginatorModule,
+        MatRadioModule,
         MatSelectModule,
         MatSidenavModule,
         MatSortModule,

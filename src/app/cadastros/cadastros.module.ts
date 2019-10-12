@@ -11,11 +11,9 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { SharedModule } from '../util/shared.module';
 import { CadastroRoutingModule } from './cadastro-routing.module';
 
-
-import { livroReducer } from './obras/livro/livro.reducer'
+import { livroReducer } from './obras/livro/livro.reducer';
 import { StoreModule } from '@ngrx/store';
 import { EditUsuarioComponent } from './edit-usuario/edit-usuario.component';
-import { ValidaCpfDirective } from '../util/validaCPF.directive';
 
 @NgModule({
   declarations: [
@@ -28,7 +26,6 @@ import { ValidaCpfDirective } from '../util/validaCPF.directive';
     PeriodicoComponent,
     UsuariosComponent,
     EditUsuarioComponent,
-    ValidaCpfDirective
   ],
   imports: [
     CommonModule,

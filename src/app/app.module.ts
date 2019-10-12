@@ -13,24 +13,24 @@ import { AppComponent } from './app.component';
 
 import { environment } from 'src/environments/environment';
 
-import { reducers } from './app.reducer';
 import { AuthService } from './auth/auth.service';
-import { HeaderComponent } from './navegacao/header/header.component';
-import { HomeComponent } from './home/home.component';
-import { LivroService } from './cadastros/obras/livro/livro.service';
-import { LoginComponent } from './auth/login/login.component';
-import { SidenavListComponent } from './navegacao/sidenav-list/sidenav-list.component';
-import { ValidaCpfDirective} from './util/validaCPF.directive';
-import { SubscriptionHandlerService } from './subscriptionsHandler.service';
-import { UIService } from './util/ui.service';
 import { CadastrosModule } from './cadastros/cadastros.module';
 import { EmprestimoModule } from './emprestimo/emprestimo.module';
-import { PeriodicoService } from './cadastros/obras/periodico/periodico.service';
-import { PesquisaModule } from './pesquisa/pesquisa.module';
-import { SharedModule } from './util/shared.module';
+import { HeaderComponent } from './navegacao/header/header.component';
+import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
+import { LivroService } from './cadastros/obras/livro/livro.service';
+import { LoginComponent } from './auth/login/login.component';
 import { MidiaService } from './cadastros/obras/midia/midia.service';
 import { OutrasObrasService } from './cadastros/obras/outras-obras/outras-obras-service';
+import { PeriodicoService } from './cadastros/obras/periodico/periodico.service';
+import { PesquisaModule } from './pesquisa/pesquisa.module';
+import { reducers } from './app.reducer';
+import { SharedModule } from './util/shared.module';
+import { SidenavListComponent } from './navegacao/sidenav-list/sidenav-list.component';
+import { SituacaoService } from './emprestimo/situacao/situacao.service';
+import { SubscriptionHandlerService } from './subscriptionsHandler.service';
+import { UIService } from './util/ui.service';
 import { UsuariosService } from './cadastros/usuarios/usuarios.service';
 
 @NgModule({
@@ -62,6 +62,7 @@ import { UsuariosService } from './cadastros/usuarios/usuarios.service';
     PeriodicoService,
     MidiaService,
     OutrasObrasService,
+    SituacaoService,
     SubscriptionHandlerService,
     UsuariosService,
     UIService,

@@ -22,7 +22,6 @@ export class UsuariosComponent implements OnChanges, OnInit {
   public cadastro: UsuariosCadastro = new UsuariosCadastro();
 
   public updateDB = false;
-  public grupoUsuarios: FormGroup;
   public hideForm = false;
 
   cadastroSubscription: Subscription;
@@ -33,17 +32,7 @@ export class UsuariosComponent implements OnChanges, OnInit {
     private fb: FormBuilder,
     private uiService: UIService,
     private usuariosService: UsuariosService,
-  ) {
-    this.grupoUsuarios = this.fb.group({
-      name: [null, Validators.required],
-      cpf: [null, Validators.required],
-      datebirth: [null, Validators.required],
-      email: [null, Validators.required],
-      address: [null, Validators.required],
-      complement: [null, Validators.required],
-      city: [null, Validators.required],
-    });
-  }
+  ) {}
 
   ngOnChanges() {
     if (this.initUser.id) {
@@ -85,7 +74,6 @@ export class UsuariosComponent implements OnChanges, OnInit {
           this.updateDB = true;
           this.cadastro = res[0];
           this.hideForm = false;
-          this.grupoUsuarios = res;
           });
       } else {
       this.hideForm = false;

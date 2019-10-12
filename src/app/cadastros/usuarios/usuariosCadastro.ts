@@ -7,9 +7,9 @@ export class UsuariosCadastro {
     birthdate: Date;
     email: string;
     city: string;
-    blocked: boolean;
-    date_block: Date;
-    date_unblock: Date;
+    blocked = false;
+    date_block?: Date;
+    date_unblock?: Date;
 
     clearUser(): void {
         this.id = null;

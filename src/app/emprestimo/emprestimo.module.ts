@@ -7,6 +7,7 @@ import { EmprestimoComponent } from './emprestimo.component';
 import { EmprestimoRoutingModule } from './emprestimo-routing.module'
 import { SituacaoComponent } from './situacao/situacao.component';
 import { SharedModule } from '../util/shared.module';
+import { ValidaCpfDirective } from '../util/validaCPF.directive';
 
 @NgModule({
   declarations: [

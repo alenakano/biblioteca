@@ -31,7 +31,6 @@ export class EditUsuarioComponent implements OnInit {
     this.cpfSubscription = this.usuariosService.pesquisar(form).subscribe(
       value => {
         if (value.length > 0) {
-          console.log(value)
           this.uiService.showSnackbar('Usuário encontrado. Por favor, altere o cadastro.', null, {duration: 3000});
           this.onUserValue(value[0]);
         } else {
