@@ -14,8 +14,10 @@ import { UsuariosCadastro } from './usuariosCadastro';
 export class UsuariosComponent implements OnChanges, OnInit {
 
   @Input() initUser: UsuariosCadastro = new UsuariosCadastro();
+  @ViewChild('f', null) form;
 
   public maxDate;
+  public todayDate;
   lista: Array<any>;
   public cadastro: UsuariosCadastro = new UsuariosCadastro();
 
@@ -44,7 +46,7 @@ export class UsuariosComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges() {
-    if (this.initUser) {
+    if (this.initUser.id) {
       this.updateDB = true;
       this.cadastro = this.initUser;
     }
@@ -53,7 +55,8 @@ export class UsuariosComponent implements OnChanges, OnInit {
   ngOnInit() {
     this.maxDate = new Date();
     //Mínimo de 16 anos para poder se cadastrar na biblioteca
-    this.maxDate.setFullYear(this.maxDate.getFullYear() - 12);
+    this.maxDate.setFullYear(this.maxDate.getFullYear() - 16);
+    this.todayDate = new Date();
   }
 
   onSubmit(form: NgForm) {
@@ -69,6 +72,7 @@ export class UsuariosComponent implements OnChanges, OnInit {
     this.cadastroSubscription = this.usuariosService.cadastrar(this.cadastro).subscribe(
       msg => {
         this.uiService.showSnackbar(msg.message, null, {duration: 3000});
+        this.form.resetForm();
       },
       error => this.onServiceCreateError(error)
     );
