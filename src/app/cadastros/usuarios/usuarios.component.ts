@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, OnChanges } from '@angular/core';
 import { NgForm, FormBuilder, FormGroup, Validators, Form } from '@angular/forms';
 import { AuthService } from 'src/app/auth/auth.service';
 import { UIService } from 'src/app/util/ui.service';
@@ -11,7 +11,9 @@ import { UsuariosCadastro } from './usuariosCadastro';
   templateUrl: './usuarios.component.html',
   styleUrls: ['./usuarios.component.css']
 })
-export class UsuariosComponent implements OnInit {
+export class UsuariosComponent implements OnChanges, OnInit {
+
+  @Input() initUser: UsuariosCadastro = new UsuariosCadastro();
 
   public maxDate;
   lista: Array<any>;
@@ -30,7 +32,7 @@ export class UsuariosComponent implements OnInit {
     private uiService: UIService,
     private usuariosService: UsuariosService,
   ) {
-    this.grupoUsuarios = fb.group({
+    this.grupoUsuarios = this.fb.group({
       name: [null, Validators.required],
       cpf: [null, Validators.required],
       datebirth: [null, Validators.required],
@@ -39,6 +41,13 @@ export class UsuariosComponent implements OnInit {
       complement: [null, Validators.required],
       city: [null, Validators.required],
     });
+  }
+
+  ngOnChanges() {
+    if (this.initUser) {
+      this.updateDB = true;
+      this.cadastro = this.initUser;
+    }
   }
 
   ngOnInit() {
@@ -70,7 +79,6 @@ export class UsuariosComponent implements OnInit {
       this.usuariosService.pesquisar(this.cadastro).subscribe(
         res => {
           this.updateDB = true;
-          console.log(res)
           this.cadastro = res[0];
           this.hideForm = false;
           this.grupoUsuarios = res;

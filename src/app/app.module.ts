@@ -40,7 +40,6 @@ import { UsuariosService } from './cadastros/usuarios/usuarios.service';
     HeaderComponent,
     HomeComponent,
     SidenavListComponent,
-    ValidaCpfDirective,
   ],
   imports: [
     AngularFireAuthModule,
