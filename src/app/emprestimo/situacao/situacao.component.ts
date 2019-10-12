@@ -83,7 +83,6 @@ export class SituacaoComponent implements OnInit, OnDestroy {
 
   voltar(): void {
     this.showSituacao = false;
-    this.form.clearForm();
   }
 
 }
