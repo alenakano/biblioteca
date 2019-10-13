@@ -1,12 +1,13 @@
 import { Router } from 'express';
-import { pesquisarObras, devolverLivros, emprestarLivros } from '../controllers/obras.controller';
+import { pesquisarObras, devolverLivros, emprestarObras } from '../controllers/obras.controller';
 
 const router = Router();
 
 router.route('/pesquisas/:obraNome/:obraTipo')
     .get(pesquisarObras);
 
-router.route('/emprestimos/:obraNome/:obraTipo/:idObra')
-    .post(emprestarLivros);
+router.route('/emprestimos/')
+    .post(emprestarObras)
+    .put(devolverLivros);
 
 export default router;

@@ -17,7 +17,8 @@ export async function pesquisarObras(req: Request, res: Response, next: NextFunc
     }
 }
 
-export async function emprestarLivros(req: Request, res: Response, next: NextFunction): Promise<any> {
+export async function emprestarObras(req: Request, res: Response, next: NextFunction): Promise<any> {
+    // TODO - REALIZAR LOGICA EMPRESTIMO DE OBRAS
     // try {
     //     const createQueryResult = await emprestaObrasDAO(req);
     //     if (createQueryResult[0].affectedRows) {
@@ -36,6 +37,7 @@ export async function emprestarLivros(req: Request, res: Response, next: NextFun
 }
 
 export async function devolverLivros(req: Request, res: Response, next: NextFunction): Promise<any> {
+    // TODO - REALIZAR LOGICA DEVOLUÇÃO DE OBRAS
     // try {
     //     const createQueryResult = await emprestaObrasDAO(req);
     //     if (createQueryResult[0].affectedRows) {
