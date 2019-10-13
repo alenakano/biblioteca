@@ -9,6 +9,7 @@
 
 # dependencies
 /node_modules
+/biblioteca_node/node_modules
 
 # profiling files
 chrome-profiler-events*.json
@@ -45,5 +46,4 @@ testem.log
 .DS_Store
 Thumbs.db
 
-/biblioteca_node/node_modules/*
-/biblioteca_node/dist/*
+/biblioteca_node/dist/biblioteca
