@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Transacoes } from '../transacoes';
+import { TransacaoService } from '../transacao.service';
+import { UIService } from 'src/app/util/ui.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-emprestar',
@@ -8,13 +11,21 @@ import { NgForm } from '@angular/forms';
 })
 export class EmprestarComponent implements OnInit {
 
-  constructor() { }
+  emprestimoSubscription: Subscription;
+
+  constructor(
+    private transacaoService: TransacaoService,
+    private uiService: UIService,
+  ) { }
 
   ngOnInit() {
   }
 
-  onSubmit(form: NgForm): void {
-
+  onSubmit(form: Transacoes): void {
+    this.emprestimoSubscription = this.transacaoService.emprestar(form).subscribe(
+      value => this.uiService.showSnackbar(value.message, null, {duration: 3000}),
+      error => this.uiService.showSnackbar(error.message, null, {duration: 3000}),
+    );
   }
 
 }

@@ -25,13 +25,4 @@ export class NovaService {
         return this.http
             .get(request);
     }
-
-    emprestar(emprestimo: Pesquisa): Observable<any> {
-      const body = emprestimo;
-      const request = this.url + '/emprestimos' +
-        emprestimo.nomeObra + '/' +
-        emprestimo.tipoObra + '/' +
-        emprestimo.idObra;
-      return this.http.put(request, body);
-    }
 }
