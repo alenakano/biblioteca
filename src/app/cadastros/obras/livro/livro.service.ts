@@ -57,6 +57,7 @@ export class LivroService {
 
     cadastrar(livro: LivroCadastro): Observable<any> {
         const body = livro;
+        console.log(livro);
         const request = this.url;
         return this.http
             .post(request, body);

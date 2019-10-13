@@ -9,6 +9,7 @@ import PostRoutes from './routes/post.routes';
 import LivrosRoutes from './routes/livros.routes';
 import PeriodicosRoutes from './routes/periodicos.routes';
 import MidiasRoutes from './routes/midias.routes';
+import ObrasRoutes from './routes/obras.routes';
 import OutrasRoutes from './routes/outras.routes';
 import UsuariosRoutes from './routes/usuarios.routes';
 import BloqueioRoutes from './routes/bloqueio.routes';
@@ -48,6 +49,7 @@ export class App {
         this.app.use('/outras', OutrasRoutes);
         this.app.use('/usuarios', UsuariosRoutes);
         this.app.use('/bloqueios', BloqueioRoutes);
+        this.app.use('/obras', ObrasRoutes);
     }
 
     async listen() {

@@ -65,13 +65,13 @@ async function parseResponse(userData: any) {
     userData = userData[0] as Usuarios;
     parsedResp.cpf = userData[0].cpf;
     let date = new Date();
-    if (Date.parse(userData[0].date_unblock) < date.getTime()) {
+    if (Date.parse(userData[0].date_unblock) <= date.getTime()) {
         parsedResp.blocked = false;
         parsedResp.date_block = undefined;
         parsedResp.date_unblock = undefined;
         return parsedResp;
     } else {
-        parsedResp.blocked = userData[0].blocked;
+        parsedResp.blocked = true;
         parsedResp.date_block = userData[0].date_block;
         parsedResp.date_unblock = userData[0].date_unblock;
         return parsedResp;
