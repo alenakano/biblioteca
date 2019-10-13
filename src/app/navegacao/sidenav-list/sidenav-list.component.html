@@ -1,4 +1,10 @@
 <mat-nav-list>
+    <a mat-list-item routerLink="/relatorios" (click)="onClose()" *ngIf="isAuth$ | async">
+        <mat-icon>filter_none</mat-icon>
+        <span class="nav-caption">
+            Relatórios
+        </span>
+    </a>
     <!--Setou um layout com distância de 10px entre cada elemento-->
     <a mat-list-item routerLink="/cadastros" (click)="onClose()" *ngIf="isAuth$ | async">
         <mat-icon>view_agenda</mat-icon>

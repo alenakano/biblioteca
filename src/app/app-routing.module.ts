@@ -13,6 +13,8 @@ const routes: Routes = [
   { path: 'emprestimos', loadChildren: './emprestimo/emprestimo.module#EmprestimoModule', canLoad: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'pesquisa', loadChildren: './pesquisa/pesquisa.module#PesquisaModule' },
+  { path: 'relatorios', loadChildren: './relatorios/relatorios.module#RelatoriosModule' },
+
 ];
 
 @NgModule({

@@ -14,6 +14,9 @@
         <!--Setou um layout com distância de 10px entre cada elemento-->
         <ul fxLayout fxLayoutGap="20px" class="navegacao">
             <li *ngIf="isAuth$ | async">
+                <a routerLink="/relatorios">Relatórios</a>
+            </li>
+            <li *ngIf="isAuth$ | async">
                 <a routerLink="/emprestimos">Empréstimos</a>
             </li>
             <li *ngIf="isAuth$ | async">
