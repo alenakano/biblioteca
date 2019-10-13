@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { UsuariosCadastro } from './usuarios/usuariosCadastro';
+import { MatTabGroup } from '@angular/material';
 
 @Component({
   selector: 'app-cadastros',
@@ -8,8 +10,16 @@ import { Component, OnInit } from '@angular/core';
 export class CadastrosComponent implements OnInit {
 
   constructor() { }
+  userInput: UsuariosCadastro = new UsuariosCadastro();
+
+  @ViewChild('tabs', null) tabs: MatTabGroup;
 
   ngOnInit() {
+  }
+
+  onUserValue(user: UsuariosCadastro) {
+    this.userInput = user;
+    this.tabs.selectedIndex = 0;
   }
 
 }

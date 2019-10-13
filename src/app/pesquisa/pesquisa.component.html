@@ -1,3 +1,4 @@
-<app-nova></app-nova>
+<app-nova
+(obraPesquisa)="onObraValue($event)"></app-nova>
 <br>
-<app-resultados></app-resultados>
+<app-resultados [pesquisaInput]="pesquisaResponse"></app-resultados>

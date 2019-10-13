@@ -4,14 +4,14 @@
             Cadastro de livro:
         </mat-card-title>
         <!--Se tirar o fxLayoutAlign abaixo, os campos ficam mais largos-->
-        <form fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup]="grupoLivro" #ngForm="ngForm" (ngSubmit)="onFormOpcoesSubmit(grupoLivro.value)">
+        <form *ngIf="!hideForm" fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup]="grupoLivro" #ngForm="ngForm" (ngSubmit)="onFormOpcoesSubmit(grupoLivro.value)">
             <mat-card-content fxLayout="column" fxLayoutAlign="center">
                 <mat-form-field>
                     <input 
                         matInput
                         required
-                        formControlName= "nomeLivro"
-                        name="nomeLivro" 
+                        formControlName= "title"
+                        name="title" 
                         type="text" 
                         placeholder="Digite o nome do livro"
                     >
@@ -21,8 +21,8 @@
                     <input 
                         matInput
                         required
-                        formControlName= "nomeAutor"
-                        name="nomeAutor" 
+                        formControlName= "author"
+                        name="author" 
                         type="text" 
                         placeholder="Digite o nome do autor"
                     >
@@ -43,8 +43,8 @@
                     <input 
                         matInput
                         required
-                        formControlName="local"
-                        name="local" 
+                        formControlName="location"
+                        name="location" 
                         type="text" 
                         placeholder="Código de localização"
                     >
@@ -54,9 +54,9 @@
                     <input
                         matInput
                         required
-                        formControlName="data"
+                        formControlName="date_acquisition"
                         [matDatepicker]="picker"
-                        name="data"
+                        name="date_acquisition"
                         placeholder="Data de aquisição"
                         >
                     <mat-datepicker-toggle 
@@ -68,22 +68,22 @@
                 </mat-form-field>
                 <mat-form-field >
                     <!--Nome da variável para formControlName inicializado no constructor-->
-                    <mat-select formControlName="categoria" placeholder="Tipo de obra" [(value)]="selected">
+                    <mat-select formControlName="type_book" placeholder="Tipo de obra" [(ngModel)]="cadastro.type_book" [compareWith]="compareObjects">
                         Selecione categoria:
-                        <mat-option *ngFor="let l of livrosCategoria$ | async" value={{l.nome}}>
+                        <mat-option *ngFor="let l of livrosCategoria$ | async" value={{l.id}}>
                             {{l.nome}}
                         </mat-option>
                     </mat-select>
                     <mat-error>  
-                        <span *ngIf="!grupoLivro.get('categoria').valid && grupoLivro.get('categoria').touched || ngForm.submitted">Escolha uma opção</span>  
+                        <span *ngIf="!grupoLivro.get('type_book').valid && grupoLivro.get('type_book').touched || ngForm.submitted">Escolha uma opção</span>  
                     </mat-error>  
                 </mat-form-field>
                 <mat-form-field>
                     <input 
                         matInput 
                         required  
-                        formControlName="pais"
-                        name="pais"
+                        formControlName="country"
+                        name="country"
                         type="text" 
                         placeholder="País"
                     >
@@ -91,8 +91,20 @@
                 </mat-form-field>
                 <mat-form-field>
                     <input 
+                        matInput 
+                        required  
+                        formControlName="qtd"
+                        name="qtd"
+                        type="number" 
+                        placeholder="Quantidade"
+                    >
+                    <mat-error>Preencha o campo</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
                         matInput
-                        name="obs" 
+                        formControlName="description"
+                        name="description" 
                         type="text" 
                         placeholder="Observações"
                     >
@@ -117,4 +129,11 @@
             </mat-card-content>
         </form>
     </mat-card>
+</section>
+<section>
+    <app-confirmacao
+        *ngIf="hideForm"
+        [mensagem]="'Livro já cadastrado! Gostaria de editar o cadastro?'"
+        (confirmacao)="onConfirmacao($event)"
+    ></app-confirmacao>
 </section>

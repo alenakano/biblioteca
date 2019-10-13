@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CadastrosComponent } from './cadastros.component';
+import { CommonModule } from '../common/common.module';
 import { LivroComponent } from './obras/livro/livro.component';
 import { MidiaComponent } from './obras/midia/midia.component';
 import { ObrasComponent } from './obras/obras.component';
@@ -10,9 +11,9 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { SharedModule } from '../util/shared.module';
 import { CadastroRoutingModule } from './cadastro-routing.module';
 
-
-import { livroReducer } from './obras/livro/livro.reducer'
+import { livroReducer } from './obras/livro/livro.reducer';
 import { StoreModule } from '@ngrx/store';
+import { EditUsuarioComponent } from './edit-usuario/edit-usuario.component';
 
 @NgModule({
   declarations: [
@@ -24,8 +25,10 @@ import { StoreModule } from '@ngrx/store';
     OutrasObrasComponent,
     PeriodicoComponent,
     UsuariosComponent,
+    EditUsuarioComponent,
   ],
   imports: [
+    CommonModule,
     SharedModule,
     CadastroRoutingModule,
     // Reduce para feature -> tratamento para Lazy Load

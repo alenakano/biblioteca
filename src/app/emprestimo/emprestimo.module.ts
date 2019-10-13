@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 
-import { ConfirmacaoComponent } from './confirmacao/confirmacao.component';
+import { CommonModule } from '../common/common.module';
 import { DevolverComponent } from './devolver/devolver.component';
 import { EmprestarComponent } from './emprestar/emprestar.component';
 import { EmprestimoComponent } from './emprestimo.component';
 import { EmprestimoRoutingModule } from './emprestimo-routing.module'
 import { SituacaoComponent } from './situacao/situacao.component';
 import { SharedModule } from '../util/shared.module';
+import { ValidaCpfDirective } from '../util/validaCPF.directive';
 
 @NgModule({
   declarations: [
-    ConfirmacaoComponent,
     DevolverComponent,
     EmprestarComponent,
     EmprestimoComponent,
@@ -18,10 +18,10 @@ import { SharedModule } from '../util/shared.module';
   ],
   imports: [
     SharedModule,
+    CommonModule,
     EmprestimoRoutingModule,
   ],
   exports: [
-    ConfirmacaoComponent,
     DevolverComponent,
     EmprestarComponent,
     EmprestimoComponent,

@@ -1,27 +1,27 @@
 <section class="pesquisa" fxLayout fxLayoutAlign="center">
     <mat-card fxFlex.xs="100%" fxFlex="400px">
-        <form #f="ngForm" (ngSubmit)="onSubmit(f)"> 
+        <form #f="ngForm" (ngSubmit)="onSubmit(f.value)"> 
             <mat-card-title fxLayoutAlign="center">
                 Pesquisa por obra:
             </mat-card-title>
             <mat-card-content fxLayout="column" fxLayoutAlign="center" fxLayoutGap="10px">
                 <mat-form-field>
-                    <input matInput ngModel name="campoPesquisa" placeholder="Pesquise pelo título e/ou autor" required>
+                    <input matInput ngModel name="nomeObra" placeholder="Pesquise pelo título e/ou autor" required>
                     <mat-error>Campo obrigatório</mat-error>
                 </mat-form-field>
                 <mat-form-field>
-                    <mat-select placeholder="Tipo de obra"  ngModel name="categoria">
+                    <mat-select placeholder="Tipo de obra"  ngModel name="tipoObra">
                         Selecione o tipo de obra a ser emprestada:
-                        <mat-option value="livro">
+                        <mat-option value="1">
                             Livro
                         </mat-option>
-                        <mat-option value="periodico">
+                        <mat-option value="2">
                             Periódico
                         </mat-option>
-                        <mat-option value="midia">
+                        <mat-option value="3">
                             Mídia
                         </mat-option>
-                        <mat-option value="outras">
+                        <mat-option value="4">
                             Outras
                         </mat-option>
                     </mat-select>

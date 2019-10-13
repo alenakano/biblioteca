@@ -1,4 +1,4 @@
-<section class="midias" fxLayout fxLayoutAlign="center">
+<section *ngIf="!hideForm" class="midias" fxLayout fxLayoutAlign="center">
     <mat-card fxFlex.xs="100%" fxFlex="400px">
         <!--Se tirar o fxLayoutAlign abaixo, os campos ficam mais largos-->
         <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup]="grupoMidia" #ngForm="ngForm" (ngSubmit)="onFormOpcoesSubmit(grupoMidia.value)">
@@ -10,8 +10,8 @@
                     <input 
                         matInput
                         required
-                        formControlName= "nomeMidia"
-                        name="nomeMidia" 
+                        formControlName= "title"
+                        name="title" 
                         type="text" 
                         placeholder="Digite o título midia"
                     >
@@ -21,8 +21,8 @@
                     <input 
                         matInput
                         required
-                        formControlName= "nomeAutor"
-                        name="nomeAutor" 
+                        formControlName= "author"
+                        name="author" 
                         type="text" 
                         placeholder="Digite o nome do autor"
                     >
@@ -54,9 +54,9 @@
                     <input
                         matInput
                         required
-                        formControlName="data"
+                        formControlName="date_acquisition"
                         [matDatepicker]="picker"
-                        name="data"
+                        name="date_acquisition"
                         placeholder="Data de aquisição"
                         >
                     <mat-datepicker-toggle 
@@ -68,22 +68,22 @@
                 </mat-form-field>
                 <mat-form-field >
                     <!--Nome da variável para formControlName inicializado no constructor-->
-                    <mat-select formControlName="categoria" placeholder="Tipo de obra" [(value)]="selected">
+                    <mat-select formControlName="type_midia" placeholder="Tipo de obra" [(ngModel)]="cadastro.type_midia" [compareWith]="compareObjects">
                         Selecione categoria:
-                        <mat-option *ngFor="let l of lista" value={{l.nome}}>
+                        <mat-option *ngFor="let l of lista" value={{l.id}}>
                             {{l.nome}}
                         </mat-option>
                     </mat-select>
                     <mat-error>  
-                        <span *ngIf="!grupoMidia.get('categoria').valid && grupoMidia.get('categoria').touched || ngForm.submitted">Escolha uma opção</span>  
+                        <span *ngIf="!grupoMidia.get('type_midia').valid && grupoMidia.get('type_midia').touched || ngForm.submitted">Escolha uma opção</span>  
                     </mat-error>  
                 </mat-form-field>
                 <mat-form-field>
                     <input 
                         matInput 
                         required  
-                        formControlName="pais"
-                        name="pais"
+                        formControlName="country"
+                        name="country"
                         type="text" 
                         placeholder="País"
                     >
@@ -91,8 +91,19 @@
                 </mat-form-field>
                 <mat-form-field>
                     <input 
+                        matInput 
+                        required  
+                        formControlName="qtd"
+                        name="qtd"
+                        type="number" 
+                        placeholder="Quantidade"
+                    >
+                    <mat-error>Preencha o campo</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
                         matInput
-                        name="obs" 
+                        name="description" 
                         type="text" 
                         placeholder="Observações"
                     >
@@ -117,4 +128,11 @@
             </mat-card-content>
         </form>
     </mat-card>
+</section>
+<section>
+    <app-confirmacao
+        *ngIf="hideForm"
+        [mensagem]="'Mídia já cadastrada! Gostaria de editar o cadastro?'"
+        (confirmacao)="onConfirmacao($event)"
+></app-confirmacao>
 </section>
