@@ -74,11 +74,35 @@ export class SituacaoComponent implements OnInit, OnDestroy {
 
   onSituacaoSubmit(situacao: Situacao) {
     situacao.cpf = this.userSituacao.cpf;
+    situacao = this.validateDate(situacao);
+    if (Date.parse(this.userSituacao.date_unblock.toString()) >= Date.parse(this.userSituacao.date_unblock.toString())) {
+      this.uiService.showSnackbar(
+        'Data de fim de multa menor da data de início de multa. Por favor, tente novamente.',
+        null ,
+        {duration: 3000}
+      );
+      return;
+    }
     this.showSituacao = false;
-    this.updateSubscription = this.situacaoService.atualizar(situacao).subscribe (
+    this.updateSubscription = this.situacaoService.atualizar(this.userSituacao).subscribe (
       value => this.uiService.showSnackbar(value.message, null, {duration: 3000}),
       erro => this.uiService.showSnackbar(erro.message, null, {duration: 3000})
     );
+  }
+
+  validateDate(situacao: Situacao): Situacao {
+    let dataAtual = new Date();
+    if (Date.parse(this.userSituacao.date_unblock.toString()) <= dataAtual.getTime()) {
+      this.userSituacao.blocked = false;
+      this.userSituacao.date_block = undefined;
+      this.userSituacao.date_unblock = undefined;
+      return this.userSituacao;
+    } else {
+      this.userSituacao.blocked = true;
+      this.userSituacao.date_block = situacao.date_block;
+      this.userSituacao.date_unblock = situacao.date_unblock;
+      return this.userSituacao;
+    }
   }
 
   voltar(): void {

@@ -1,20 +1,39 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Pesquisa } from './pesquisa';
+import { NovaService } from './nova.service';
+import { UIService } from 'src/app/util/ui.service';
+import { Subscription } from 'rxjs';
+import { PesquisaResponse } from './pesquisaResponse';
 
 @Component({
   selector: 'app-nova',
   templateUrl: './nova.component.html',
   styleUrls: ['./nova.component.css']
 })
-export class NovaComponent implements OnInit {
+export class NovaComponent implements OnInit, OnDestroy {
 
-  constructor() { }
+  public subscription: Subscription;
+  @Output() obraPesquisa: EventEmitter<PesquisaResponse[]> = new EventEmitter<PesquisaResponse[]>();
+
+  constructor(
+    private novaService: NovaService,
+    private uiService: UIService,
+  ) { }
 
   ngOnInit() {
   }
 
-  onSubmit(form: NgForm): void {
-    console.log('CLICOU PESQUISAR', form)
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  onSubmit(form: Pesquisa): void {
+    this.subscription = this.novaService.pesquisar(form).subscribe(
+      value => this.obraPesquisa.emit(value),
+      erro => this.uiService.showSnackbar(erro.message, null, {duration: 3000})
+    );
   }
 
 }

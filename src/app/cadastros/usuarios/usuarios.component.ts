@@ -28,8 +28,6 @@ export class UsuariosComponent implements OnChanges, OnInit {
   updateSubscription: Subscription;
 
   constructor(
-    private authService: AuthService,
-    private fb: FormBuilder,
     private uiService: UIService,
     private usuariosService: UsuariosService,
   ) {}
