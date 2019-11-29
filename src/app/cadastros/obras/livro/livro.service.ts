@@ -13,7 +13,9 @@ import { SubscriptionHandlerService } from 'src/app/subscriptionsHandler.service
 import * as categorias from './livro.actions';
 import * as fromCategoriaLivro from './livro.reducer';
 import { Store } from '@ngrx/store';
-import { LivroCadastro } from './livroCadastro';
+import { ObraCadastro } from './obraCadastro';
+import { Isbn } from './isbn';
+import { ExemplarCadastro } from './exemplarCadastro';
 
 
 @Injectable()
@@ -55,7 +57,15 @@ export class LivroService {
         );
     }
 
-    cadastrar(livro: LivroCadastro): Observable<any> {
+    consultaISBN(isbn: Isbn): Observable<any> {
+        const body = isbn;
+        console.log(isbn);
+        const request = this.url;
+        return this.http
+            .post(request, body);
+    }
+
+    cadastrarObra(livro: ObraCadastro): Observable<any> {
         const body = livro;
         console.log(livro);
         const request = this.url;
@@ -63,13 +73,14 @@ export class LivroService {
             .post(request, body);
     }
 
-    pesquisar(livro: LivroCadastro): Observable<any> {
-        const request = this.url + '/' + livro.isbn;
+    cadastrarExemplar(livro: ExemplarCadastro): Observable<any> {
+        const body = livro;
+        const request = this.url;
         return this.http
-            .get(request);
+            .post(request, body);
     }
 
-    atualizar(livro: LivroCadastro): Observable<any> {
+    atualizarObra(livro: ObraCadastro): Observable<any> {
         const body = livro;
         const request = this.url + '/' + livro.isbn;
         return this.http.put(request, body);
