@@ -8,21 +8,21 @@
 <section class="devolver" fxLayout fxLayoutAlign="center">
     <mat-card class="mat-elevation-z3" fxFlex.xs="100%" fxFlex="400px">
             <mat-card-content fxLayout="column" fxLayoutAlign="center" fxLayoutGap="10px">
-                <h2>Livros emprestados</h2>
+                <h2 (click)="onEmprestadosClick()">Livros emprestados</h2>
             </mat-card-content>
     </mat-card>
 </section>
 <section class="devolver" fxLayout fxLayoutAlign="center">
     <mat-card class="mat-elevation-z3" fxFlex.xs="100%" fxFlex="400px">
             <mat-card-content fxLayout="column" fxLayoutAlign="center" fxLayoutGap="10px">
-                <h2>Usuários bloqueados</h2>
+                <h2 (click)="onBloqueadosClick()">Usuários bloqueados</h2>
             </mat-card-content>
     </mat-card>
 </section>
 <section class="devolver" fxLayout fxLayoutAlign="center">
     <mat-card class="mat-elevation-z3" fxFlex.xs="100%" fxFlex="400px">
             <mat-card-content fxLayout="column" fxLayoutAlign="center" fxLayoutGap="10px">
-                <h2>Livros em atraso</h2>
+                <h2 (click)="onAtrasadosClick()">Livros em atraso</h2>
             </mat-card-content>
     </mat-card>
 </section>
