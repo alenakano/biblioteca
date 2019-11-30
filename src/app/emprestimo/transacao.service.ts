@@ -29,7 +29,7 @@ export class TransacaoService {
         console.log(emprestimo);
         const request = this.url;
         return this.http
-            .post(request, body);
+            .post(request, body, { responseType: 'blob' });
     }
 
     devolver(devolucao: Emprestimo): Observable<any> {
