@@ -71,7 +71,7 @@
                 </mat-form-field>
                 <mat-form-field >
                     <!--Nome da variável para formControlName inicializado no constructor-->
-                    <mat-select formControlName="type_book" placeholder="Tipo de obra" [(ngModel)]="obraCadastro.type_book" [compareWith]="compareObjects">
+                    <mat-select formControlName="type_book" placeholder="Categoria do livro" [(ngModel)]="obraCadastro.type_book" [compareWith]="compareObjects">
                         Selecione categoria:
                         <mat-option *ngFor="let l of livrosCategoria$ | async" value={{l.id}}>
                             {{l.nome}}
