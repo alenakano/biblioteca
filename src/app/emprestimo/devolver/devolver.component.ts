@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Transacoes } from '../transacoes';
 import { Subscription } from 'rxjs';
-import { TransacaoService } from '../transacao.service';
 import { UIService } from 'src/app/util/ui.service';
+import { Emprestimo } from '../emprestar/emprestimo';
+import { TransacaoService } from '../transacao.service';
 
 @Component({
   selector: 'app-devolver',
@@ -21,16 +21,26 @@ export class DevolverComponent implements OnDestroy, OnInit {
   ngOnInit() {
   }
 
-  onSubmit(form: Transacoes): void {
+  onSubmit(form: Emprestimo): void {
     this.devolucaoSubscription = this.transacaoService.devolver(form).subscribe(
       value => this.uiService.showSnackbar(value.message, null, {duration: 3000}),
-      error => this.uiService.showSnackbar(error.message, null, {duration: 3000}),
+      error => {
+        this.onErrorDevolucao(error);
+      }
     );
   }
 
   ngOnDestroy(): void {
     if (this.devolucaoSubscription) {
       this.devolucaoSubscription.unsubscribe();
+    }
+  }
+
+  onErrorDevolucao(msg: any): void {
+    if (msg.status === 412) {
+      this.uiService.showSnackbar(msg.message, null, {duration: 3000});
+    } else {
+      this.uiService.showSnackbar('Erro de conexão. Por favor, tente mais tarde', null, {duration: 3000});
     }
   }
 

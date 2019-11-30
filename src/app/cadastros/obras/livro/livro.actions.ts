@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { CategoriaLivros } from './CategoriaLivros';
+import { CategoriaLivros } from './categoriaLivros';
 
 export const SET_CATEGORIAS_LIVRO = '[Categoria] Set Categorias Livro';
 

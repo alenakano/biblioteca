@@ -1,5 +1,5 @@
 import * as fromRoot from '../../../app.reducer';
-import { CategoriaLivros } from './CategoriaLivros';
+import { CategoriaLivros } from './categoriaLivros';
 import { LivroActions, SET_CATEGORIAS_LIVRO } from './livro.actions';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 

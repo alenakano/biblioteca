@@ -6,19 +6,67 @@
             </mat-card-title>
             <mat-card-content fxLayout="column" fxLayoutAlign="center" fxLayoutGap="10px">
                 <mat-form-field>
-                <input 
-                    matInput 
-                    #cpfInput
-                    validaCPF 
-                    ngModel 
-                    name="cpf" 
-                    placeholder="Digite CPF do usuário" 
-                    required
-                    minlength="11"
-                    maxlength="11"
-                >
+                    <input 
+                        matInput 
+                        #cpfInput
+                        validaCPF 
+                        ngModel 
+                        name="cpf" 
+                        placeholder="Digite CPF do usuário" 
+                        required
+                        minlength="11"
+                        maxlength="11"
+                    >
                     <mat-error>Campo obrigatório</mat-error>
                 </mat-form-field>
+                <mat-form-field>
+                    <input 
+                        matInput
+                        ngModel
+                        required
+                        name="codExemplar" 
+                        type="text" 
+                        placeholder="Digite o código localizador"
+                    >
+                    <mat-error>Preencha o campo</mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input
+                        matInput
+                        ngModel
+                        required
+                        [min]="minDate"
+                        [matDatepicker]="picker"
+                        name="dateEmprestimo"
+                        placeholder="Data do empréstimo"
+                        >
+                    <mat-datepicker-toggle 
+                        matSuffix 
+                        [for]="picker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error>Selecione a data do empréstimo</mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input
+                        matInput
+                        ngModel
+                        required
+                        [matDatepicker]="picker2"
+                        [min]="minDate"
+                        name="dateDevolucao"
+                        placeholder="Data para devolução"
+                        >
+                    <mat-datepicker-toggle 
+                        matSuffix 
+                        [for]="picker2"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                    <mat-error>Selecione a data para devolução</mat-error>
+                </mat-form-field>
+
                 <mat-form-field>
                     <input matInput ngModel name="Usuário" placeholder="Digite o código da obra" required>
                     <mat-error>Campo obrigatório</mat-error>

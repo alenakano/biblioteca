@@ -40,10 +40,6 @@ export class UsuariosComponent implements OnChanges, OnInit {
   }
 
   ngOnInit() {
-    this.maxDate = new Date();
-    //Mínimo de 16 anos para poder se cadastrar na biblioteca
-    this.maxDate.setFullYear(this.maxDate.getFullYear() - 16);
-    this.todayDate = new Date();
   }
 
   onSubmit(form: NgForm) {

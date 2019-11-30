@@ -3,8 +3,7 @@ import { FormBuilder, FormGroup, Validators, Form } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 
-
-import { CategoriaLivros } from './CategoriaLivros';
+import { CategoriaLivros } from './categoriaLivros';
 import { ExemplarCadastro } from './exemplarCadastro';
 import { Isbn } from './isbn';
 import { LivroService } from './livro.service';
@@ -114,13 +113,14 @@ export class LivroComponent implements OnInit, OnDestroy {
   onFormExemplarSubmit(cad: Form | any) {
     this.exemplarCadastro = cad;
     this.exemplarCadastro.isbn = this.isbn.isbn;
+    this.exemplarCadastro.date_acquisition = cad.date_acquisition.format();
 
     this.cadastroSubscription = this.livroService.cadastrarExemplar(this.exemplarCadastro).subscribe(
       res => {
         this.uiService.showSnackbar(res.message, null, {duration: 3000});
         this.voltar();
       },
-      error => this.onServiceCreateError2(error)
+      error => this.onServiceCreateError(error)
     );
   }
 
@@ -171,14 +171,6 @@ export class LivroComponent implements OnInit, OnDestroy {
         this.exemplarForm.resetForm();
       }
   }
-
-  public onServiceCreateError2(error) {
-
-    this.uiService.showSnackbar(error.message, null, {duration: 3000});
-    this.voltar();
-  }
-
-
   public onServiceISBNError(res) {
     if (res.status === 412) {
       this.hideISBN = true;

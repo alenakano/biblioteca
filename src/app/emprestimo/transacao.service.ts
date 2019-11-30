@@ -1,15 +1,21 @@
+import {
+    HttpClient,
+    HttpHeaders,
+} from '@angular/common/http';
+
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Transacoes } from './transacoes';
+import { Subject, Observable } from 'rxjs';
+
+import { Emprestimo } from './emprestar/emprestimo';
+
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class TransacaoService {
 
-  headers: HttpHeaders;
-    url = 'http://localhost:3000/obras';
+    headers: HttpHeaders;
+    url = 'http://localhost:3000/emprestimos';
 
     constructor(
         private  http: HttpClient
@@ -18,17 +24,20 @@ export class TransacaoService {
         this.headers.append('Content-Type', 'application/json');
     }
 
-    emprestar(emprestimo: Transacoes): Observable<any> {
-      const body = emprestimo;
-      const request = this.url + '/emprestimos' +
-        emprestimo.cpf + '/' +
-        emprestimo.idObra;
-      return this.http.post(request, body);
+    emprestar(emprestimo: Emprestimo): Observable<any> {
+        const body = emprestimo;
+        console.log(emprestimo);
+        const request = this.url;
+        return this.http
+            .post(request, body);
     }
 
-    devolver(emprestimo: Transacoes): Observable<any> {
-        const body = emprestimo;
-        const request = this.url + '/emprestimos';
-        return this.http.put(request, body);
+    devolver(devolucao: Emprestimo): Observable<any> {
+        const body = devolucao;
+        console.log(devolucao);
+        const request = this.url;
+        return this.http
+            .post(request, body);
     }
+
 }

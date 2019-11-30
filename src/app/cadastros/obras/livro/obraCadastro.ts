@@ -1,5 +1,3 @@
-import { Moment } from 'moment';
-
 export class ObraCadastro {
     isbn: string;
     category = '1';
