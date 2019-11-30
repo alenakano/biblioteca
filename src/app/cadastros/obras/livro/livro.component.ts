@@ -66,6 +66,7 @@ export class LivroComponent implements OnInit, OnDestroy {
       title: [null, null],
       author: [null, null],
       location: [null, Validators.required],
+      tomo: [null, null],
       date_acquisition: [null, Validators.required],
     });
 
@@ -102,6 +103,7 @@ export class LivroComponent implements OnInit, OnDestroy {
           isbn: [{value: this.isbn.isbn, disabled: true}, null],
           title: [{value: res[0].title, disabled: true}, null],
           author: [{value: res[0].author, disabled: true}, null],
+          tomo: [null, null],
           location: [null, Validators.required],
           date_acquisition: [null, Validators.required],
         });
@@ -136,6 +138,7 @@ export class LivroComponent implements OnInit, OnDestroy {
             isbn: [{value: this.obraCadastro.isbn, disabled: true}, null],
             title: [{value: this.obraCadastro.title, disabled: true}, null],
             author: [{value: this.obraCadastro.author, disabled: true}, null],
+            tomo: [null, null],
             location: [null, Validators.required],
             date_acquisition: [null, Validators.required],
           });
