@@ -37,8 +37,8 @@ export async function createEmprestimo(req: Request, res: Response, next: NextFu
         dadosEmprestimo.dateEmprestimo = parseDate(dadosEmprestimo.dateEmprestimo);
         dadosEmprestimo.dateDevolucao = parseDate(dadosEmprestimo.dateDevolucao);
 
-        let imgSrc = 'file://' + __dirname + '/book.png';
-        imgSrc = path.normalize(imgSrc);
+        let imgSrc = path.join(__dirname, '..', '/book.png');
+        imgSrc = path.normalize('file://' + imgSrc);
 
         const auth = autenticador(dadosEmprestimo);
 
@@ -59,7 +59,7 @@ export async function createEmprestimo(req: Request, res: Response, next: NextFu
                 }
             });
         });
-     */
+    */
 
     try {
         const createQueryResult = await createEmprestimoDAO(req);

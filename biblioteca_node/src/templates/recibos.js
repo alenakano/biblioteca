@@ -1,6 +1,27 @@
 module.exports = {
-    pdfCertificado: function (dados) { 
-        return `
+    pdfTesteLista: function (dados) { 
+        return ` 
+        <style>
+            table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            table-layout: fixed;
+            width: 100%;
+            }
+            
+            td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+            }
+            
+            tr:nth-child(even) {
+            background-color: #dddddd;
+            }
+        </style>
+        <table>
+          ${dados}
+        </table>
         `             
     },
 

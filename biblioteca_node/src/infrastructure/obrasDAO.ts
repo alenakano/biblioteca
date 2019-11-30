@@ -8,12 +8,13 @@ async function openConnection(): Promise<Pool> {
 
 export async function pesquisaObrasDAO(req: Request): Promise<any> {
     const connGetLivros = await openConnection();
-    let obraNome = req.params.obraNome;
-    let obraTipo = req.params.obraTipo;
+    const obraNome = '%' + req.params.obraNome + '%';
+    const obraTipo = req.params.obraTipo;
     const getLivros = await connGetLivros.query(
-        'SELECT * FROM obras WHERE author = ? OR title = ? AND category = ?',
+        'SELECT * FROM obras WHERE author LIKE ? OR title like ? AND category = ?',
         [obraNome, obraNome, obraTipo]
     );
+    console.log('PESQUISA OBRAS --->', getLivros[0])
     return getLivros[0];
 }
 
