@@ -17,7 +17,6 @@ export class PesquisaComponent implements OnInit {
 
   onObraValue(pesquisaValue: PesquisaResponse) {
     this.pesquisaResponse = pesquisaValue;
-    console.log('VALOR PESQUISA ', this.pesquisaResponse);
   }
 
 }

@@ -10,7 +10,7 @@
                     <mat-error>Campo obrigatório</mat-error>
                 </mat-form-field>
                 <mat-form-field>
-                    <mat-select placeholder="Tipo de obra"  ngModel name="tipoObra">
+                    <mat-select placeholder="Tipo de obra"  ngModel name="tipoObra" required>
                         Selecione o tipo de obra a ser emprestada:
                         <mat-option value="1">
                             Livro
@@ -31,6 +31,7 @@
                         mat-raised-button 
                         type="submit" 
                         color="primary"
+                        [disabled]="f.invalid"
                     >
                         Pesquisar
                 </button>
