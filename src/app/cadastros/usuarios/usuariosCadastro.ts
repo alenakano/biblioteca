@@ -1,5 +1,5 @@
 export class UsuariosCadastro {
-    id: string;
+    idUsuario: string;
     name: string;
     cpf: string;
     address: string;
@@ -7,7 +7,7 @@ export class UsuariosCadastro {
     birthdate: Date;
     email: string;
     city: string;
-    blocked = false;
+    status = 0;
     date_block?: Date;
     date_unblock?: Date;
 
@@ -20,7 +20,7 @@ export class UsuariosCadastro {
         this.birthdate = null;
         this.email = null;
         this.city = null;
-        this.blocked = false;
+        this.status = 0;
         this.date_block = null;
         this.date_unblock = null;
     }

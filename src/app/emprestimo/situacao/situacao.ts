@@ -1,6 +1,6 @@
 export class Situacao {
     cpf: string;
-    blocked: boolean;
+    status: int;
     date_block: Date;
     date_unblock: Date;
 }

@@ -30,7 +30,7 @@ export class SituacaoComponent implements OnInit, OnDestroy {
   ) {
     this.situacao = this.fb.group({
       cpf: [null, Validators.required],
-      blocked: [null, Validators.required],
+      status: [null, Validators.required],
       date_block: [null, null],
       date_unblock: [null, null],
     });
@@ -60,7 +60,7 @@ export class SituacaoComponent implements OnInit, OnDestroy {
         this.userSituacao = value;
         this.situacao = this.fb.group({
           cpf: new FormControl({ value: value.cpf, disabled: true }),
-          blocked: [value.blocked, Validators.required],
+          status: [value.status, Validators.required],
           date_block: [value.date_block, null],
           date_unblock: [value.date_unblock, null],
         });
@@ -93,12 +93,12 @@ export class SituacaoComponent implements OnInit, OnDestroy {
   validateDate(situacao: Situacao): Situacao {
     let dataAtual = new Date();
     if (Date.parse(this.userSituacao.date_unblock.toString()) <= dataAtual.getTime()) {
-      this.userSituacao.blocked = false;
+      this.userSituacao.status = false;
       this.userSituacao.date_block = undefined;
       this.userSituacao.date_unblock = undefined;
       return this.userSituacao;
     } else {
-      this.userSituacao.blocked = true;
+      this.userSituacao.status = true;
       this.userSituacao.date_block = situacao.date_block;
       this.userSituacao.date_unblock = situacao.date_unblock;
       return this.userSituacao;
