@@ -7,7 +7,7 @@ export async function connect() {
         port: 3307,
         user: 'root',
         password: '',
-        database: 'node_mysql_ts',
+        database: 'biblioteca',
         connectionLimit: 10
     });
 
