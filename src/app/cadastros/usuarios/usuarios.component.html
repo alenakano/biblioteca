@@ -6,24 +6,24 @@
     <h3 class="mat-h2">Formulário de cadastro:</h3>
     <mat-form-field hintLabel="Digite o nome completo.">
         <input 
-            [(ngModel)]="cadastro.name"
+            [(ngModel)]="cadastro.nomeUsuario"
             matInput
             required
-            name="name" 
+            name="nomeUsuario" 
             type="text" 
             placeholder="Digite o nome"
         >
     </mat-form-field>
     <mat-form-field hintLabel="Deve ter 11 caracteres.">
         <input 
-            [(ngModel)]="cadastro.cpf"
+            [(ngModel)]="cadastro.CPF"
             matInput
             required
             validaCPF
             #cpfInput="ngModel"
             minlength="11"
             maxlength="11"
-            name="cpf" 
+            name="CPF" 
             type="text" 
             placeholder="Digite o CPF"
         >
@@ -35,11 +35,11 @@
     <mat-form-field>
         <!--max serve para limitar a escolha de data na tela -->
         <input
-            [(ngModel)]="cadastro.birthdate"
+            [(ngModel)]="cadastro.dataNascimento"
             matInput
             required
             [matDatepicker]="picker"
-            name="birthdate"
+            name="dataNascimento"
             placeholder="Data de nascimento"
             >
         <mat-datepicker-toggle 
@@ -66,10 +66,10 @@
     </mat-form-field>
     <mat-form-field>
         <input 
-            [(ngModel)]="cadastro.address"            
+            [(ngModel)]="cadastro.endereco"            
             matInput
             required
-            name="address" 
+            name="endereco" 
             type="text" 
             placeholder="Digite o endereço"
         >
@@ -77,19 +77,19 @@
     </mat-form-field>
     <mat-form-field>
         <input 
-            [(ngModel)]="cadastro.complement"                        
+            [(ngModel)]="cadastro.complemento"                        
             matInput 
-            name="complement"  
+            name="complemento"  
             type="text" 
             placeholder="Complemento"
         >
     </mat-form-field>
     <mat-form-field>
         <input 
-            [(ngModel)]="cadastro.city"                        
+            [(ngModel)]="cadastro.cidade"                        
             matInput
             required
-            name="city" 
+            name="cidade" 
             type="text" 
             placeholder="Cidade"
         >

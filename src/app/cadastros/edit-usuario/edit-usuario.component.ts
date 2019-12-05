@@ -27,7 +27,7 @@ export class EditUsuarioComponent implements OnInit {
 
   onSubmit(form: any) {
     const usuario: UsuariosCadastro = new UsuariosCadastro();
-    usuario.cpf = form.cpf;
+    usuario.CPF = form.CPF;
     this.cpfSubscription = this.usuariosService.pesquisar(form).subscribe(
       value => {
         if (value.length > 0) {

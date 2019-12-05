@@ -1,28 +1,28 @@
 export class UsuariosCadastro {
     idUsuario: string;
-    name: string;
-    cpf: string;
-    address: string;
-    complement: string;
-    birthdate: Date;
+    nomeUsuario: string;
+    CPF: string;
+    endereco: string;
+    complemento: string;
+    dataNascimento: Date;
     email: string;
-    city: string;
+    cidade: string;
     status = 0;
-    date_block?: Date;
-    date_unblock?: Date;
+    dataBloqueio?: Date;
+    dataDesbloqueio?: Date;
 
     clearUser(): void {
-        this.id = null;
-        this.name = null;
-        this.cpf = null;
-        this.address = null;
-        this.complement = null;
-        this.birthdate = null;
+        this.idUsuario = null;
+        this.nomeUsuario = null;
+        this.CPF = null;
+        this.endereco = null;
+        this.complemento = null;
+        this.dataNascimento = null;
         this.email = null;
-        this.city = null;
+        this.cidade = null;
         this.status = 0;
-        this.date_block = null;
-        this.date_unblock = null;
+        this.dataBloqueio = null;
+        this.dataDesbloqueio = null;
     }
 }
 

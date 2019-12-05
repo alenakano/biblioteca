@@ -32,14 +32,14 @@ export class UsuariosService {
     }
 
     pesquisar(usuario: UsuariosCadastro): Observable<any> {
-        const request = this.url + '/' + usuario.cpf;
+        const request = this.url + '/' + usuario.CPF;
         return this.http
             .get(request);
     }
 
     atualizar(usuario: UsuariosCadastro): Observable<any> {
         const body = usuario;
-        const request = this.url + '/' + usuario.cpf;
+        const request = this.url + '/' + usuario.CPF;
         return this.http.put(request, body);
     }
 

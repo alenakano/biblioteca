@@ -1,13 +1,13 @@
 export class Usuarios {
     idUsuario: string;
-    name: string;
-    cpf: string;
-    address: string;
-    complement: string;
-    birthdate: Date;
+    nome: string;
+    CPF: string;
+    endereco: string;
+    complemento: string;
+    dataNascimento: Date;
     email: string;
-    city: string;
-    blocked = 0;
-    date_block: Date;
-    date_unblock: Date;
+    cidade: string;
+    status = 0;
+    dataBloqueio: Date;
+    dataDesbloqueio: Date;
 }

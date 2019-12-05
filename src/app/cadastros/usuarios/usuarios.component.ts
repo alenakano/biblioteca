@@ -33,9 +33,10 @@ export class UsuariosComponent implements OnChanges, OnInit {
   ) {}
 
   ngOnChanges() {
-    if (this.initUser.id) {
+    if (this.initUser.idUsuario) {
       this.updateDB = true;
       this.cadastro = this.initUser;
+      console.log(this.cadastro)
     }
   }
 

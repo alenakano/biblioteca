@@ -75,7 +75,7 @@ export class SituacaoComponent implements OnInit, OnDestroy {
   onSituacaoSubmit(situacao: Situacao) {
     situacao.cpf = this.userSituacao.cpf;
     situacao = this.validateDate(situacao);
-    if (Date.parse(this.userSituacao.date_unblock.toString()) >= Date.parse(this.userSituacao.date_unblock.toString())) {
+    if (Date.parse(this.userSituacao.dataDesbloqueio.toString()) >= Date.parse(this.userSituacao.dataDesbloqueio.toString())) {
       this.uiService.showSnackbar(
         'Data de fim de multa menor da data de início de multa. Por favor, tente novamente.',
         null ,
@@ -91,16 +91,16 @@ export class SituacaoComponent implements OnInit, OnDestroy {
   }
 
   validateDate(situacao: Situacao): Situacao {
-    let dataAtual = new Date();
-    if (Date.parse(this.userSituacao.date_unblock.toString()) <= dataAtual.getTime()) {
-      this.userSituacao.status = false;
-      this.userSituacao.date_block = undefined;
-      this.userSituacao.date_unblock = undefined;
+    const dataAtual = new Date();
+    if (Date.parse(this.userSituacao.dataDesbloqueio.toString()) <= dataAtual.getTime()) {
+      this.userSituacao.status = 0;
+      this.userSituacao.dataDesbloqueio = undefined;
+      this.userSituacao.dataDesbloqueio = undefined;
       return this.userSituacao;
     } else {
-      this.userSituacao.status = true;
-      this.userSituacao.date_block = situacao.date_block;
-      this.userSituacao.date_unblock = situacao.date_unblock;
+      this.userSituacao.status = 1;
+      this.userSituacao.dataDesbloqueio = situacao.dataDesbloqueio;
+      this.userSituacao.dataDesbloqueio = situacao.dataDesbloqueio;
       return this.userSituacao;
     }
   }
