@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MidiaComponent } from './midia.component';
+import { ComumLibComponent } from './comumLib.component';
 
-describe('MidiaComponent', () => {
-  let component: MidiaComponent;
-  let fixture: ComponentFixture<MidiaComponent>;
+describe('ComumLibComponent', () => {
+  let component: ComumLibComponent;
+  let fixture: ComponentFixture<ComumLibComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MidiaComponent ]
+      declarations: [ ComumLibComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MidiaComponent);
+    fixture = TestBed.createComponent(ComumLibComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

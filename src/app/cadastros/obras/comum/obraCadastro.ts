@@ -1,4 +1,4 @@
-export interface Obras {
+export class ObraCadastro {
     idObra?: number;
     idTipo: number;
     identificador?: string;

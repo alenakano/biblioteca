@@ -1,18 +1,18 @@
-<section *ngIf="!hideISBN" class="verificaLivros" fxLayout fxLayoutAlign="center">
+<section *ngIf="!hideObraTipo" class="verificaLivros" fxLayout fxLayoutAlign="center">
     <mat-card fxFlex.xs="100%" fxFlex="400px">
         <mat-card-title fxLayoutAlign="center">
             Cadastro de obras/exemplares:
         </mat-card-title>
-        <form fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup]="grupoID" #isbnForm="ngForm" (ngSubmit)="onFormISBNSubmit(grupoID.value)">
+        <form fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup]="grupoID" #obraTipoForm="ngForm" (ngSubmit)="onFormObraTipoSubmit(grupoID.value)">
             <mat-card-content fxLayout="column" fxLayoutAlign="center">
                 <mat-form-field>
                     <input 
                         matInput
                         required
-                        formControlName="isbnID"
-                        name="isbnID" 
+                        formControlName="identificador"
+                        name="identificador" 
                         type="text" 
-                        placeholder="Digite o ISBN"
+                        [placeholder]="onIDValue()"
                     >
                     <mat-error>Preencha o campo</mat-error>
                 </mat-form-field>
@@ -29,7 +29,7 @@
                         mat-raised-button 
                         type="submit" 
                         color="primary"
-                        [disabled]="isbnForm.invalid"
+                        [disabled]="obraTipoForm.invalid"
                     >
                         Cadastrar
                     </button>
@@ -39,7 +39,7 @@
     </mat-card>
 </section>
 
-<section *ngIf="hideISBN && !hideObra" class="obras" fxLayout fxLayoutAlign="center">
+<section *ngIf="hideObraTipo && !hideObra" class="obras" fxLayout fxLayoutAlign="center">
     <mat-card fxFlex.xs="100%" fxFlex="400px">
         <mat-card-title fxLayoutAlign="center">
             Dados da obra:
@@ -50,9 +50,18 @@
                 <mat-form-field>
                     <input 
                         matInput
+                        formControlName="identificador"
+                        name="identificador" 
+                        type="text" 
+                        disabled
+                    >
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
+                        matInput
                         required
-                        formControlName= "title"
-                        name="title" 
+                        formControlName= "titulo"
+                        name="titulo" 
                         type="text" 
                         placeholder="Digite o nome do livro"
                     >
@@ -62,41 +71,75 @@
                     <input 
                         matInput
                         required
-                        formControlName= "author"
-                        name="author" 
+                        formControlName= "autor"
+                        name="autor" 
                         type="text" 
                         placeholder="Digite o nome do autor"
                     >
                     <mat-error>Preencha o campo</mat-error>
-                </mat-form-field>
+                </mat-form-field> 
                 <mat-form-field >
-                    <!--Nome da variável para formControlName inicializado no constructor-->
-                    <mat-select formControlName="type_book" placeholder="Categoria do livro" [(ngModel)]="obraCadastro.type_book" [compareWith]="compareObjects">
-                        Selecione categoria:
-                        <mat-option *ngFor="let l of livrosCategoria$ | async" value={{l.id}}>
-                            {{l.nome}}
-                        </mat-option>
-                    </mat-select>
-                    <mat-error>  
-                        <span *ngIf="!grupoObra.get('type_book').valid && grupoObra.get('type_book').touched || ngForm.submitted">Escolha uma opção</span>  
-                    </mat-error>  
+                    <input 
+                        matInput
+                        required
+                        formControlName= "ano"
+                        name="ano" 
+                        type="text"
+                        maxlength="4"
+                        placeholder="Digite o ano"
+                    >
+                    <mat-error *ngIf="grupoObra.controls['ano'].touched && grupoObra.get('ano').hasError('required')">Preencha o campo</mat-error>
+                    <mat-error *ngIf="grupoObra.controls['ano'].touched && grupoObra.controls['ano'].hasError('minlength')">Preencha o campo com 4 dígitos</mat-error>
+                </mat-form-field> 
+                <mat-form-field>
+                    <input 
+                        matInput 
+                        required  
+                        formControlName="pais"
+                        name="pais"
+                        type="text" 
+                        placeholder="Digite o país"
+                    >
+                    <mat-error>Preencha o campo</mat-error>
                 </mat-form-field>
                 <mat-form-field>
                     <input 
                         matInput 
                         required  
-                        formControlName="country"
-                        name="country"
+                        formControlName="editora"
+                        name="editora"
                         type="text" 
-                        placeholder="País"
+                        placeholder="Digite a editora"
+                    >
+                    <mat-error>Preencha o campo</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
+                        matInput 
+                        required  
+                        formControlName="idioma"
+                        name="idioma"
+                        type="text" 
+                        placeholder="Digite o idioma"
+                    >
+                    <mat-error>Preencha o campo</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
+                        matInput 
+                        required  
+                        formControlName="CDD"
+                        name="CDD"
+                        type="text" 
+                        placeholder="Digite o CDD"
                     >
                     <mat-error>Preencha o campo</mat-error>
                 </mat-form-field>
                 <mat-form-field>
                     <input 
                         matInput
-                        formControlName="description"
-                        name="description" 
+                        formControlName="descricao"
+                        name="descricao" 
                         type="text" 
                         placeholder="Observações"
                     >
@@ -142,7 +185,7 @@
     </mat-card>
 </section>
 
-<section *ngIf="hideISBN && !hideExemplar" class="livros" fxLayout fxLayoutAlign="center">
+<section *ngIf="hideObraTipo && !hideExemplar" class="livros" fxLayout fxLayoutAlign="center">
     <mat-card fxFlex.xs="100%" fxFlex="400px">
         <mat-card-title fxLayoutAlign="center">
             Dados do exemplar:
@@ -153,18 +196,27 @@
                 <mat-form-field>
                     <input 
                         matInput
-                        formControlName="isbn"
-                        name="isbn" 
+                        formControlName="identificador"
+                        name="identificador" 
                         type="text" 
-                        placeholder="ISBN"
+                        placeholder="onIDValue()"
                         disabled
                     >
                 </mat-form-field>
                 <mat-form-field>
                     <input 
                         matInput
-                        formControlName= "title"
-                        name="title" 
+                        formControlName="descricao"
+                        name="descricao" 
+                        type="text" 
+                        placeholder="Observações"
+                    >
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
+                        matInput
+                        formControlName= "titulo"
+                        name="titulo" 
                         type="text" 
                         placeholder="Nome do livro"
                         disabled
@@ -173,8 +225,8 @@
                 <mat-form-field >
                     <input 
                         matInput
-                        formControlName= "author"
-                        name="author" 
+                        formControlName= "autor"
+                        name="autor" 
                         type="text" 
                         placeholder="Nome do autor"
                         disabled
@@ -184,8 +236,8 @@
                     <input 
                         matInput
                         required
-                        formControlName="location"
-                        name="location" 
+                        formControlName="local"
+                        name="local" 
                         type="text" 
                         placeholder="Código de localização"
                     >
@@ -195,7 +247,7 @@
                     <input 
                         matInput
                         formControlName="tomo"
-                        name="tome" 
+                        name="tomo" 
                         type="text" 
                         placeholder="Tomo"
                     >
@@ -204,9 +256,9 @@
                     <input
                         matInput
                         required
-                        formControlName="date_acquisition"
+                        formControlName="dataAquisicao"
                         [matDatepicker]="picker"
-                        name="date_acquisition"
+                        name="dataAquisicao"
                         placeholder="Data de aquisição"
                         >
                     <mat-datepicker-toggle 

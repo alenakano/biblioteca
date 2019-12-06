@@ -1,11 +1,11 @@
 import * as fromRoot from '../../../app.reducer';
-import { CategoriaLivros } from './categoriaLivros';
-import { LivroActions, SET_CATEGORIAS_LIVRO } from './livro.actions';
+import { CategoriaComum } from './categoriaComum';
+import { ComumLibActions, SET_CATEGORIAS_COMUM } from './comumLib.actions';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 
 export interface CategoriaState {
-    categorias: CategoriaLivros[];
+    categorias: CategoriaComum[];
 }
 
 // Precisamos extender do root state para nos precaver do lazy load
@@ -18,9 +18,9 @@ const initialState: CategoriaState = {
     categorias: []
 };
 
-export function livroReducer(state = initialState, action: LivroActions) {
+export function comumReducer(state = initialState, action: ComumLibActions) {
     switch (action.type) {
-        case SET_CATEGORIAS_LIVRO:
+        case SET_CATEGORIAS_COMUM:
             return {
                 /** caso tivesse outros objetos na interface, não perderia eles ao preencher o payload da categoria livros */
                 ...state,

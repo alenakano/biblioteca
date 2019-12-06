@@ -1,5 +1,14 @@
 import { Router } from 'express';
-import { pesquisarObras, devolverLivros, emprestarObras } from '../controllers/obras.controller';
+import {
+    pesquisarObras,
+    devolverObras,
+    emprestarObras,
+    getObras,
+    createObra,
+    getObra,
+    deleteObra,
+    updateObra
+} from '../controllers/obras.controller';
 
 const router = Router();
 
@@ -8,6 +17,15 @@ router.route('/pesquisas/:obraNome/:obraTipo')
 
 router.route('/emprestimos/')
     .post(emprestarObras)
-    .put(devolverLivros);
+    .put(devolverObras);
+
+router.route('/')
+    .get(getObras)
+    .post(createObra);
+
+router.route('/:obraId')
+    .get(getObra)
+    .delete(deleteObra)
+    .put(updateObra);
 
 export default router;
