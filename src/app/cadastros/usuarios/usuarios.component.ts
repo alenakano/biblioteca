@@ -36,7 +36,6 @@ export class UsuariosComponent implements OnChanges, OnInit {
     if (this.initUser.idUsuario) {
       this.updateDB = true;
       this.cadastro = this.initUser;
-      console.log(this.cadastro)
     }
   }
 

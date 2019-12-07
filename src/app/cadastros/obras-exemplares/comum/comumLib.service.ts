@@ -49,9 +49,16 @@ export class ComumLibService {
             .post(request, body);
     }
 
-    cadastrarExemplar(livro: ExemplarCadastro): Observable<any> {
-        const body = livro;
-        const request = this.url;
+    fetchExemplar(idObra: number): Observable<any> {
+        const request = this.url + '/exemplares/' + idObra;
+        return this.http
+            .get(request);
+    }
+
+    cadastrarExemplar(exemplar: ExemplarCadastro): Observable<any> {
+        const body = exemplar;
+        console.log(exemplar)
+        const request = this.url + '/cadastrarExemplar/';
         return this.http
             .post(request, body);
     }

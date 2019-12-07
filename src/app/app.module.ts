@@ -19,7 +19,7 @@ import { EmprestimoModule } from './emprestimo/emprestimo.module';
 import { HeaderComponent } from './navegacao/header/header.component';
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ComumLibService } from './cadastros/obras/comum/comumLib.service';
+import { ComumLibService } from './cadastros/obras-exemplares/comum/comumLib.service';
 import { LoginComponent } from './auth/login/login.component';
 import { PesquisaModule } from './pesquisa/pesquisa.module';
 import { reducers } from './app.reducer';

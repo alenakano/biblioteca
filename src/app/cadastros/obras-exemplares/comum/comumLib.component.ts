@@ -39,9 +39,9 @@ export class ComumLibComponent implements OnInit, OnDestroy {
   public hideObra = true;
   public hideExemplar = true;
 
-
   cadastroSubscription: Subscription;
   updateSubscription: Subscription;
+  fetchExemplarSubscription: Subscription;
 
 
   constructor(
@@ -68,12 +68,14 @@ export class ComumLibComponent implements OnInit, OnDestroy {
     });
 
     this.grupoExemplar = this.fb.group({
-      ObraTipo: [null, null],
-      titulo: [null, null],
-      autor: [null, null],
-      localizacao: [null, Validators.required],
+      identificador: [{value: this.obraCadastro.identificador, disabled: true}, null],
+      titulo: [{value: this.obraCadastro.titulo, disabled: true}, null],
+      autor: [{value: this.obraCadastro.autor, disabled: true}, null],
       tomo: [null, null],
+      local: [null, Validators.required],
       dataAquisicao: [null, Validators.required],
+      numExemplar: [this.exemplarCadastro.numExemplar, Validators.required],
+      status: [null, Validators.required],
     });
 
    }
@@ -88,6 +90,9 @@ export class ComumLibComponent implements OnInit, OnDestroy {
     if (this.updateSubscription) {
       this.updateSubscription.unsubscribe();
     }
+    if (this.fetchExemplarSubscription) {
+      this.fetchExemplarSubscription.unsubscribe();
+    }
   }
 
   onFormObraTipoSubmit(cad: Form | any) {
@@ -98,17 +103,8 @@ export class ComumLibComponent implements OnInit, OnDestroy {
         this.hideObraTipo = true;
         this.hideObra = false;
         this.obraCadastro = res[0];
-        this.grupoObra = this.fb.group({
-          identificador: [{value: this.identificador.identificador, disabled: true}, null],
-          titulo: [this.obraCadastro.titulo, Validators.required],
-          autor: [this.obraCadastro.autor, Validators.required],
-          ano: [this.obraCadastro.ano, [Validators.required, Validators.minLength(4)]],
-          pais: [this.obraCadastro.pais, Validators.required],
-          editora: [this.obraCadastro.editora, Validators.required],
-          descricao: [this.obraCadastro.descricao, null],
-          idioma: [this.obraCadastro.idioma, Validators.required],
-          CDD: [this.obraCadastro.CDD, Validators.required],
-        });
+        this.startObraForm(true);
+        this.uiService.showSnackbar('Obra já cadastrada. Atualize ou continue para exemplares.', null, {duration: 3000});
       },
       error => this.onServiceObraTipoError(error)
     );
@@ -116,7 +112,7 @@ export class ComumLibComponent implements OnInit, OnDestroy {
 
   onFormExemplarSubmit(cad: Form | any) {
     this.exemplarCadastro = cad;
-    this.exemplarCadastro.identificador = this.identificador.identificador;
+    this.exemplarCadastro.idObra = this.obraCadastro.idObra;
     this.exemplarCadastro.dataAquisicao = cad.dataAquisicao.format();
 
     this.cadastroSubscription = this.comumLibService.cadastrarExemplar(this.exemplarCadastro).subscribe(
@@ -137,14 +133,6 @@ export class ComumLibComponent implements OnInit, OnDestroy {
       this.cadastroSubscription = this.comumLibService.atualizarObra(this.obraCadastro).subscribe(
         msg => {
           this.uiService.showSnackbar(msg.message, null, {duration: 3000});
-          this.grupoExemplar = this.fb.group({
-            identificador: [{value: this.obraCadastro.identificador, disabled: true}, null],
-            titulo: [{value: this.obraCadastro.titulo, disabled: true}, null],
-            autor: [{value: this.obraCadastro.autor, disabled: true}, null],
-            tomo: [null, null],
-            local: [null, Validators.required],
-            dataAquisicao: [null, Validators.required],
-          });
           this.onStepExemplar();
         },
         error => this.onServiceCreateError(error)
@@ -153,16 +141,8 @@ export class ComumLibComponent implements OnInit, OnDestroy {
       this.cadastroSubscription = this.comumLibService.cadastrarObra(this.obraCadastro).subscribe(
         msg => {
           this.uiService.showSnackbar(msg.message, null, {duration: 3000});
-          this.updateObra = true;
-          this.grupoExemplar = this.fb.group({
-            identificador: [{value: this.identificador.identificador, disabled: true}, null],
-            titulo: [{value: this.obraCadastro.titulo, disabled: true}, null],
-            autor: [{value: this.obraCadastro.autor, disabled: true}, null],
-            tomo: [null, null],
-            local: [null, Validators.required],
-            dataAquisicao: [null, Validators.required],
-          });
           this.onStepExemplar();
+          this.updateObra = true;
         },
         error => this.onServiceCreateError(error)
       );
@@ -205,8 +185,72 @@ export class ComumLibComponent implements OnInit, OnDestroy {
       this.hideObraTipo = true;
       this.hideObra = false;
       this.updateObra = false;
-      this.uiService.showSnackbar('Obra não cadastrada. Por favor, insira os dados.', null, {duration: 3000});
+      this.uiService.showSnackbar('Obra não cadastrada. Por favor, insira os dados.', null, {duration: 2000});
       this.obraCadastro.identificador = this.identificador.identificador;
+      this.startObraForm(false);
+    } else {
+      this.uiService.showSnackbar('Erro de conexão. Por favor, tente mais tarde', null, {duration: 2000});
+      this.hideObraTipo = false;
+      this.hideExemplar = true;
+      this.hideObra = true;
+    }
+  }
+
+  onStepExemplar(): void {
+    this.hideObraTipo = true;
+    this.hideExemplar = false;
+    this.hideObra = true;
+    this.exemplarCadastro.idObra = this.obraCadastro.idObra;
+    if (this.updateObra && this.obraCadastro.idObra) {
+      this.fetchExemplarSubscription = this.comumLibService.fetchExemplar(this.exemplarCadastro.idObra).subscribe(
+        res => {
+          if (res.length > 0) {
+            let maxNumExemplar = Math.max.apply(Math, res.map(o => o.numExemplar));
+            this.exemplarCadastro.numExemplar = ++maxNumExemplar;
+          } else {
+            this.exemplarCadastro.numExemplar = 1;
+          }
+          this.startExemplarForm();
+        },
+        err => {
+          this.uiService.showSnackbar('Não foi possível recuperar número do último exemplar cadastrado.', null, {duration: 2000});
+          this.exemplarCadastro.numExemplar = 1;
+          this.startExemplarForm();
+        }
+      );
+    } else {
+      this.exemplarCadastro.numExemplar = 1;
+      this.startExemplarForm();
+    }
+  }
+
+  startExemplarForm(): void {
+    this.grupoExemplar = this.fb.group({
+      identificador: [{value: this.obraCadastro.identificador, disabled: true}, null],
+      titulo: [{value: this.obraCadastro.titulo, disabled: true}, null],
+      autor: [{value: this.obraCadastro.autor, disabled: true}, null],
+      tomo: [null, null],
+      local: [null, Validators.required],
+      dataAquisicao: [null, Validators.required],
+      numExemplar: [{value: this.exemplarCadastro.numExemplar, disabled: false}, Validators.required],
+      status: [null, Validators.required],
+    });
+  }
+
+  startObraForm(cadastrado: boolean): void {
+    if (cadastrado) {
+      this.grupoObra = this.fb.group({
+        identificador: [{value: this.identificador.identificador, disabled: true}, null],
+        titulo: [this.obraCadastro.titulo, Validators.required],
+        autor: [this.obraCadastro.autor, Validators.required],
+        ano: [this.obraCadastro.ano, [Validators.required, Validators.minLength(4)]],
+        pais: [this.obraCadastro.pais, Validators.required],
+        editora: [this.obraCadastro.editora, Validators.required],
+        descricao: [this.obraCadastro.descricao, null],
+        idioma: [this.obraCadastro.idioma, Validators.required],
+        CDD: [this.obraCadastro.CDD, Validators.required],
+      });
+    } else {
       this.grupoObra = this.fb.group({
         identificador: [{value: this.identificador.identificador, disabled: true}, null],
         titulo: [null, Validators.required],
@@ -218,19 +262,7 @@ export class ComumLibComponent implements OnInit, OnDestroy {
         idioma: [null, Validators.required],
         CDD: [null, Validators.required],
       });
-      console.log('OBRA CADASTRO', res);
-    } else {
-      this.uiService.showSnackbar('Erro de conexão. Por favor, tente mais tarde', null, {duration: 3000});
-      this.hideObraTipo = false;
-      this.hideExemplar = true;
-      this.hideObra = true;
     }
-  }
-
-  onStepExemplar(): void {
-    this.hideObraTipo = true;
-    this.hideExemplar = false;
-    this.hideObra = true;
   }
 
   voltar(): void {

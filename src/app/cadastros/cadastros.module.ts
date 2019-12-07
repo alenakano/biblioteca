@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CadastrosComponent } from './cadastros.component';
 import { CommonModule } from '../common/common.module';
-import { ComumLibComponent } from './obras/comum/comumLib.component';
-import { ObrasComponent } from './obras/obras.component';
-import { ObrasOpcoesComponent } from './obras/obras-opcoes/obras-opcoes.component';
+import { ComumLibComponent } from './obras-exemplares/comum/comumLib.component';
+import { ObrasComponent } from './obras-exemplares/obras.component';
+import { ObrasOpcoesComponent } from './obras-exemplares/obras-opcoes/obras-opcoes.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { SharedModule } from '../util/shared.module';
 import { CadastroRoutingModule } from './cadastro-routing.module';
 
-import { comumReducer } from './obras/comum/comumLib.reducer';
+import { comumReducer } from './obras-exemplares/comum/comumLib.reducer';
 import { StoreModule } from '@ngrx/store';
 import { EditUsuarioComponent } from './edit-usuario/edit-usuario.component';
 

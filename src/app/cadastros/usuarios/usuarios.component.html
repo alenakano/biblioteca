@@ -26,6 +26,7 @@
             name="CPF" 
             type="text" 
             placeholder="Digite o CPF"
+            [disabled]="updateDB"
         >
         <!-- Não precisamos importar mat-hint pq é do mat-form-field -->
         <mat-hint align="end">{{cpfInput.value?.length}}/11</mat-hint>

@@ -54,6 +54,7 @@
                         name="identificador" 
                         type="text" 
                         disabled
+                        [placeholder]="onIDValue()"
                     >
                 </mat-form-field>
                 <mat-form-field>
@@ -199,17 +200,8 @@
                         formControlName="identificador"
                         name="identificador" 
                         type="text" 
-                        placeholder="onIDValue()"
+                        [placeholder]="onIDValue()"
                         disabled
-                    >
-                </mat-form-field>
-                <mat-form-field>
-                    <input 
-                        matInput
-                        formControlName="descricao"
-                        name="descricao" 
-                        type="text" 
-                        placeholder="Observações"
                     >
                 </mat-form-field>
                 <mat-form-field>
@@ -251,6 +243,38 @@
                         type="text" 
                         placeholder="Tomo"
                     >
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
+                        required 
+                        matInput
+                        formControlName="numExemplar"
+                        name="numExemplar" 
+                        type="text" 
+                        placeholder="Número do exemplar"
+                    >
+                    <mat-error>Preencha o campo</mat-error> 
+                </mat-form-field>         
+                <mat-form-field >
+                    <mat-select 
+                        formControlName="status" 
+                        name="status" 
+                        placeholder="Status de obra"
+                    >
+                        Selecione o status do exemplar:
+                        <mat-option value="1">
+                            Ativo
+                        </mat-option>
+                        <mat-option value="2">
+                            Perdido
+                        </mat-option>
+                        <mat-option value="3">
+                            Danificado
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>  
+                        <span *ngIf="!grupoExemplar.get('status').valid && grupoExemplar.get('status').touched || grupoExemplar.submitted">Escolha uma opção</span>  
+                    </mat-error>  
                 </mat-form-field>
                 <mat-form-field>
                     <input

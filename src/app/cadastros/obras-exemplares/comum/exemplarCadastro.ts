@@ -1,6 +1,6 @@
 export class ExemplarCadastro {
     idExemplar?: number;
-    identificador: string;
+    idObra: number;
     numExemplar: number;
     local: string;
     dataAquisicao: Date;
