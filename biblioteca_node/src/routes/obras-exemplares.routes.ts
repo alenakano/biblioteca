@@ -1,14 +1,16 @@
 import { Router } from 'express';
 import {
+    cadastrarExemplar,
     pesquisarObras,
     devolverObras,
     emprestarObras,
+    getExemplar,
     getObras,
     createObra,
     getObra,
     deleteObra,
     updateObra
-} from '../controllers/obras.controller';
+} from '../controllers/obras-exemplares.controller';
 
 const router = Router();
 
@@ -22,6 +24,12 @@ router.route('/emprestimos/')
 router.route('/')
     .get(getObras)
     .post(createObra);
+
+router.route('/exemplares/:idObra')
+    .get(getExemplar);
+
+router.route('/cadastrarExemplar')
+    .post(cadastrarExemplar);
 
 router.route('/:obraId')
     .get(getObra)

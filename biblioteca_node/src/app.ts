@@ -6,7 +6,7 @@ import cors from 'cors';
 // Declaração das rotas no INDEX.ROUTES
 import IndexRoutes from './routes/index.routes';
 import PostRoutes from './routes/post.routes';
-import ObrasRoutes from './routes/obras.routes';
+import ObrasRoutes from './routes/obras-exemplares.routes';
 import UsuariosRoutes from './routes/usuarios.routes';
 import BloqueioRoutes from './routes/bloqueio.routes';
 import EmprestimoRoutes from './routes/emprestimo.routes';

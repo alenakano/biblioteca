@@ -3,6 +3,7 @@ import { Pool } from 'mysql2/promise';
 import { Request } from 'express';
 
 import { Obras } from '../interfaces/obras.interface';
+import { Exemplar } from '../interfaces/exemplar.interface';
 
 export async function pesquisaObrasDAO(req: Request): Promise<any> {
     const connGetObras = await openConnection();
@@ -31,6 +32,21 @@ export async function getObrasDAO(): Promise<any> {
     const connGetObras = await openConnection();
     const getObras = await connGetObras.query('SELECT * FROM obra');
     return getObras[0];
+}
+
+export async function createExemplarDAO(req: Request): Promise<any> {
+    const newExemplar: Exemplar = req.body;
+    newExemplar.dataCadastro = new Date();
+    const connCreateObras = await openConnection();
+    const createObras = await connCreateObras.query('INSERT INTO exemplar SET ?', [ newExemplar ]);
+    return createObras;
+}
+
+export async function getExemplarDAO(id: string): Promise<any> {
+    const idObra = id;
+    const connGetExemplar = await openConnection();
+    const getExemplar = await connGetExemplar.query('SELECT * FROM exemplar WHERE idObra = ?', [ idObra ]);
+    return getExemplar[0];
 }
 
 export async function createObrasDAO(req: Request): Promise<any> {

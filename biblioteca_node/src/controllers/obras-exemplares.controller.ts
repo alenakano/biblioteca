@@ -2,13 +2,15 @@ import { Request, Response } from 'express';
 
 import {
     createObrasDAO,
+    createExemplarDAO,
+    getExemplarDAO,
     getObraDAO,
     getObrasDAO,
     deleteObrasDAO,
     updateObrasDAO,
     pesquisaObrasDAO,
     emprestaObrasDAO,
-} from '../infrastructure/obrasDAO';
+} from '../infrastructure/obras-exemplaresDAO';
 
 import HttpException from '../exceptions/httpException';
 
@@ -62,6 +64,31 @@ export async function devolverObras(req: Request, res: Response, next: NextFunct
     // } catch (error) {
     //     resolveError(error, res);
     // }
+}
+export async function cadastrarExemplar(req: Request, res: Response, next: NextFunction): Promise<any> {
+    try {
+        const createQueryResult = await createExemplarDAO(req);
+        if (createQueryResult[0].affectedRows) {
+            return res.json ({
+                message: 'Exemplar cadastrado com sucesso.'
+            });
+        } else {
+            return res.json ({
+                message: 'Exemplar não cadastrado. Verifique.'
+            });
+        }
+
+    } catch (error) {
+        resolveError(error, res);
+    }
+}
+
+export async function getExemplar(req: Request, res: Response, next: NextFunction): Promise<any> {
+    try {
+        return res.json(await getExemplarDAO(req.params.idObra));
+    } catch (error) {
+        next(new HttpException(404, 'Deu ruim'));
+    }
 }
 
 export async function getObras(req: Request, res: Response, next: NextFunction): Promise<any> {
