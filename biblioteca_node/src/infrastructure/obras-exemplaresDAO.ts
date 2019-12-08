@@ -7,10 +7,12 @@ import { Exemplar } from '../interfaces/exemplar.interface';
 
 export async function pesquisaObrasDAO(req: Request): Promise<any> {
     const connGetObras = await openConnection();
+    let obraResponse: Obras;
+    let exemplarResponse: Exemplar;
     const obraNome = '%' + req.params.obraNome + '%';
     const obraTipo = req.params.obraTipo;
     const getObras = await connGetObras.query(
-        'SELECT * FROM obras WHERE author LIKE ? OR title like ? AND category = ?',
+        'SELECT * FROM obra WHERE autor LIKE ? OR titulo like ? AND idTipo = ?',
         [obraNome, obraNome, obraTipo]
     );
     return getObras[0];

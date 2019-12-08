@@ -53,10 +53,16 @@ export async function getUsuarioBloqueioDAO(id: string): Promise<any> {
 }
 
 export async function updateUsuarioBloqueioDAO(req: Request): Promise<any> {
-    const upUsuarios: Usuarios = req.body;
     const upId = req.params.cpf;
+    const status = req.body.status;
+    const dataBloqueio = req.body.dataBloqueio;
+    const dataDesbloqueio = req.body.dataDesbloqueio;
+
     const connUpdateUsuarios = await openConnection();
-    const updateUsuarios = await connUpdateUsuarios.query('UPDATE usuario set ? WHERE CPF = ?', [upUsuarios, upId]);
+    const updateUsuarios = await connUpdateUsuarios
+        .query('UPDATE usuario SET status = ?, dataBloqueio = ?, dataDesbloqueio = ? WHERE CPF = ?', 
+        [status, dataBloqueio, dataDesbloqueio, upId]);
+    console.log(updateUsuarios);
     return updateUsuarios;
 }
 
@@ -66,7 +72,7 @@ async function parseResponse(userData: any) {
     parsedResp.cpf = userData[0].cpf;
     const date = new Date();
     if (userData[0].dataDesbloqueio == 'Invalid Date'
-        || userData[0].dataDesbloqueio.getDate() === userData[0].dataDesbloqueio.getDate()
+        || userData[0].dataDesbloqueio == 'NaN'
         || (Date.parse(userData[0].dataDesbloqueio.getTime()) <= date.getTime())) {
         parsedResp.status = 0;
         parsedResp.dataBloqueio = undefined;

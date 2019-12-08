@@ -27,53 +27,49 @@ function parseDate(date: string): string {
     );
 }
 
-function autenticador(dados: Emprestimo): string {
-    return 'teste';
-    // return Buffer.from(dados.cpf + dados.idExemplar).toString('base64');
-}
-
 export async function createEmprestimo(req: Request, res: Response, next: NextFunction): Promise<any> {
 
     try {
         const createQueryResult = await createEmprestimoDAO(req);
-        /* PARA GERAR O PDF
-            const dadosEmprestimo: Emprestimo = req.body;
-            dadosEmprestimo.dateEmprestimo = parseDate(dadosEmprestimo.dateEmprestimo);
-            dadosEmprestimo.dateDevolucao = parseDate(dadosEmprestimo.dateDevolucao);
+        /* PARA GERAR O PDF */
+        const dadosEmprestimo: Emprestimo = req.body;
+        const comprovante = {
+            dataEmprestimo: parseDate(dadosEmprestimo.dataEmprestimo.toString()),
+            dataPrevisao: parseDate(dadosEmprestimo.dataPrevisao.toString()),
+            cpf: req.params.cpf,
+            idExemplar: req.body.idExemplar
+        };
 
-            let imgSrc = path.join(__dirname, '..', '/book.png');
-            imgSrc = path.normalize('file://' + imgSrc);
+        let imgSrc = path.join(__dirname, '..', '/book.png');
+        imgSrc = path.normalize('file://' + imgSrc);
 
-            const auth = autenticador(dadosEmprestimo);
-
-            const options = {
-                format: 'A5',
-            };
-            const obj = templates.pdfReciboEmprestimo(dadosEmprestimo, imgSrc, auth);
-            pdf.create(obj, options).toStream((err: any, stream: any) => {
-                const file = stream.path;
-                res.setHeader('Content-type', 'application/pdf');
-                res.setHeader('Content-disposition', 'attachment; filename=' + file);
-                // res.setHeader('Access-Control-Expose-Headers', 'Location');
-                res.download(file, (erro: any) => {
-                    if (erro) {
-                        console.log(erro);
-                    } else {
-                        console.log('Efetuado com sucesso');
-                    }
-                });
+        const options = {
+            format: 'A5',
+        };
+        const obj = templates.pdfReciboEmprestimo(comprovante, imgSrc);
+        pdf.create(obj, options).toStream((err: any, stream: any) => {
+            const file = stream.path;
+            res.setHeader('Content-type', 'application/pdf');
+            res.setHeader('Content-disposition', 'attachment; filename=' + file);
+            // res.setHeader('Access-Control-Expose-Headers', 'Location');
+            res.download(file, (erro: any) => {
+                if (erro) {
+                    console.log(erro);
+                } else {
+                    console.log('Efetuado com sucesso');
+                }
             });
-        */
+        });
 
-        if (createQueryResult[0].affectedRows) {
-            return res.json ({
-                message: 'Emprestimo cadastrado com sucesso.'
-            });
-        } else {
-            return res.json ({
-                message: 'Emprestimo não cadastrado. Verifique.'
-            });
-        }
+        // if (createQueryResult[0].affectedRows) {
+        //     return res.json ({
+        //         message: 'Emprestimo cadastrado com sucesso.'
+        //     });
+        // } else {
+        //     return res.json ({
+        //         message: 'Emprestimo não cadastrado. Verifique.'
+        //     });
+        // }
 
     } catch (error) {
         resolveError(error, res);

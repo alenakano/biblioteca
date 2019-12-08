@@ -26,8 +26,5 @@ router.route('/cadastrarExemplar')
     .post(cadastrarExemplar);
 
 router.route('/:obraId')
-    .get(getObra)
-    .delete(deleteObra)
-    .put(updateObra);
-
+.get(getObra)
 export default router;
