@@ -2,8 +2,6 @@ import { Router } from 'express';
 import {
     cadastrarExemplar,
     pesquisarObras,
-    devolverObras,
-    emprestarObras,
     getExemplar,
     getObras,
     createObra,
@@ -16,10 +14,6 @@ const router = Router();
 
 router.route('/pesquisas/:obraNome/:obraTipo')
     .get(pesquisarObras);
-
-router.route('/emprestimos/')
-    .post(emprestarObras)
-    .put(devolverObras);
 
 router.route('/')
     .get(getObras)

@@ -93,11 +93,11 @@ export async function deleteEmprestimo(req: Request, res: Response, next: NextFu
         const deleteQueryResult = await deleteEmprestimoDAO(req, next);
         if (deleteQueryResult[0].affectedRows) {
             return res.json ({
-                message: 'Emprestimo removido com sucesso'
+                message: 'Devolução realizada com sucesso'
             });
         } else {
             return res.json ({
-                message: 'Nenhum Emprestimo encontrado para ser removido'
+                message: 'Nenhum empréstimo encontrado'
             });
         }
     } catch (error) {

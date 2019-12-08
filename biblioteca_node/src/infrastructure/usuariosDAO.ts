@@ -65,13 +65,15 @@ async function parseResponse(userData: any) {
     userData = userData[0] as Usuarios;
     parsedResp.cpf = userData[0].cpf;
     const date = new Date();
-    if (Date.parse(userData[0].dataDesbloqueio) <= date.getTime()) {
-        parsedResp.status = 1;
+    if (userData[0].dataDesbloqueio == 'Invalid Date'
+        || userData[0].dataDesbloqueio.getDate() === userData[0].dataDesbloqueio.getDate()
+        || (Date.parse(userData[0].dataDesbloqueio.getTime()) <= date.getTime())) {
+        parsedResp.status = 0;
         parsedResp.dataBloqueio = undefined;
         parsedResp.dataDesbloqueio = undefined;
         return parsedResp;
     } else {
-        parsedResp.status = 0;
+        parsedResp.status = 1;
         parsedResp.dataBloqueio = userData[0].dataBloqueio;
         parsedResp.dataDesbloqueio = userData[0].dataDesbloqueio;
         return parsedResp;

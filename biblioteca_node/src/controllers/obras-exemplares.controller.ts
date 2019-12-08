@@ -28,43 +28,6 @@ export async function pesquisarObras(req: Request, res: Response, next: NextFunc
     }
 }
 
-export async function emprestarObras(req: Request, res: Response, next: NextFunction): Promise<any> {
-    // TODO - REALIZAR LOGICA EMPRESTIMO DE OBRAS
-    // try {
-    //     const createQueryResult = await emprestaObrasDAO(req);
-    //     if (createQueryResult[0].affectedRows) {
-    //         return res.json ({
-    //             message: 'Obra cadastrado com sucesso.'
-    //         });
-    //     } else {
-    //         return res.json ({
-    //             message: 'Obra não cadastrado. Verifique.'
-    //         });
-    //     }
-
-    // } catch (error) {
-    //     resolveError(error, res);
-    // }
-}
-
-export async function devolverObras(req: Request, res: Response, next: NextFunction): Promise<any> {
-    // TODO - REALIZAR LOGICA DEVOLUÇÃO DE OBRAS
-    // try {
-    //     const createQueryResult = await emprestaObrasDAO(req);
-    //     if (createQueryResult[0].affectedRows) {
-    //         return res.json ({
-    //             message: 'Obra cadastrado com sucesso.'
-    //         });
-    //     } else {
-    //         return res.json ({
-    //             message: 'Obra não cadastrado. Verifique.'
-    //         });
-    //     }
-
-    // } catch (error) {
-    //     resolveError(error, res);
-    // }
-}
 export async function cadastrarExemplar(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
         const createQueryResult = await createExemplarDAO(req);
