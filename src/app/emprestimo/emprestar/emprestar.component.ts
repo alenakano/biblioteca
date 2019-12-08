@@ -66,10 +66,15 @@ export class EmprestarComponent implements OnDestroy, OnInit {
               window.URL.revokeObjectURL(data);
               link.remove();
           }, 100);
+          this.uiService.showSnackbar('Empréstimo efetivado com sucesso.', null, {duration: 3000});
       },
       error => {
-        this.uiService.showSnackbar('Falha ao realizar empréstimo. Verifique se título já está emprestado', null, {duration: 3000})},
+        if (error.status === 494) {
+          this.uiService.showSnackbar('Usuário está bloqueado. Verifique.', null, {duration: 3000});
+        } else {
+          this.uiService.showSnackbar('Falha ao realizar empréstimo. Verifique se título já está emprestado', null, {duration: 3000});
+        }
+      }
     );
   }
-
 }

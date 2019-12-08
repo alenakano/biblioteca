@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { UIService } from 'src/app/util/ui.service';
 import { Emprestimo } from '../emprestar/emprestimo';
@@ -14,6 +14,7 @@ export class DevolverComponent implements OnDestroy, OnInit {
 
   devolucaoSubscription: Subscription;
   devolucao: Devolucao = new Devolucao();
+  @ViewChild('f', null) form;
 
   constructor(
     private transacaoService: TransacaoService,
@@ -27,7 +28,9 @@ export class DevolverComponent implements OnDestroy, OnInit {
     this.devolucao = form;
     this.devolucao.dataDevolucao = new Date();
     this.devolucaoSubscription = this.transacaoService.devolver(this.devolucao).subscribe(
-      value => this.uiService.showSnackbar(value.message, null, {duration: 3000}),
+      value => {
+        this.uiService.showSnackbar(value.message, null, {duration: 3000});
+      },
       error => {
         this.onErrorDevolucao(error);
       }

@@ -55,7 +55,6 @@ export class UsuariosComponent implements OnChanges, OnInit {
     this.cadastroSubscription = this.usuariosService.cadastrar(this.cadastro).subscribe(
       msg => {
         this.uiService.showSnackbar(msg.message, null, {duration: 3000});
-        this.form.resetForm();
       },
       error => this.onServiceCreateError(error)
     );

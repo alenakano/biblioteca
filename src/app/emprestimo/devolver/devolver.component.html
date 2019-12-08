@@ -1,6 +1,6 @@
 <section class="devolver" fxLayout fxLayoutAlign="center">
     <mat-card class="mat-elevation-z3" fxFlex.xs="100%" fxFlex="400px">
-        <form #f="ngForm" (ngSubmit)="onSubmit(f.value)"> 
+        <form #f="ngForm" (ngSubmit)="onSubmit(f.value); f.resetForm()"> 
             <mat-card-title fxLayoutAlign="center">
                 Devolução:
             </mat-card-title>

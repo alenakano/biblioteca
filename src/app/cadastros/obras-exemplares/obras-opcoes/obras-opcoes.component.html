@@ -31,7 +31,7 @@
                     </mat-form-field>
             </mat-card-content>
             <mat-card-actions fxLayoutAlign="center">
-                <button mat-raised-button type="submit" color="primary">Ir</button>
+                <button mat-raised-button type="submit" color="primary" [disabled]="!grupo.get('selecao').value">Ir</button>
             </mat-card-actions>
         </form>
     </mat-card>
