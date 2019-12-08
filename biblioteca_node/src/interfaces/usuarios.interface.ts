@@ -1,4 +1,4 @@
-export class Usuarios {
+export interface Usuarios {
     idUsuario: string;
     nome: string;
     CPF: string;
@@ -7,7 +7,7 @@ export class Usuarios {
     dataNascimento: Date;
     email: string;
     cidade: string;
-    status = 0;
+    status: number;
     dataBloqueio: Date;
     dataDesbloqueio: Date;
 }

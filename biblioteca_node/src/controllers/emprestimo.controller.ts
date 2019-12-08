@@ -90,7 +90,7 @@ export async function getEmprestimo(req: Request, res: Response, next: NextFunct
 
 export async function deleteEmprestimo(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
-        const deleteQueryResult = await deleteEmprestimoDAO(req);
+        const deleteQueryResult = await deleteEmprestimoDAO(req, next);
         if (deleteQueryResult[0].affectedRows) {
             return res.json ({
                 message: 'Emprestimo removido com sucesso'

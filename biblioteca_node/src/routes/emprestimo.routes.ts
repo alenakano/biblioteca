@@ -6,8 +6,10 @@ const router = Router();
 router.route('/:cpf')
     .post(createEmprestimo);
 
+router.route('/')
+    .delete(deleteEmprestimo);
+
 router.route('/:cpf/:idExemplar')
-    .delete(deleteEmprestimo)
     .put(updateEmprestimo);
 
 router.route('/:cpf/:idExemplar')
