@@ -75,8 +75,8 @@ export class SituacaoComponent implements OnInit, OnDestroy {
   onSituacaoSubmit(situacao: Situacao) {
     this.userSituacao.status = situacao.status;
     if (this.userSituacao.status == 1) {
-      this.userSituacao.dataBloqueio = situacao.dataBloqueio.format('DD-MM-YYYY HH:mm:ss');
-      this.userSituacao.dataDesbloqueio = situacao.dataDesbloqueio.format('DD-MM-YYYY HH:mm:ss');
+      this.userSituacao.dataBloqueio = situacao.dataBloqueio;
+      this.userSituacao.dataDesbloqueio = situacao.dataDesbloqueio;
     } else {
       this.userSituacao.dataDesbloqueio = '';
       this.userSituacao.dataBloqueio = '';
