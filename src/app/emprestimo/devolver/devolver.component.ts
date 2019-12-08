@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { UIService } from 'src/app/util/ui.service';
 import { Emprestimo } from '../emprestar/emprestimo';
 import { TransacaoService } from '../transacao.service';
+import { Devolucao } from './devolucao';
 
 @Component({
   selector: 'app-devolver',
@@ -12,6 +13,8 @@ import { TransacaoService } from '../transacao.service';
 export class DevolverComponent implements OnDestroy, OnInit {
 
   devolucaoSubscription: Subscription;
+  devolucao: Devolucao = new Devolucao();
+  @ViewChild('f', null) form;
 
   constructor(
     private transacaoService: TransacaoService,
@@ -21,9 +24,13 @@ export class DevolverComponent implements OnDestroy, OnInit {
   ngOnInit() {
   }
 
-  onSubmit(form: Emprestimo): void {
-    this.devolucaoSubscription = this.transacaoService.devolver(form).subscribe(
-      value => this.uiService.showSnackbar(value.message, null, {duration: 3000}),
+  onSubmit(form: Devolucao): void {
+    this.devolucao = form;
+    this.devolucao.dataDevolucao = new Date();
+    this.devolucaoSubscription = this.transacaoService.devolver(this.devolucao).subscribe(
+      value => {
+        this.uiService.showSnackbar(value.message, null, {duration: 3000});
+      },
       error => {
         this.onErrorDevolucao(error);
       }
@@ -37,11 +44,28 @@ export class DevolverComponent implements OnDestroy, OnInit {
   }
 
   onErrorDevolucao(msg: any): void {
-    if (msg.status === 412) {
-      this.uiService.showSnackbar(msg.message, null, {duration: 3000});
-    } else {
-      this.uiService.showSnackbar('Erro de conexão. Por favor, tente mais tarde', null, {duration: 3000});
+    switch (msg.status) {
+      case 412: {
+        this.uiService.showSnackbar(msg.message, null, {duration: 3000});
+        break;
+      }
+      case 490: {
+        this.uiService.showSnackbar('Nenhum empréstimo encontrado', null, {duration: 3000});
+        break;
+      }
+      case 491: {
+        this.uiService.showSnackbar('Nenhum usuário encontrado', null, {duration: 3000});
+        break;
+      }
+      case 492: {
+        this.uiService.showSnackbar('Usuário em atraso. Conta bloqueada 7 dias', null, {duration: 3000});
+        break;
+      }
+      case 493: {
+        this.uiService.showSnackbar('Erro na entrega. Bloquear usuário e efetuar a devolução novamente', null, {duration: 3000});
+        break;
+      }
+      default: this.uiService.showSnackbar('Problemas de conexão. Por favor, tente mais tarde', null, {duration: 3000});
     }
   }
-
 }

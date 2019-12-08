@@ -1,6 +1,6 @@
 <section class="emprestar" fxLayout fxLayoutAlign="center">
     <mat-card class="mat-elevation-z3" fxFlex.xs="100%" fxFlex="400px">
-        <form #f="ngForm" (ngSubmit)="onSubmit(f.value)"> 
+        <form #f="ngForm" (ngSubmit)="onSubmit(f.value); f.resetForm()"> 
             <mat-card-title fxLayoutAlign="center">
                 Empréstimo:
             </mat-card-title>
@@ -11,7 +11,7 @@
                         #cpfInput
                         validaCPF 
                         ngModel 
-                        name="cpf" 
+                        name="CPF" 
                         placeholder="Digite CPF do usuário" 
                         required
                         minlength="11"
@@ -24,9 +24,9 @@
                         matInput
                         ngModel
                         required
-                        name="codExemplar" 
-                        type="text" 
-                        placeholder="Digite o código localizador"
+                        name="idExemplar" 
+                        type="number" 
+                        placeholder="Digite o ID do exemplar"
                     >
                     <mat-error>Preencha o campo</mat-error>
                 </mat-form-field>
@@ -34,11 +34,11 @@
                 <mat-form-field>
                     <input
                         matInput
-                        ngModel
+                        [ngModel]="emprestimo"
                         required
                         [min]="minDate"
                         [matDatepicker]="picker"
-                        name="dateEmprestimo"
+                        name="dataEmprestimo"
                         placeholder="Data do empréstimo"
                         >
                     <mat-datepicker-toggle 
@@ -52,11 +52,11 @@
                 <mat-form-field>
                     <input
                         matInput
-                        ngModel
+                        [ngModel]="devolucao"
                         required
                         [matDatepicker]="picker2"
                         [min]="minDate"
-                        name="dateDevolucao"
+                        name="dataPrevisao"
                         placeholder="Data para devolução"
                         >
                     <mat-datepicker-toggle 
@@ -65,11 +65,6 @@
                     ></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
                     <mat-error>Selecione a data para devolução</mat-error>
-                </mat-form-field>
-
-                <mat-form-field>
-                    <input matInput ngModel name="Usuário" placeholder="Digite o código da obra" required>
-                    <mat-error>Campo obrigatório</mat-error>
                 </mat-form-field>
                 <mat-card-actions fxLayoutAlign="center">
                     <button 

@@ -1,12 +1,14 @@
 import {
     HttpClient,
     HttpHeaders,
+    HttpParams,
 } from '@angular/common/http';
 
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 
 import { Emprestimo } from './emprestar/emprestimo';
+import { Devolucao } from './devolver/devolucao';
 
 
 @Injectable({
@@ -24,20 +26,16 @@ export class TransacaoService {
         this.headers.append('Content-Type', 'application/json');
     }
 
-    emprestar(emprestimo: Emprestimo): Observable<any> {
-        const body = emprestimo;
-        console.log(emprestimo);
-        const request = this.url;
+    emprestar(emprestimo: Emprestimo, cpf: string): Observable<any> {
+        const request = this.url + '/' + cpf;
         return this.http
-            .post(request, body, { responseType: 'blob' });
+            .post(request, emprestimo, { responseType: 'blob' });
     }
 
-    devolver(devolucao: Emprestimo): Observable<any> {
-        const body = devolucao;
-        console.log(devolucao);
+    devolver(devolucao: Devolucao): Observable<any> {
         const request = this.url;
         return this.http
-            .post(request, body);
+            .request('delete', request, {body: devolucao});
     }
 
 }

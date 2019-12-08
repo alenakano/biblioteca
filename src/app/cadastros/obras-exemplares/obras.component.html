@@ -1,0 +1,11 @@
+<ng-container [ngSwitch]="passo">
+    <section *ngSwitchCase="'opcoes'">
+        <app-obras-opcoes (selection)="onTypeSelected($event)"></app-obras-opcoes>
+    </section>
+    <section *ngSwitchCase="'cadastro'">
+        <app-comum
+            [tipoObra]="tipoObra"
+            (backOptions)="onBackOptions()"
+        ></app-comum>
+    </section>
+</ng-container>

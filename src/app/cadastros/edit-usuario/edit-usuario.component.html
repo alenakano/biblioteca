@@ -20,7 +20,7 @@
                     >
                     <!-- Não precisamos importar mat-hint pq é do mat-form-field -->
                     <mat-hint align="end">{{cpfInput.value?.length}}/11</mat-hint>
-                    <mat-error *ngIf="cpfInput.hasError('required')">Deve possuir no mínimo 6 dígitos</mat-error>
+                    <mat-error *ngIf="cpfInput.hasError('required')">Deve possuir 11 dígitos</mat-error>
                     <mat-error *ngIf="!cpfInput.hasError('required')">Digite CPF válido</mat-error>
                 </mat-form-field>
                 <mat-card-actions fxLayoutAlign="center">

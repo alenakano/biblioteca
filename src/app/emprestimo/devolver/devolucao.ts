@@ -1,5 +1,6 @@
 export class Devolucao {
-    cpf: string;
-    codExemplar: string;
-    dateDevolvido: Date;
+    idEmprestimo?: string;
+    CPF: string;
+    idExemplar: number;
+    dataDevolucao: Date;
 }

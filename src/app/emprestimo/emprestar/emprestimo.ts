@@ -1,6 +1,7 @@
 export class Emprestimo {
-    cpf: string;
-    codExemplar: string;
-    dateEmprestimo: Date;
-    dateDevolucao: Date;
+    idEmprestimo?: string;
+    idUsuario?: string;
+    idExemplar: number;
+    dataEmprestimo: Date;
+    dataPrevisao: Date;
 }

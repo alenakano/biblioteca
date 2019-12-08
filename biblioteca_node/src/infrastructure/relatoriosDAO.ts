@@ -11,7 +11,6 @@ export async function pesquisaEmprestimosDAO(): Promise<any> {
     const getEmprestimos = await connGetEmprestimos.query(
         'SELECT * FROM obras WHERE author LIKE ? OR title like ? AND category = ?'
     );
-    console.log('PESQUISA OBRAS --->', getEmprestimos[0])
     return getEmprestimos[0];
 }
 

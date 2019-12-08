@@ -27,25 +27,26 @@ function parseDate(date: string): string {
     );
 }
 
-function autenticador(dados: Emprestimo): string {
-    return Buffer.from(dados.cpf + dados.codExemplar).toString('base64');
-}
-
 export async function createEmprestimo(req: Request, res: Response, next: NextFunction): Promise<any> {
-    /* PARA GERAR O PDF
+
+    try {
+        const createQueryResult = await createEmprestimoDAO(req, next);
+        /* PARA GERAR O PDF */
         const dadosEmprestimo: Emprestimo = req.body;
-        dadosEmprestimo.dateEmprestimo = parseDate(dadosEmprestimo.dateEmprestimo);
-        dadosEmprestimo.dateDevolucao = parseDate(dadosEmprestimo.dateDevolucao);
+        const comprovante = {
+            dataEmprestimo: parseDate(dadosEmprestimo.dataEmprestimo.toString()),
+            dataPrevisao: parseDate(dadosEmprestimo.dataPrevisao.toString()),
+            cpf: req.params.cpf,
+            idExemplar: req.body.idExemplar
+        };
 
         let imgSrc = path.join(__dirname, '..', '/book.png');
         imgSrc = path.normalize('file://' + imgSrc);
 
-        const auth = autenticador(dadosEmprestimo);
-
         const options = {
             format: 'A5',
         };
-        const obj = templates.pdfReciboEmprestimo(dadosEmprestimo, imgSrc, auth);
+        const obj = templates.pdfReciboEmprestimo(comprovante, imgSrc);
         pdf.create(obj, options).toStream((err: any, stream: any) => {
             const file = stream.path;
             res.setHeader('Content-type', 'application/pdf');
@@ -59,19 +60,16 @@ export async function createEmprestimo(req: Request, res: Response, next: NextFu
                 }
             });
         });
-    */
 
-    try {
-        const createQueryResult = await createEmprestimoDAO(req);
-        if (createQueryResult[0].affectedRows) {
-            return res.json ({
-                message: 'Emprestimo cadastrado com sucesso.'
-            });
-        } else {
-            return res.json ({
-                message: 'Emprestimo não cadastrado. Verifique.'
-            });
-        }
+        // if (createQueryResult[0].affectedRows) {
+        //     return res.json ({
+        //         message: 'Emprestimo cadastrado com sucesso.'
+        //     });
+        // } else {
+        //     return res.json ({
+        //         message: 'Emprestimo não cadastrado. Verifique.'
+        //     });
+        // }
 
     } catch (error) {
         resolveError(error, res);
@@ -88,14 +86,14 @@ export async function getEmprestimo(req: Request, res: Response, next: NextFunct
 
 export async function deleteEmprestimo(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
-        const deleteQueryResult = await deleteEmprestimoDAO(req);
+        const deleteQueryResult = await deleteEmprestimoDAO(req, next);
         if (deleteQueryResult[0].affectedRows) {
             return res.json ({
-                message: 'Emprestimo removido com sucesso'
+                message: 'Devolução realizada com sucesso'
             });
         } else {
             return res.json ({
-                message: 'Nenhum Emprestimo encontrado para ser removido'
+                message: 'Nenhum empréstimo encontrado'
             });
         }
     } catch (error) {

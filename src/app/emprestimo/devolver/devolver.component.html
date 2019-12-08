@@ -1,6 +1,6 @@
 <section class="devolver" fxLayout fxLayoutAlign="center">
     <mat-card class="mat-elevation-z3" fxFlex.xs="100%" fxFlex="400px">
-        <form #f="ngForm" (ngSubmit)="onSubmit(f.value)"> 
+        <form #f="ngForm" (ngSubmit)="onSubmit(f.value); f.resetForm()"> 
             <mat-card-title fxLayoutAlign="center">
                 Devolução:
             </mat-card-title>
@@ -11,7 +11,7 @@
                         #cpfInput
                         validaCPF 
                         ngModel 
-                        name="cpf" 
+                        name="CPF" 
                         placeholder="Digite CPF do usuário" 
                         required
                         minlength="11"
@@ -24,8 +24,8 @@
                     <input 
                         matInput 
                         ngModel 
-                        name="codExemplar" 
-                        placeholder="Digite o código localizador" 
+                        name="idExemplar" 
+                        placeholder="Digite o ID do exemplar" 
                         required
                     >
                     <mat-error>Campo obrigatório</mat-error>

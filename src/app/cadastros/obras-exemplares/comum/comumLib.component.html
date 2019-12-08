@@ -1,0 +1,316 @@
+<section *ngIf="!hideObraTipo" class="verificaLivros" fxLayout fxLayoutAlign="center">
+    <mat-card fxFlex.xs="100%" fxFlex="400px">
+        <mat-card-title fxLayoutAlign="center">
+            Cadastro de obras/exemplares:
+        </mat-card-title>
+        <form fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup]="grupoID" #obraTipoForm="ngForm" (ngSubmit)="onFormObraTipoSubmit(grupoID.value)">
+            <mat-card-content fxLayout="column" fxLayoutAlign="center">
+                <mat-form-field>
+                    <input 
+                        matInput
+                        required
+                        formControlName="identificador"
+                        name="identificador" 
+                        type="text" 
+                        [placeholder]="onIDValue()"
+                    >
+                    <mat-error>Preencha o campo</mat-error>
+                </mat-form-field>
+                <mat-card-actions fxLayoutAlign="center" fxLayoutGap="20px">
+                    <button 
+                        mat-raised-button
+                        type="button" 
+                        color="primary"
+                        (click)="voltar()"
+                    >
+                        Voltar
+                    </button>
+                    <button 
+                        mat-raised-button 
+                        type="submit" 
+                        color="primary"
+                        [disabled]="obraTipoForm.invalid"
+                    >
+                        Cadastrar
+                    </button>
+                </mat-card-actions>
+            </mat-card-content>
+        </form>
+    </mat-card>
+</section>
+
+<section *ngIf="hideObraTipo && !hideObra" class="obras" fxLayout fxLayoutAlign="center">
+    <mat-card fxFlex.xs="100%" fxFlex="400px">
+        <mat-card-title fxLayoutAlign="center">
+            Dados da obra:
+        </mat-card-title>
+        <!--Se tirar o fxLayoutAlign abaixo, os campos ficam mais largos-->
+        <form fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup]="grupoObra" #ngForm="ngForm" (ngSubmit)="onFormObrasSubmit(grupoObra.value)">
+            <mat-card-content fxLayout="column" fxLayoutAlign="center">
+                <mat-form-field>
+                    <input 
+                        matInput
+                        formControlName="identificador"
+                        name="identificador" 
+                        type="text" 
+                        disabled
+                        [placeholder]="onIDValue()"
+                    >
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
+                        matInput
+                        required
+                        formControlName= "titulo"
+                        name="titulo" 
+                        type="text" 
+                        placeholder="Digite o título"
+                    >
+                    <mat-error>Preencha o campo</mat-error>
+                </mat-form-field>
+                <mat-form-field >
+                    <input 
+                        matInput
+                        required
+                        formControlName= "autor"
+                        name="autor" 
+                        type="text" 
+                        placeholder="Digite o nome do autor"
+                    >
+                    <mat-error>Preencha o campo</mat-error>
+                </mat-form-field> 
+                <mat-form-field >
+                    <input 
+                        matInput
+                        required
+                        formControlName= "ano"
+                        name="ano" 
+                        type="text"
+                        maxlength="4"
+                        placeholder="Digite o ano"
+                    >
+                    <mat-error *ngIf="grupoObra.controls['ano'].touched && grupoObra.get('ano').hasError('required')">Preencha o campo</mat-error>
+                    <mat-error *ngIf="grupoObra.controls['ano'].touched && grupoObra.controls['ano'].hasError('minlength')">Preencha o campo com 4 dígitos</mat-error>
+                </mat-form-field> 
+                <mat-form-field>
+                    <input 
+                        matInput 
+                        required  
+                        formControlName="pais"
+                        name="pais"
+                        type="text" 
+                        placeholder="Digite o país"
+                    >
+                    <mat-error>Preencha o campo</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
+                        matInput 
+                        required  
+                        formControlName="editora"
+                        name="editora"
+                        type="text" 
+                        placeholder="Digite a editora"
+                    >
+                    <mat-error>Preencha o campo</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
+                        matInput 
+                        required  
+                        formControlName="idioma"
+                        name="idioma"
+                        type="text" 
+                        placeholder="Digite o idioma"
+                    >
+                    <mat-error>Preencha o campo</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
+                        matInput 
+                        required  
+                        formControlName="CDD"
+                        name="CDD"
+                        type="text" 
+                        placeholder="Digite o CDD"
+                    >
+                    <mat-error>Preencha o campo</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
+                        matInput
+                        formControlName="descricao"
+                        name="descricao" 
+                        type="text" 
+                        placeholder="Observações"
+                    >
+                </mat-form-field>
+                <mat-card-actions fxLayoutAlign="center" fxLayoutGap="20px">
+                    <button 
+                        mat-raised-button
+                        type="button" 
+                        color="primary"
+                        (click)="onVoltarObra()"
+                    >
+                        Voltar
+                    </button>
+                    <button 
+                        *ngIf="!updateObra" 
+                        mat-raised-button 
+                        type="submit" 
+                        color="primary"
+                        [disabled]="ngForm.invalid"
+                    >
+                        Cadastrar
+                    </button>
+                    <button
+                        *ngIf="updateObra" 
+                        mat-raised-button 
+                        type="submit" 
+                        color="primary"
+                        [disabled]="ngForm.invalid"
+                    >
+                        Atualizar
+                    </button>
+                    <button
+                        *ngIf="updateObra" 
+                        mat-raised-button 
+                        (click)="onStepExemplar()"
+                        color="primary"
+                    >
+                        Seguir sem atualizar
+                    </button>
+                </mat-card-actions>
+            </mat-card-content>
+        </form>
+    </mat-card>
+</section>
+
+<section *ngIf="hideObraTipo && !hideExemplar" class="livros" fxLayout fxLayoutAlign="center">
+    <mat-card fxFlex.xs="100%" fxFlex="400px">
+        <mat-card-title fxLayoutAlign="center">
+            Dados do exemplar:
+        </mat-card-title>
+        <!--Se tirar o fxLayoutAlign abaixo, os campos ficam mais largos-->
+        <form fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup]="grupoExemplar" #exemplarForm="ngForm" (ngSubmit)="onFormExemplarSubmit(grupoExemplar.value)">
+            <mat-card-content fxLayout="column" fxLayoutAlign="center">
+                <mat-form-field>
+                    <input 
+                        matInput
+                        formControlName="identificador"
+                        name="identificador" 
+                        type="text" 
+                        [placeholder]="onIDValue()"
+                        disabled
+                    >
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
+                        matInput
+                        formControlName= "titulo"
+                        name="titulo" 
+                        type="text" 
+                        placeholder="Título"
+                        disabled
+                    >
+                </mat-form-field>
+                <mat-form-field >
+                    <input 
+                        matInput
+                        formControlName= "autor"
+                        name="autor" 
+                        type="text" 
+                        placeholder="Autor"
+                        disabled
+                    >
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
+                        matInput
+                        required
+                        formControlName="local"
+                        name="local" 
+                        type="text" 
+                        placeholder="Código de localização"
+                    >
+                    <mat-error>Preencha o campo</mat-error>            
+                </mat-form-field>
+                <mat-form-field *ngIf="tipoObra=='1'"> 
+                    <input 
+                        matInput
+                        formControlName="tomo"
+                        name="tomo" 
+                        type="text" 
+                        placeholder="Tomo"
+                    >
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
+                        required 
+                        matInput
+                        formControlName="numExemplar"
+                        name="numExemplar" 
+                        type="text" 
+                        placeholder="Número do exemplar"
+                    >
+                    <mat-error>Preencha o campo</mat-error> 
+                </mat-form-field>         
+                <mat-form-field >
+                    <mat-select 
+                        formControlName="status" 
+                        name="status" 
+                        placeholder="Status de obra"
+                    >
+                        Selecione o status do exemplar:
+                        <mat-option value="1">
+                            Ativo
+                        </mat-option>
+                        <mat-option value="2">
+                            Perdido
+                        </mat-option>
+                        <mat-option value="3">
+                            Danificado
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>  
+                        <span *ngIf="!grupoExemplar.get('status').valid && grupoExemplar.get('status').touched || grupoExemplar.submitted">Escolha uma opção</span>  
+                    </mat-error>  
+                </mat-form-field>
+                <mat-form-field>
+                    <input
+                        matInput
+                        required
+                        formControlName="dataAquisicao"
+                        [matDatepicker]="picker"
+                        name="dataAquisicao"
+                        placeholder="Data de aquisição"
+                        >
+                    <mat-datepicker-toggle 
+                        matSuffix 
+                        [for]="picker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error>Selecione a data de aquisição</mat-error>
+                </mat-form-field>
+                <mat-card-actions fxLayoutAlign="center" fxLayoutGap="20px">
+                    <button 
+                        mat-raised-button
+                        type="button" 
+                        color="primary"
+                        (click)="onVoltarExemplar()"
+                    >
+                        Voltar
+                    </button>
+                    <button
+                        mat-raised-button 
+                        type="submit" 
+                        color="primary"
+                        [disabled]="exemplarForm.invalid"
+                    >
+                        Cadastrar
+                    </button>
+                </mat-card-actions>
+            </mat-card-content>
+        </form>
+    </mat-card>
+</section>

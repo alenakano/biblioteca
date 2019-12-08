@@ -19,11 +19,8 @@ import { EmprestimoModule } from './emprestimo/emprestimo.module';
 import { HeaderComponent } from './navegacao/header/header.component';
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
-import { LivroService } from './cadastros/obras/livro/livro.service';
+import { ComumLibService } from './cadastros/obras-exemplares/comum/comumLib.service';
 import { LoginComponent } from './auth/login/login.component';
-import { MidiaService } from './cadastros/obras/midia/midia.service';
-import { OutrasObrasService } from './cadastros/obras/outras-obras/outras-obras-service';
-import { PeriodicoService } from './cadastros/obras/periodico/periodico.service';
 import { PesquisaModule } from './pesquisa/pesquisa.module';
 import { reducers } from './app.reducer';
 import { SharedModule } from './util/shared.module';
@@ -58,10 +55,7 @@ import { UsuariosService } from './cadastros/usuarios/usuarios.service';
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
     AuthService,
-    LivroService,
-    PeriodicoService,
-    MidiaService,
-    OutrasObrasService,
+    ComumLibService,
     SituacaoService,
     SubscriptionHandlerService,
     UsuariosService,
