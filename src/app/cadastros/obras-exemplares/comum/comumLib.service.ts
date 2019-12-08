@@ -57,7 +57,6 @@ export class ComumLibService {
 
     cadastrarExemplar(exemplar: ExemplarCadastro): Observable<any> {
         const body = exemplar;
-        console.log(exemplar)
         const request = this.url + '/cadastrarExemplar/';
         return this.http
             .post(request, body);

@@ -1,5 +1,5 @@
 export class ExemplarCadastro {
-    idExemplar?: number;
+    idExemplar: number;
     idObra: number;
     numExemplar: number;
     local: string;

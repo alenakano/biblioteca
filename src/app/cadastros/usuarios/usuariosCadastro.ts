@@ -8,8 +8,6 @@ export class UsuariosCadastro {
     email: string;
     cidade: string;
     status = 0;
-    dataBloqueio?: Date;
-    dataDesbloqueio?: Date;
 
     clearUser(): void {
         this.idUsuario = null;
@@ -21,8 +19,6 @@ export class UsuariosCadastro {
         this.email = null;
         this.cidade = null;
         this.status = 0;
-        this.dataBloqueio = null;
-        this.dataDesbloqueio = null;
     }
 }
 

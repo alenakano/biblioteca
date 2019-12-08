@@ -19,6 +19,7 @@ export class SituacaoComponent implements OnInit, OnDestroy {
   public situacao: FormGroup;
   public showSituacao: boolean;
   public userSituacao: Situacao = new Situacao();
+  public cpf: string;
 
   cadastroSubscription: Subscription;
   updateSubscription: Subscription;
@@ -31,8 +32,8 @@ export class SituacaoComponent implements OnInit, OnDestroy {
     this.situacao = this.fb.group({
       cpf: [null, Validators.required],
       status: [null, Validators.required],
-      date_block: [null, null],
-      date_unblock: [null, null],
+      dataBloqueio: [null, null],
+      dataDesbloqueio: [null, null],
     });
   }
 
@@ -51,9 +52,8 @@ export class SituacaoComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm): void {
-    let userConsulta: Situacao = new Situacao();
-    userConsulta = form.value;
-    this.cadastroSubscription = this.situacaoService.pesquisar(userConsulta).subscribe(
+    this.cpf = form.value.cpf;
+    this.cadastroSubscription = this.situacaoService.pesquisar(this.cpf).subscribe(
       value => {
         this.showSituacao = true;
         this.uiService.showSnackbar('Usuário encontrado. Atualize a situação.', null, {duration: 3000});
@@ -61,8 +61,8 @@ export class SituacaoComponent implements OnInit, OnDestroy {
         this.situacao = this.fb.group({
           cpf: new FormControl({ value: value.cpf, disabled: true }),
           status: [value.status, Validators.required],
-          date_block: [value.date_block, null],
-          date_unblock: [value.date_unblock, null],
+          dataBloqueio: [value.dataBloqueio, null],
+          dataDesbloqueio: [value.dataDesbloqueio, null],
         });
       },
       error => {
@@ -73,9 +73,13 @@ export class SituacaoComponent implements OnInit, OnDestroy {
   }
 
   onSituacaoSubmit(situacao: Situacao) {
-    situacao.cpf = this.userSituacao.cpf;
-    situacao = this.validateDate(situacao);
-    if (Date.parse(this.userSituacao.dataDesbloqueio.toString()) >= Date.parse(this.userSituacao.dataDesbloqueio.toString())) {
+    this.userSituacao.status = situacao.status;
+    this.userSituacao.dataBloqueio = situacao.dataBloqueio.format('DD/MM/YYYY HH:mm:ss');
+    this.userSituacao.dataDesbloqueio = situacao.dataDesbloqueio.format('DD/MM/YYYY HH:mm:ss');
+    this.userSituacao.cpf = this.cpf;
+    if (
+      Date.parse(this.userSituacao.dataBloqueio) >=
+      Date.parse(this.userSituacao.dataDesbloqueio)) {
       this.uiService.showSnackbar(
         'Data de fim de multa menor da data de início de multa. Por favor, tente novamente.',
         null ,
@@ -92,14 +96,14 @@ export class SituacaoComponent implements OnInit, OnDestroy {
 
   validateDate(situacao: Situacao): Situacao {
     const dataAtual = new Date();
-    if (Date.parse(this.userSituacao.dataDesbloqueio.toString()) <= dataAtual.getTime()) {
+    if (Date.parse(situacao.dataDesbloqueio.format('DD/MM/YYYY HH:mm:ss')) <= dataAtual.getTime()) {
       this.userSituacao.status = 0;
-      this.userSituacao.dataDesbloqueio = undefined;
+      this.userSituacao.dataBloqueio = undefined;
       this.userSituacao.dataDesbloqueio = undefined;
       return this.userSituacao;
     } else {
       this.userSituacao.status = 1;
-      this.userSituacao.dataDesbloqueio = situacao.dataDesbloqueio;
+      this.userSituacao.dataBloqueio = situacao.dataBloqueio;
       this.userSituacao.dataDesbloqueio = situacao.dataDesbloqueio;
       return this.userSituacao;
     }

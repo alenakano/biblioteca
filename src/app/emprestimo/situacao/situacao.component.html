@@ -19,7 +19,7 @@
                         placeholder="Digite o CPF"
                     >
                     <mat-hint align="end">{{cpfInput.value?.length}}/11</mat-hint>
-                    <mat-error *ngIf="cpfInput.hasError('required')">Deve possuir no mínimo 6 dígitos</mat-error>
+                    <mat-error *ngIf="cpfInput.hasError('required')">Deve possuir 11 dígitos</mat-error>
                     <mat-error *ngIf="!cpfInput.hasError('required')">Digite CPF válido</mat-error>
                 </mat-form-field>
                 <mat-card-actions fxLayoutAlign="center">
@@ -50,7 +50,7 @@
                     <input 
                         matInput
                         required
-                        formControlName= "cpf"
+                        formControlName="cpf"
                         name="cpf" 
                         type="text" 
                         disabled
@@ -70,8 +70,8 @@
                         matInput
                         [matDatepicker]="picker"
                         [max]="maxDate"
-                        formControlName="date_block"
-                        name="date_block"
+                        formControlName="dataBloqueio"
+                        name="dataBloqueio"
                         placeholder="Data de bloqueio"
                         >
                     <mat-datepicker-toggle 
@@ -84,9 +84,9 @@
                 <mat-form-field>
                     <input
                         matInput
-                        formControlName="date_unblock"
+                        formControlName="dataDesbloqueio"
                         [matDatepicker]="picker2"
-                        name="date_unblock"
+                        name="dataDesbloqueio"
                         placeholder="Data de desbloqueio"
                         >
                     <mat-datepicker-toggle 
@@ -109,7 +109,14 @@
                         mat-raised-button 
                         type="submit" 
                         color="primary"
-                        [disabled]="fInfos.invalid"
+                        [disabled]="
+                            (situacao.get('status').value==1 && 
+                            !situacao.get('dataBloqueio').dirty && 
+                            !situacao.get('dataDesbloqueio').dirty) ||
+                            (situacao.get('status').value==0 && 
+                            (situacao.get('dataBloqueio').dirty || 
+                            situacao.get('dataDesbloqueio').dirty))
+                            "
                     >
                         Atualizar
                 </button>

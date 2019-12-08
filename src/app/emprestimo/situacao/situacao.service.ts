@@ -21,8 +21,8 @@ export class SituacaoService {
         this.headers.append('Content-Type', 'application/json');
     }
 
-    pesquisar(usuario: Situacao): Observable<any> {
-        const request = this.url + '/' + usuario.cpf;
+    pesquisar(cpf: string): Observable<any> {
+        const request = this.url + '/' + cpf;
         return this.http
             .get(request);
     }

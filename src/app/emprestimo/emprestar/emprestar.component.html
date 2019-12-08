@@ -11,7 +11,7 @@
                         #cpfInput
                         validaCPF 
                         ngModel 
-                        name="cpf" 
+                        name="CPF" 
                         placeholder="Digite CPF do usuário" 
                         required
                         minlength="11"
@@ -24,9 +24,9 @@
                         matInput
                         ngModel
                         required
-                        name="codExemplar" 
-                        type="text" 
-                        placeholder="Digite o código localizador"
+                        name="idExemplar" 
+                        type="number" 
+                        placeholder="Digite o código do exemplar"
                     >
                     <mat-error>Preencha o campo</mat-error>
                 </mat-form-field>
@@ -34,12 +34,13 @@
                 <mat-form-field>
                     <input
                         matInput
-                        ngModel
+                        [ngModel]="emprestimo"
                         required
                         [min]="minDate"
                         [matDatepicker]="picker"
-                        name="dateEmprestimo"
+                        name="dataEmprestimo"
                         placeholder="Data do empréstimo"
+                        disabled
                         >
                     <mat-datepicker-toggle 
                         matSuffix 
@@ -52,12 +53,13 @@
                 <mat-form-field>
                     <input
                         matInput
-                        ngModel
+                        [ngModel]="devolucao"
                         required
                         [matDatepicker]="picker2"
                         [min]="minDate"
-                        name="dateDevolucao"
+                        name="dataPrevisao"
                         placeholder="Data para devolução"
+                        disabled
                         >
                     <mat-datepicker-toggle 
                         matSuffix 
@@ -65,11 +67,6 @@
                     ></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
                     <mat-error>Selecione a data para devolução</mat-error>
-                </mat-form-field>
-
-                <mat-form-field>
-                    <input matInput ngModel name="Usuário" placeholder="Digite o código da obra" required>
-                    <mat-error>Campo obrigatório</mat-error>
                 </mat-form-field>
                 <mat-card-actions fxLayoutAlign="center">
                     <button 

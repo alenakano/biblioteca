@@ -1,6 +1,6 @@
 export class Situacao {
     cpf: string;
     status: number;
-    dataBloqueio: Date;
-    dataDesbloqueio: Date;
+    dataBloqueio: any;
+    dataDesbloqueio: any;
 }

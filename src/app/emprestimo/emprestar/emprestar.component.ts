@@ -13,6 +13,8 @@ export class EmprestarComponent implements OnDestroy, OnInit {
 
   emprestimoSubscription: Subscription;
   minDate: Date;
+  emprestimo: Date = new Date();
+  devolucao: Date = new Date();
 
   constructor(
     private transacaoService: TransacaoService,
@@ -21,6 +23,7 @@ export class EmprestarComponent implements OnDestroy, OnInit {
 
   ngOnInit(): void {
     this.minDate = new Date();
+    this.devolucao = new Date(this.devolucao.setDate(this.devolucao.getDate() + 7));
   }
 
   ngOnDestroy(): void {
@@ -28,10 +31,14 @@ export class EmprestarComponent implements OnDestroy, OnInit {
   }
 
   onSubmit(form: any): void {
-    const emprestimo: Emprestimo = form;
-    emprestimo.dateDevolucao = form.dateDevolucao.format();
-    emprestimo.dateEmprestimo = form.dateEmprestimo.format();
-    this.emprestimoSubscription = this.transacaoService.emprestar(form).subscribe(
+    const emprestimo: Emprestimo = new Emprestimo();
+    emprestimo.dataEmprestimo = form.dataEmprestimo;
+    emprestimo.dataPrevisao = form.dataPrevisao;
+    emprestimo.idExemplar = form.idExemplar;
+    const cpf = form.CPF;
+    emprestimo.dataPrevisao = form.dataPrevisao;
+    emprestimo.dataEmprestimo = form.dataEmprestimo;
+    this.emprestimoSubscription = this.transacaoService.emprestar(emprestimo, cpf).subscribe(
       x => {
         // It is necessary to create a new blob object with mime-type explicitly set
           // otherwise only Chrome works like it should
@@ -60,7 +67,8 @@ export class EmprestarComponent implements OnDestroy, OnInit {
               link.remove();
           }, 100);
       },
-      error => this.uiService.showSnackbar(error.message, null, {duration: 3000}),
+      error => {
+        this.uiService.showSnackbar('Falha ao realizar empréstimo. Verifique se título já está emprestado', null, {duration: 3000})},
     );
   }
 
