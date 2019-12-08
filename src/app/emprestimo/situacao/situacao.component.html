@@ -110,13 +110,12 @@
                         type="submit" 
                         color="primary"
                         [disabled]="
-                            (situacao.get('status').value==1 && 
-                            !situacao.get('dataBloqueio').dirty && 
-                            !situacao.get('dataDesbloqueio').dirty) ||
-                            (situacao.get('status').value==0 && 
-                            (situacao.get('dataBloqueio').dirty || 
-                            situacao.get('dataDesbloqueio').dirty))
-                            "
+                            (situacao.get('status').value === 1 && 
+                            (!situacao.get('dataBloqueio').value || 
+                            !situacao.get('dataDesbloqueio').value)) ||
+                            (situacao.get('status').value === 0 && 
+                            (situacao.get('dataBloqueio').value ||
+                            situacao.get('dataDesbloqueio').value))"
                     >
                         Atualizar
                 </button>

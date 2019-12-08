@@ -58,7 +58,6 @@ export class SituacaoComponent implements OnInit, OnDestroy {
         this.showSituacao = true;
         this.uiService.showSnackbar('Usuário encontrado. Atualize a situação.', null, {duration: 3000});
         this.userSituacao = value;
-        console.log('VALUE', value)
         this.situacao = this.fb.group({
           cpf: new FormControl({ value: value.cpf, disabled: true }),
           status: [value.status, Validators.required],
@@ -75,8 +74,13 @@ export class SituacaoComponent implements OnInit, OnDestroy {
 
   onSituacaoSubmit(situacao: Situacao) {
     this.userSituacao.status = situacao.status;
-    this.userSituacao.dataBloqueio = situacao.dataBloqueio.format('DD/MM/YYYY HH:mm:ss');
-    this.userSituacao.dataDesbloqueio = situacao.dataDesbloqueio.format('DD/MM/YYYY HH:mm:ss');
+    if (this.userSituacao.status == 1) {
+      this.userSituacao.dataBloqueio = situacao.dataBloqueio.format('DD-MM-YYYY HH:mm:ss');
+      this.userSituacao.dataDesbloqueio = situacao.dataDesbloqueio.format('DD-MM-YYYY HH:mm:ss');
+    } else {
+      this.userSituacao.dataDesbloqueio = '';
+      this.userSituacao.dataBloqueio = '';
+    }
     this.userSituacao.cpf = this.cpf;
     if (
       Date.parse(this.userSituacao.dataBloqueio) >=
