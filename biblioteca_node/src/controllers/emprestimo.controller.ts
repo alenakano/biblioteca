@@ -28,41 +28,43 @@ function parseDate(date: string): string {
 }
 
 function autenticador(dados: Emprestimo): string {
-    return Buffer.from(dados.cpf + dados.codExemplar).toString('base64');
+    return 'teste';
+    // return Buffer.from(dados.cpf + dados.idExemplar).toString('base64');
 }
 
 export async function createEmprestimo(req: Request, res: Response, next: NextFunction): Promise<any> {
-    /* PARA GERAR O PDF
-        const dadosEmprestimo: Emprestimo = req.body;
-        dadosEmprestimo.dateEmprestimo = parseDate(dadosEmprestimo.dateEmprestimo);
-        dadosEmprestimo.dateDevolucao = parseDate(dadosEmprestimo.dateDevolucao);
-
-        let imgSrc = path.join(__dirname, '..', '/book.png');
-        imgSrc = path.normalize('file://' + imgSrc);
-
-        const auth = autenticador(dadosEmprestimo);
-
-        const options = {
-            format: 'A5',
-        };
-        const obj = templates.pdfReciboEmprestimo(dadosEmprestimo, imgSrc, auth);
-        pdf.create(obj, options).toStream((err: any, stream: any) => {
-            const file = stream.path;
-            res.setHeader('Content-type', 'application/pdf');
-            res.setHeader('Content-disposition', 'attachment; filename=' + file);
-            // res.setHeader('Access-Control-Expose-Headers', 'Location');
-            res.download(file, (erro: any) => {
-                if (erro) {
-                    console.log(erro);
-                } else {
-                    console.log('Efetuado com sucesso');
-                }
-            });
-        });
-    */
 
     try {
         const createQueryResult = await createEmprestimoDAO(req);
+        /* PARA GERAR O PDF
+            const dadosEmprestimo: Emprestimo = req.body;
+            dadosEmprestimo.dateEmprestimo = parseDate(dadosEmprestimo.dateEmprestimo);
+            dadosEmprestimo.dateDevolucao = parseDate(dadosEmprestimo.dateDevolucao);
+
+            let imgSrc = path.join(__dirname, '..', '/book.png');
+            imgSrc = path.normalize('file://' + imgSrc);
+
+            const auth = autenticador(dadosEmprestimo);
+
+            const options = {
+                format: 'A5',
+            };
+            const obj = templates.pdfReciboEmprestimo(dadosEmprestimo, imgSrc, auth);
+            pdf.create(obj, options).toStream((err: any, stream: any) => {
+                const file = stream.path;
+                res.setHeader('Content-type', 'application/pdf');
+                res.setHeader('Content-disposition', 'attachment; filename=' + file);
+                // res.setHeader('Access-Control-Expose-Headers', 'Location');
+                res.download(file, (erro: any) => {
+                    if (erro) {
+                        console.log(erro);
+                    } else {
+                        console.log('Efetuado com sucesso');
+                    }
+                });
+            });
+        */
+
         if (createQueryResult[0].affectedRows) {
             return res.json ({
                 message: 'Emprestimo cadastrado com sucesso.'

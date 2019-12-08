@@ -1,6 +1,7 @@
 export interface Emprestimo {
-    cpf: string;
-    codExemplar: string;
-    dateEmprestimo: string;
-    dateDevolucao: string;
+    idEmprestimo: string;
+    idUsuario: number;
+    idExemplar: number;
+    dataEmprestimo: Date;
+    dataPrevisao: Date;
 }

@@ -13,7 +13,6 @@ export async function pesquisaObrasDAO(req: Request): Promise<any> {
         'SELECT * FROM obras WHERE author LIKE ? OR title like ? AND category = ?',
         [obraNome, obraNome, obraTipo]
     );
-    console.log('PESQUISA OBRAS --->', getObras[0]);
     return getObras[0];
 }
 

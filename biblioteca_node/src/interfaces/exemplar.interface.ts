@@ -1,5 +1,5 @@
 export interface Exemplar {
-    idExemplar?: number;
+    idExemplar: number;
     idObra: number;
     numExemplar: number;
     local: string;

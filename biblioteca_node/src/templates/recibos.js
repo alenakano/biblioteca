@@ -25,7 +25,7 @@ module.exports = {
         `             
     },
 
-    pdfReciboEmprestimo: function (dados, img, aut) { 
+    pdfReciboEmprestimo: function (dados, img, aut, cpf) { 
         return `
         <div id='pageHeader'>
             <img 
@@ -41,10 +41,7 @@ module.exports = {
         <div style="margin-top: 80px">
             <h2 style="font-size: 1.2em; text-align:center">Recibo de empréstimo</h2>
             <p style="font-size: 0.6em; text-align:center"> 
-                Identificação do usuário: <span style="font-weight: bold;">${dados.cpf}</span><br> 
-                Código do exemplar: <span style="font-weight: bold;">${dados.codExemplar}</span><br> 
-                Código do empréstimo: <span style="font-weight: bold;">${dados.dateEmprestimo}</span><br> 
-                Código da devolução: <span style="font-weight: bold;">${dados.dateDevolucao}</span><br>
+                Identificação do usuário: ght: bold;">${dados.dataPrevisao}</span><br>
                 Autenticador: <span style="font-weight: bold;">${aut}</span>
             </p>
         </div>

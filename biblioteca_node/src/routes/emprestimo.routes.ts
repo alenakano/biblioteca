@@ -3,14 +3,14 @@ import { getEmprestimo, createEmprestimo, deleteEmprestimo, updateEmprestimo } f
 
 const router = Router();
 
-router.route('/')
+router.route('/:cpf')
     .post(createEmprestimo);
 
-router.route('/:cpf/:codExemplar')
+router.route('/:cpf/:idExemplar')
     .delete(deleteEmprestimo)
     .put(updateEmprestimo);
 
-router.route('/:cpf/:codExemplar')
+router.route('/:cpf/:idExemplar')
     .get(getEmprestimo);
 
 export default router;

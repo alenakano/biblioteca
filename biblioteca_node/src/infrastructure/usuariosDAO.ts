@@ -25,14 +25,14 @@ export async function createUsuariosDAO(req: Request): Promise<any> {
 export async function deleteUsuariosDAO(id: string): Promise<any> {
     const deleteId = id;
     const connDeleteUsuarios = await openConnection();
-    const deleteUsuarios = await connDeleteUsuarios.query('DELETE FROM usuario WHERE cpf = ?', [ deleteId ]);
+    const deleteUsuarios = await connDeleteUsuarios.query('DELETE FROM usuario WHERE CPF = ?', [ deleteId ]);
     return deleteUsuarios;
 }
 
 export async function getUsuarioDAO(id: string): Promise<any> {
     const getId = id;
     const connGetUsuarios = await openConnection();
-    const getUsuarios = await connGetUsuarios.query('SELECT * FROM usuario WHERE cpf = ?', [ getId ]);
+    const getUsuarios = await connGetUsuarios.query('SELECT * FROM usuario WHERE CPF = ?', [ getId ]);
     return getUsuarios[0];
 }
 
@@ -40,14 +40,14 @@ export async function updateUsuariosDAO(req: Request): Promise<any> {
     const upUsuarios: Usuarios = req.body;
     const upId = req.params.cpf;
     const connUpdateUsuarios = await openConnection();
-    const updateUsuarios = await connUpdateUsuarios.query('UPDATE usuario set ? WHERE cpf = ?', [upUsuarios, upId]);
+    const updateUsuarios = await connUpdateUsuarios.query('UPDATE usuario set ? WHERE CPF = ?', [upUsuarios, upId]);
     return updateUsuarios;
 }
 
 export async function getUsuarioBloqueioDAO(id: string): Promise<any> {
     const getId = id;
     const connGetUsuarios = await openConnection();
-    const getUsuarios = await connGetUsuarios.query('SELECT * FROM usuario WHERE cpf = ?', [ getId ]);
+    const getUsuarios = await connGetUsuarios.query('SELECT * FROM usuario WHERE CPF = ?', [ getId ]);
     const parsed: Bloqueio = await parseResponse(getUsuarios);
     return parsed;
 }
@@ -56,7 +56,7 @@ export async function updateUsuarioBloqueioDAO(req: Request): Promise<any> {
     const upUsuarios: Usuarios = req.body;
     const upId = req.params.cpf;
     const connUpdateUsuarios = await openConnection();
-    const updateUsuarios = await connUpdateUsuarios.query('UPDATE usuario set ? WHERE cpf = ?', [upUsuarios, upId]);
+    const updateUsuarios = await connUpdateUsuarios.query('UPDATE usuario set ? WHERE CPF = ?', [upUsuarios, upId]);
     return updateUsuarios;
 }
 
@@ -64,16 +64,16 @@ async function parseResponse(userData: any) {
     const parsedResp: Bloqueio = new Bloqueio();
     userData = userData[0] as Usuarios;
     parsedResp.cpf = userData[0].cpf;
-    let date = new Date();
-    if (Date.parse(userData[0].date_unblock) <= date.getTime()) {
-        parsedResp.status = 0;
-        parsedResp.date_block = undefined;
-        parsedResp.date_unblock = undefined;
+    const date = new Date();
+    if (Date.parse(userData[0].dataDesbloqueio) <= date.getTime()) {
+        parsedResp.status = 1;
+        parsedResp.dataBloqueio = undefined;
+        parsedResp.dataDesbloqueio = undefined;
         return parsedResp;
     } else {
-        parsedResp.status = 1;
-        parsedResp.date_block = userData[0].date_block;
-        parsedResp.date_unblock = userData[0].date_unblock;
+        parsedResp.status = 0;
+        parsedResp.dataBloqueio = userData[0].dataBloqueio;
+        parsedResp.dataDesbloqueio = userData[0].dataDesbloqueio;
         return parsedResp;
     }
 }
