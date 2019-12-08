@@ -64,7 +64,7 @@
                         formControlName= "titulo"
                         name="titulo" 
                         type="text" 
-                        placeholder="Digite o nome do livro"
+                        placeholder="Digite o título"
                     >
                     <mat-error>Preencha o campo</mat-error>
                 </mat-form-field>
@@ -210,7 +210,7 @@
                         formControlName= "titulo"
                         name="titulo" 
                         type="text" 
-                        placeholder="Nome do livro"
+                        placeholder="Título"
                         disabled
                     >
                 </mat-form-field>
@@ -220,7 +220,7 @@
                         formControlName= "autor"
                         name="autor" 
                         type="text" 
-                        placeholder="Nome do autor"
+                        placeholder="Autor"
                         disabled
                     >
                 </mat-form-field>
@@ -235,7 +235,7 @@
                     >
                     <mat-error>Preencha o campo</mat-error>            
                 </mat-form-field>
-                <mat-form-field>
+                <mat-form-field *ngIf="tipoObra=='1'"> 
                     <input 
                         matInput
                         formControlName="tomo"

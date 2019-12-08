@@ -58,6 +58,7 @@ export class SituacaoComponent implements OnInit, OnDestroy {
         this.showSituacao = true;
         this.uiService.showSnackbar('Usuário encontrado. Atualize a situação.', null, {duration: 3000});
         this.userSituacao = value;
+        console.log('VALUE', value)
         this.situacao = this.fb.group({
           cpf: new FormControl({ value: value.cpf, disabled: true }),
           status: [value.status, Validators.required],

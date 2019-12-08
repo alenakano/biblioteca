@@ -26,7 +26,7 @@
                         required
                         name="idExemplar" 
                         type="number" 
-                        placeholder="Digite o código do exemplar"
+                        placeholder="Digite o ID do exemplar"
                     >
                     <mat-error>Preencha o campo</mat-error>
                 </mat-form-field>
@@ -40,7 +40,6 @@
                         [matDatepicker]="picker"
                         name="dataEmprestimo"
                         placeholder="Data do empréstimo"
-                        disabled
                         >
                     <mat-datepicker-toggle 
                         matSuffix 
@@ -59,7 +58,6 @@
                         [min]="minDate"
                         name="dataPrevisao"
                         placeholder="Data para devolução"
-                        disabled
                         >
                     <mat-datepicker-toggle 
                         matSuffix 
