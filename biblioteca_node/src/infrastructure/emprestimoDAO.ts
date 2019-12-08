@@ -12,7 +12,7 @@ async function openConnection(): Promise<Pool> {
     return await connect();
 }
 
-export async function createEmprestimoDAO(req: Request): Promise<any> {
+export async function createEmprestimoDAO(req: Request, next: NextFunction): Promise<any> {
     const newEmprestimo: Emprestimo = req.body;
 
     const cpf = req.params.cpf;
@@ -23,6 +23,10 @@ export async function createEmprestimoDAO(req: Request): Promise<any> {
     );
 
     if (rows[0].idUsuario) {
+        if (rows[0].status == 1) {
+            next(new HttpException(494, 'Usuário bloqueador para emprestar'));
+            return;
+        }
         newEmprestimo.idUsuario = rows[0].idUsuario;
         const query = 'INSERT INTO emprestimo (idExemplar, idUsuario, dataEmprestimo, dataPrevisao) VALUES (?, ?, ?, ?)';
         const createEmprestimo = await connCreateEmprestimo.execute(query,

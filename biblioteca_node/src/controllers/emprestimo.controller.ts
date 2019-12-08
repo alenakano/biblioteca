@@ -30,7 +30,7 @@ function parseDate(date: string): string {
 export async function createEmprestimo(req: Request, res: Response, next: NextFunction): Promise<any> {
 
     try {
-        const createQueryResult = await createEmprestimoDAO(req);
+        const createQueryResult = await createEmprestimoDAO(req, next);
         /* PARA GERAR O PDF */
         const dadosEmprestimo: Emprestimo = req.body;
         const comprovante = {
