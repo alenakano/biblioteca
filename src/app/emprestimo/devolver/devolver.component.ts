@@ -65,7 +65,7 @@ export class DevolverComponent implements OnDestroy, OnInit {
         this.uiService.showSnackbar('Erro na entrega. Bloquear usuário e efetuar a devolução novamente', null, {duration: 3000});
         break;
       }
-      default: this.uiService.showSnackbar('Problemas de conexão. Por favor, tente mais tarde', null, {duration: 3000});
+      default: this.uiService.showSnackbar('Dados incorretos. Tente novamente.', null, {duration: 3000});
     }
   }
 }

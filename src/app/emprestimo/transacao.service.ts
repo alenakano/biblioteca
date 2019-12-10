@@ -35,7 +35,7 @@ export class TransacaoService {
     devolver(devolucao: Devolucao): Observable<any> {
         const request = this.url;
         return this.http
-            .request('delete', request, {body: devolucao});
+            .request('put', request, {body: devolucao});
     }
 
 }

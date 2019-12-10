@@ -21,16 +21,24 @@
                 </mat-form-field>
                 <mat-form-field>
                     <input 
-                        matInput
-                        ngModel
+                        matInput 
+                        ngModel 
+                        name="identificador" 
+                        placeholder="Identificador da obra" 
                         required
-                        name="idExemplar" 
-                        type="number" 
-                        placeholder="Digite o ID do exemplar"
                     >
-                    <mat-error>Preencha o campo</mat-error>
+                    <mat-error>Campo obrigatório</mat-error>
                 </mat-form-field>
-
+                <mat-form-field>
+                    <input 
+                        matInput 
+                        ngModel 
+                        name="numExemplar" 
+                        placeholder="Digite o número do exemplar" 
+                        required
+                    >
+                    <mat-error>Campo obrigatório</mat-error>
+                </mat-form-field>
                 <mat-form-field>
                     <input
                         matInput

@@ -20,12 +20,46 @@
                     <mat-hint align="end">{{cpfInput.value?.length}}/11</mat-hint>
                     <mat-error>Digite CPF válido</mat-error>
                 </mat-form-field>
+                <mat-form-field >
+                    <mat-select 
+                        ngModel
+                        name="status" 
+                        placeholder="Status de obra"
+                    >
+                        Selecione o status de entrega do exemplar:
+                        <mat-option value="0">
+                            Ativo
+                        </mat-option>
+                        <mat-option value="0">
+                            Emprestado
+                        </mat-option>
+                        <mat-option value="2">
+                            Exemplar perdido
+                        </mat-option>
+                        <mat-option value="3">
+                            Exemplar danificado
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>  
+                        Escolha uma opção
+                    </mat-error>  
+                </mat-form-field>
                 <mat-form-field>
                     <input 
                         matInput 
                         ngModel 
-                        name="idExemplar" 
-                        placeholder="Digite o ID do exemplar" 
+                        name="identificador" 
+                        placeholder="Identificador da obra" 
+                        required
+                    >
+                    <mat-error>Campo obrigatório</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
+                        matInput 
+                        ngModel 
+                        name="numExemplar" 
+                        placeholder="Digite o número do exemplar" 
                         required
                     >
                     <mat-error>Campo obrigatório</mat-error>

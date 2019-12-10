@@ -38,6 +38,8 @@ export class EmprestarComponent implements OnDestroy, OnInit {
     emprestimo.dataPrevisao = form.dataPrevisao;
     emprestimo.idExemplar = form.idExemplar;
     const cpf = form.CPF;
+    emprestimo.identificador = form.identificador;
+    emprestimo.numExemplar = form.numExemplar;
     emprestimo.dataPrevisao = form.dataPrevisao;
     emprestimo.dataEmprestimo = form.dataEmprestimo;
     this.emprestimoSubscription = this.transacaoService.emprestar(emprestimo, cpf).subscribe(
@@ -74,7 +76,7 @@ export class EmprestarComponent implements OnDestroy, OnInit {
         if (error.status === 494) {
           this.uiService.showSnackbar('Usuário está bloqueado. Verifique.', null, {duration: 3000});
         } else {
-          this.uiService.showSnackbar('Falha ao realizar empréstimo. Verifique se título já está emprestado', null, {duration: 3000});
+          this.uiService.showSnackbar('Falha ao realizar empréstimo. Verifique dados e se título já está emprestado', null, {duration: 3000});
         }
       }
     );
