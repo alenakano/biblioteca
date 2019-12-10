@@ -1,5 +1,5 @@
 module.exports = {
-    pdfTesteLista: function (dados) { 
+    pdfLista: function (dados) { 
         return ` 
         <style>
             table {
@@ -12,6 +12,7 @@ module.exports = {
             td, th {
             border: 1px solid #dddddd;
             text-align: left;
+            font-size: 10px;
             padding: 8px;
             }
             

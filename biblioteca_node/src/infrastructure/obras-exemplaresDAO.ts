@@ -11,10 +11,23 @@ export async function pesquisaObrasDAO(req: Request): Promise<any> {
     let exemplarResponse: Exemplar;
     const obraNome = '%' + req.params.obraNome + '%';
     const obraTipo = req.params.obraTipo;
+    console.log('CHEGOU')
     const getObras = await connGetObras.query(
-        'SELECT * FROM obra WHERE autor LIKE ? OR titulo like ? AND idTipo = ?',
-        [obraNome, obraNome, obraTipo]
+        `SELECT
+        ex.idExemplar
+		, ex.idObra
+		, ex.numExemplar
+		, ex.tomo
+		, ob.titulo
+		, ob.autor
+            FROM exemplar ex
+            INNER JOIN obra ob
+                ON ex.idObra = ob.idObra
+        WHERE ob.titulo LIKE ?
+            OR ob.autor LIKE ?`,
+        [obraNome, obraNome]
     );
+    console.log(getObras[0])
     return getObras[0];
 }
 

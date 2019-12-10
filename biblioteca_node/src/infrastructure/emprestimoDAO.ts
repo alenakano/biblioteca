@@ -24,14 +24,28 @@ export async function createEmprestimoDAO(req: Request, next: NextFunction): Pro
 
     if (rows[0].idUsuario) {
         if (rows[0].status == 1) {
-            next(new HttpException(494, 'Usuário bloqueador para emprestar'));
+            next(new HttpException(494, 'Usuário bloqueado para emprestar'));
             return;
         }
+
         newEmprestimo.idUsuario = rows[0].idUsuario;
         const query = 'INSERT INTO emprestimo (idExemplar, idUsuario, dataEmprestimo, dataPrevisao) VALUES (?, ?, ?, ?)';
-        const createEmprestimo = await connCreateEmprestimo.execute(query,
+        [rows, fields] = await connCreateEmprestimo.execute(query,
             [newEmprestimo.idExemplar, newEmprestimo.idUsuario, newEmprestimo.dataEmprestimo, newEmprestimo.dataPrevisao]);
-        return createEmprestimo;
+        
+        console.log(`QUERY`, rows)
+
+        if (rows. affectedRows == 1) {
+            console.log('ENTROU')
+            const createEmprestimo = await connCreateEmprestimo
+                .query('UPDATE exemplar SET status = 1 WHERE idExemplar = ?', [newEmprestimo.idExemplar]);
+            
+            console.log('CREATEEMPRESTIMO', createEmprestimo)
+                return createEmprestimo;
+        } else {
+            next(new HttpException(495, 'Empréstimo não efetuado'));
+        }
+
     }
 }
 
@@ -59,10 +73,7 @@ export async function deleteEmprestimoDAO(req: Request, next: NextFunction): Pro
                 const hoje = new Date();
                 devolucao = rows[0];
                 if (devolucao.dataPrevisao.getTime() > hoje.getTime()) {
-                    const query = 'DELETE FROM emprestimo WHERE idEmprestimo = ?';
-                    const deleteEmprestimo = await connDeleteEmprestimo.query(query,
-                        [devolucao.idEmprestimo]);
-                    return deleteEmprestimo;
+                    return deleteEmprestimoHandler(connDeleteEmprestimo, devolucao, next);
                 } else {
                     const status = 1;
                     const multaDia = new Date();
@@ -72,9 +83,7 @@ export async function deleteEmprestimoDAO(req: Request, next: NextFunction): Pro
                         [status, hoje, multaDia, usuario.CPF]
                     );
                     if (rows.affectedRows == 1) {
-                        const query = 'DELETE FROM emprestimo WHERE idEmprestimo = ?';
-                        const deleteEmprestimo = await connDeleteEmprestimo.query(query,
-                        [devolucao.idEmprestimo]);
+                        const deleteEmprestimo = deleteEmprestimoHandler(connDeleteEmprestimo, devolucao, next);
                         next(new HttpException(492, 'Entrega Efetuada com bloqueio.'));
                     } else {
                         next(new HttpException(493, 'Erro bloqueio.'));
@@ -87,6 +96,23 @@ export async function deleteEmprestimoDAO(req: Request, next: NextFunction): Pro
             next(new HttpException(491, 'Nenhum usuário encontrado.'));
         }
     } catch {
+        next(new HttpException(404, 'Erro de conexão com base de dados.'));
+    }
+}
+
+async function deleteEmprestimoHandler(connDeleteEmprestimo: any, devolucao: any, next: any) {
+    const query = 'DELETE FROM emprestimo WHERE idEmprestimo = ?';
+    const deleteEmprestimo = await connDeleteEmprestimo.query(query,
+        [devolucao.idEmprestimo]);
+    if (deleteEmprestimo[0]) {
+        const changeStatus = await connDeleteEmprestimo
+            .query('UPDATE exemplar SET status = 0 WHERE idExemplar = ?', [devolucao.idExemplar]);
+        if (changeStatus[0]) {
+            return changeStatus;
+        } else {
+            next(new HttpException(404, 'Erro de conexão com base de dados.'));
+        }
+    } else {
         next(new HttpException(404, 'Erro de conexão com base de dados.'));
     }
 }

@@ -60,17 +60,6 @@ export async function createEmprestimo(req: Request, res: Response, next: NextFu
                 }
             });
         });
-
-        // if (createQueryResult[0].affectedRows) {
-        //     return res.json ({
-        //         message: 'Emprestimo cadastrado com sucesso.'
-        //     });
-        // } else {
-        //     return res.json ({
-        //         message: 'Emprestimo não cadastrado. Verifique.'
-        //     });
-        // }
-
     } catch (error) {
         resolveError(error, res);
     }

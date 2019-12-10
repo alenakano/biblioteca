@@ -18,24 +18,27 @@ const templates = require('../templates/recibos');
 
 export async function pesquisarEmprestimos(req: Request, res: Response, next: NextFunction): Promise<any> {
 
-    /* PARA GERAR TABELA PDF
-        let imgSrc = path.join(__dirname, '..', '/book.png');
-        imgSrc = path.normalize('file://' + imgSrc);
-
+    try {
+        const pesquisaEmprestimo = await pesquisaEmprestimosDAO();
+        console.log('PESQUISA', pesquisaEmprestimo);
+            /* PARA GERAR TABELA PDF */
         const options = {
             format: 'A4',
             footer: {
                 height: '12mm'
             },
             header: {
-                height: '35mm',
+                height: '30mm',
                 contents: `
-                <h2>Relatório Biblioteca XPTO</h2>
+                <h2>Relatório Biblioteca - Exemplares emprestados</h2>
                     <table style="font-family: arial, sans-serif; table-layout: fixed; border-collapse: collapse; width: 100%;">
                     <tr>
-                        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Biblioteca</th>
-                        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Nome</th>
-                        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Quantidade</th>
+                        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">ID Exemplar</th>
+                        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">ID Obra</th>
+                        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Número do exemplar</th>
+                        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Tomo</th>
+                        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Título</th>
+                        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Autor</th>
                     </tr>
                     </table>
                 `
@@ -46,16 +49,17 @@ export async function pesquisarEmprestimos(req: Request, res: Response, next: Ne
             }
         };
         let text = '';
-        for (let i = 0; i <= 100; i++ ) {
-            text = text + `
-            <tr>
-            <td>${i}A</td>
-            <td>${i}B</td>
-            <td>${i}C</td>
-            </tr>
-          `;
-        }
-        const obj = templates.pdfTesteLista(text);
+        pesquisaEmprestimo.forEach( (row: any) => {
+            text += "<tr>";
+            text += "<td>"+row.idExemplar+"</td>";
+            text += "<td>"+row.idObra+"</td>";
+            text += "<td>"+row.numExemplar+"</td>";
+            text += "<td>"+row.tomo+"</td>";
+            text += "<td>"+row.titulo+"</td>";
+            text += "<td>"+row.autor+"</td>";
+            text += "</tr>";
+        });
+        const obj = templates.pdfLista(text);
         pdf.create(obj, options).toStream((err: any, stream: any) => {
             const file = stream.path;
             res.setHeader('Content-type', 'application/pdf');
@@ -69,10 +73,6 @@ export async function pesquisarEmprestimos(req: Request, res: Response, next: Ne
                 }
             });
         });
-    */
-
-    try {
-        return res.json(await pesquisaEmprestimosDAO());
     } catch (error) {
         next(new HttpException(404, 'Deu ruim'));
     }
@@ -80,61 +80,63 @@ export async function pesquisarEmprestimos(req: Request, res: Response, next: Ne
 
 export async function pesquisarAtrasos(req: Request, res: Response, next: NextFunction): Promise<any> {
 
-    /* PARA GERAR TABELA PDF
-        let imgSrc = path.join(__dirname, '..', '/book.png');
-        imgSrc = path.normalize('file://' + imgSrc);
-
-        const options = {
-            format: 'A4',
-            footer: {
-                height: '12mm'
-            },
-            header: {
-                height: '35mm',
-                contents: `
-                <h2>Relatório Biblioteca XPTO</h2>
-                    <table style="font-family: arial, sans-serif; table-layout: fixed; border-collapse: collapse; width: 100%;">
-                    <tr>
-                        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Empresa</th>
-                        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Livros</th>
-                        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Editoras</th>
-                    </tr>
-                    </table>
-                `
-            },
-            border: {
-                left: '10mm',
-                right: '10mm',
-            }
-        };
-        let text = '';
-        for (let i = 0; i <= 100; i++ ) {
-            text = text + `
-            <tr>
-            <td>${i + 1000}O</td>
-            <td>${i + 1000}P</td>
-            <td>${i + 1000}A</td>
-            </tr>
-          `;
-        }
-        const obj = templates.pdfTesteLista(text);
-        pdf.create(obj, options).toStream((err: any, stream: any) => {
-            const file = stream.path;
-            res.setHeader('Content-type', 'application/pdf');
-            res.setHeader('Content-disposition', 'attachment; filename=' + file);
-            // res.setHeader('Access-Control-Expose-Headers', 'Location');
-            res.download(file, (erro: any) => {
-                if (erro) {
-                    console.log(erro);
-                } else {
-                    console.log('Efetuado com sucesso');
-                }
-            });
-        });
-    */
-
     try {
-        return res.json(await pesquisaAtrasosDAO());
+       const atrasoRelatorio = await pesquisaAtrasosDAO();
+       console.log(atrasoRelatorio);
+       /* PARA GERAR TABELA PDF */
+       const options = {
+        format: 'A4',
+        footer: {
+            height: '12mm'
+        },
+        header: {
+            height: '30mm',
+            contents: `
+            <h2>Relatório Biblioteca - Usuários bloqueados</h2>
+                <table style="font-family: arial, sans-serif; table-layout: fixed; border-collapse: collapse; width: 100%;">
+                <tr>
+                    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">ID Exemplar</th>
+                    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">ID Obra</th>
+                    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Número do exemplar</th>
+                    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Título</th>
+                    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Autor</th>
+                    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Data do Bloqueio</th>
+                    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Data do Desbloqueio</th>
+                </tr>
+                </table>
+            `
+        },
+        border: {
+            left: '10mm',
+            right: '10mm',
+        }
+    };
+       let text = '';
+       atrasoRelatorio.forEach( (row: any) => {
+        text += "<tr>";
+        text += "<td>"+row.idUsuario+"</td>";
+        text += "<td>"+row.CPF+"</td>";
+        text += "<td>"+row.nomeUsuario+"</td>";
+        text += "<td>"+row.email+"</td>";
+        text += "<td>"+row.cidade+"</td>";
+        text += "<td>"+row.dataBloqueio+"</td>";
+        text += "<td>"+row.dataDesbloqueio+"</td>";
+        text += "</tr>";
+    });
+       const obj = templates.pdfLista(text);
+       pdf.create(obj, options).toStream((err: any, stream: any) => {
+        const file = stream.path;
+        res.setHeader('Content-type', 'application/pdf');
+        res.setHeader('Content-disposition', 'attachment; filename=' + file);
+        // res.setHeader('Access-Control-Expose-Headers', 'Location');
+        res.download(file, (erro: any) => {
+            if (erro) {
+                console.log(erro);
+            } else {
+                console.log('Efetuado com sucesso');
+            }
+        });
+    });
     } catch (error) {
         next(new HttpException(404, 'Deu ruim'));
     }
@@ -142,24 +144,27 @@ export async function pesquisarAtrasos(req: Request, res: Response, next: NextFu
 
 export async function pesquisarBloqueios(req: Request, res: Response, next: NextFunction): Promise<any> {
 
-    /* PARA GERAR TABELA PDF
-        let imgSrc = path.join(__dirname, '..', '/book.png');
-        imgSrc = path.normalize('file://' + imgSrc);
-
+    try {
+        const bloqueioRelatorio = await pesquisaBloqueiosDAO();
+        /* PARA GERAR TABELA PDF */
         const options = {
             format: 'A4',
             footer: {
                 height: '12mm'
             },
             header: {
-                height: '35mm',
+                height: '30mm',
                 contents: `
-                <h2>Relatório Biblioteca XPTO</h2>
+                <h2>Relatório Biblioteca - Usuários bloqueados</h2>
                     <table style="font-family: arial, sans-serif; table-layout: fixed; border-collapse: collapse; width: 100%;">
                     <tr>
-                        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Prova</th>
-                        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Conceito</th>
-                        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Teste</th>
+                        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">ID Usuário</th>
+                        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">CPF</th>
+                        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Nome do usuário</th>
+                        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">E-mail</th>
+                        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Cidade</th>
+                        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Data do Bloqueio</th>
+                        <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Data do Desbloqueio</th>
                     </tr>
                     </table>
                 `
@@ -169,18 +174,19 @@ export async function pesquisarBloqueios(req: Request, res: Response, next: Next
                 right: '10mm',
             }
         };
-
         let text = '';
-        for (let i = 0; i <= 100; i++ ) {
-            text = text + `
-            <tr>
-            <td>${i + 201}X</td>
-            <td>${i + 2039}Y</td>
-            <td>${i + 2039892}ZÍ</td>
-            </tr>
-          `;
-        }
-        const obj = templates.pdfTesteLista(text);
+        bloqueioRelatorio.forEach( (row: any) => {
+            text += "<tr>";
+            text += "<td>"+row.idUsuario+"</td>";
+            text += "<td>"+row.CPF+"</td>";
+            text += "<td>"+row.nomeUsuario+"</td>";
+            text += "<td>"+row.email+"</td>";
+            text += "<td>"+row.cidade+"</td>";
+            text += "<td>"+row.dataBloqueio+"</td>";
+            text += "<td>"+row.dataDesbloqueio+"</td>";
+            text += "</tr>";
+        });
+        const obj = templates.pdfLista(text);
         pdf.create(obj, options).toStream((err: any, stream: any) => {
             const file = stream.path;
             res.setHeader('Content-type', 'application/pdf');
@@ -194,10 +200,6 @@ export async function pesquisarBloqueios(req: Request, res: Response, next: Next
                 }
             });
         });
-    */
-
-    try {
-        return res.json(await pesquisaBloqueiosDAO());
     } catch (error) {
         next(new HttpException(404, 'Deu ruim'));
     }
