@@ -50,6 +50,7 @@ export async function pesquisaAtrasosDAO(): Promise<any> {
             INNER JOIN emprestimo em
                 ON ex.idExemplar = em.idExemplar
         WHERE ex.status = 1
+            AND em.status = 1
             AND em.dataPrevisao < (SELECT NOW())`
     );
     return getAtrasos[0];

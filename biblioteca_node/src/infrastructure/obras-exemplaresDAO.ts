@@ -7,27 +7,18 @@ import { Exemplar } from '../interfaces/exemplar.interface';
 
 export async function pesquisaObrasDAO(req: Request): Promise<any> {
     const connGetObras = await openConnection();
-    let obraResponse: Obras;
-    let exemplarResponse: Exemplar;
     const obraNome = '%' + req.params.obraNome + '%';
     const obraTipo = req.params.obraTipo;
-    console.log('CHEGOU')
     const getObras = await connGetObras.query(
-        `SELECT
-        ex.idExemplar
-		, ex.idObra
-		, ex.numExemplar
-		, ex.tomo
-		, ob.titulo
-		, ob.autor
+        `SELECT *
             FROM exemplar ex
             INNER JOIN obra ob
                 ON ex.idObra = ob.idObra
         WHERE ob.titulo LIKE ?
-            OR ob.autor LIKE ?`,
-        [obraNome, obraNome]
+            OR ob.autor LIKE ?
+            AND ob.idTipo = ?`,
+        [obraNome, obraNome, obraTipo]
     );
-    console.log(getObras[0])
     return getObras[0];
 }
 

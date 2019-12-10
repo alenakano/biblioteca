@@ -62,7 +62,6 @@ export async function updateUsuarioBloqueioDAO(req: Request): Promise<any> {
     const updateUsuarios = await connUpdateUsuarios
         .query('UPDATE usuario SET status = ?, dataBloqueio = ?, dataDesbloqueio = ? WHERE CPF = ?', 
         [status, dataBloqueio, dataDesbloqueio, upId]);
-    console.log(updateUsuarios);
     return updateUsuarios;
 }
 

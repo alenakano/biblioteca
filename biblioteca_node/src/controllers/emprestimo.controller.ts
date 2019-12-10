@@ -3,7 +3,6 @@ import { Request, Response } from 'express';
 import {
     createEmprestimoDAO,
     getEmprestimoDAO,
-    deleteEmprestimoDAO,
     updateEmprestimoDAO,
 } from '../infrastructure/EmprestimoDAO';
 
@@ -73,9 +72,9 @@ export async function getEmprestimo(req: Request, res: Response, next: NextFunct
     }
 }
 
-export async function deleteEmprestimo(req: Request, res: Response, next: NextFunction): Promise<any> {
+export async function updateEmprestimo(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
-        const deleteQueryResult = await deleteEmprestimoDAO(req, next);
+        const deleteQueryResult = await updateEmprestimoDAO(req, next);
         if (deleteQueryResult[0].affectedRows) {
             return res.json ({
                 message: 'Devolução realizada com sucesso'
@@ -90,22 +89,22 @@ export async function deleteEmprestimo(req: Request, res: Response, next: NextFu
     }
 }
 
-export async function updateEmprestimo(req: Request, res: Response, next: NextFunction) {
-    try {
-        const updateQueryResult = await updateEmprestimoDAO(req);
-        if (updateQueryResult[0].affectedRows) {
-            return res.json ({
-                message: 'Cadastro Atualizado com sucesso.'
-            });
-        } else {
-            return res.json ({
-                message: 'Falha ao atualizar.'
-            });
-        }
+// export async function updateEmprestimo(req: Request, res: Response, next: NextFunction) {
+//     try {
+//         const updateQueryResult = await updateEmprestimoDAO(req);
+//         if (updateQueryResult[0].affectedRows) {
+//             return res.json ({
+//                 message: 'Cadastro Atualizado com sucesso.'
+//             });
+//         } else {
+//             return res.json ({
+//                 message: 'Falha ao atualizar.'
+//             });
+//         }
 
-    } catch (error) {
-        const id: string = req.params.emprestimoId;
-        // testando criação de outras exceptions
-        next(new ValidationException(id));
-    }
-}
+//     } catch (error) {
+//         const id: string = req.params.emprestimoId;
+//         // testando criação de outras exceptions
+//         next(new ValidationException(id));
+//     }
+// }
