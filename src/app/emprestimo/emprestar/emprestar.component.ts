@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { UIService } from 'src/app/util/ui.service';
 import { Subscription } from 'rxjs';
 import { Emprestimo } from './emprestimo';
@@ -10,6 +10,8 @@ import { TransacaoService } from '../transacao.service';
   styleUrls: ['./emprestar.component.css']
 })
 export class EmprestarComponent implements OnDestroy, OnInit {
+
+  @ViewChild('f', null) form;
 
   emprestimoSubscription: Subscription;
   minDate: Date;

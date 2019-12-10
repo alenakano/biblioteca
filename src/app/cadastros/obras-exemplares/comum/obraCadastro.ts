@@ -1,5 +1,5 @@
 export class ObraCadastro {
-    idObra?: number;
+    idObra: number;
     idTipo: number;
     identificador?: string;
     titulo: string;

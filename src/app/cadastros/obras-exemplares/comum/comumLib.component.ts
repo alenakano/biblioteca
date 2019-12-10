@@ -125,7 +125,8 @@ export class ComumLibComponent implements OnInit, OnDestroy {
   }
 
   onFormObrasSubmit(cad: Form | any) {
-    this.obraCadastro = cad;
+
+    this.obraCadastro = { ...this.obraCadastro, ...cad };
     this.obraCadastro.identificador = this.identificador.identificador;
     this.obraCadastro.idTipo = this.tipoObra;
 
