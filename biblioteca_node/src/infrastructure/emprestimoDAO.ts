@@ -40,19 +40,22 @@ export async function createEmprestimoDAO(req: Request, next: NextFunction): Pro
             [newEmprestimo.idObra, newEmprestimo.numExemplar]
         );
         newEmprestimo.idExemplar = rows[0].idExemplar;
-
         [rows, fields] = await connCreateEmprestimo.execute(
             'SELECT * FROM emprestimo WHERE idExemplar = ? AND idUsuario = ?',
             [newEmprestimo.idExemplar, newEmprestimo.idUsuario ]
         );
 
+        if (rows[0].status >= 1) {
+            next(new HttpException(495, 'Empréstimo não efetuado'));
+        }
         if (rows.length) {
             newEmprestimo.idEmprestimo = rows[0].idEmprestimo;
-            const query = 'UPDATE emprestimo SET status = 1 WHERE idEmprestimo = ?';
+            const query = 'UPDATE emprestimo SET status = 1, dataDevolucao = NULL WHERE idEmprestimo = ?';
             let createEmprestimo = await connCreateEmprestimo.query(query,
                 [newEmprestimo.idEmprestimo]);
             createEmprestimo = await connCreateEmprestimo
                 .query('UPDATE exemplar SET status = 1 WHERE idExemplar = ?', [newEmprestimo.idExemplar]);
+            
             return createEmprestimo;
         } else {
             const query = 'INSERT INTO emprestimo (idExemplar, idUsuario, dataEmprestimo, dataPrevisao) VALUES (?, ?, ?, ?)';
@@ -94,6 +97,12 @@ export async function updateEmprestimoDAO(req: Request, next: NextFunction): Pro
                 'SELECT * FROM exemplar WHERE idObra = ? AND numExemplar = ?',
                 [devolucao.idObra, devolucao.numExemplar]
             );
+            
+            if(rows[0].status > 1) {
+                next(new HttpException(497, 'Exemplar danificado.'));
+                return;
+            }
+
             devolucao.idExemplar = rows[0].idExemplar;
             [rows, fields] = await connUpdateEmprestimo.execute(
                 'SELECT * FROM emprestimo WHERE idExemplar = ? AND idUsuario = ?',
@@ -103,7 +112,30 @@ export async function updateEmprestimoDAO(req: Request, next: NextFunction): Pro
                 const hoje = new Date();
                 devolucao.dataPrevisao = rows[0].dataPrevisao;
                 devolucao.idEmprestimo = rows[0].idEmprestimo;
-                if (devolucao.dataPrevisao.getTime() > hoje.getTime()) {
+
+                //PERDA OU DANO AO EXEMPLAR
+                if(devolucao.status > 1) {
+                    const multaDia = new Date();
+                    multaDia.setDate(multaDia.getDate() + 365);
+                    
+                    [rows, fields] = await connUpdateEmprestimo.query(
+                        'UPDATE emprestimo SET status = ? WHERE idEmprestimo = ?',
+                        [devolucao.status, devolucao.idEmprestimo]);
+                    
+                    [rows, fields] = await connUpdateEmprestimo.query(
+                        'UPDATE exemplar SET status = ? WHERE idExemplar = ?',
+                        [devolucao.status, devolucao.idExemplar]);
+
+                    [rows, fields] = await connUpdateEmprestimo.execute(
+                        'UPDATE usuario SET status = 1, dataBloqueio = ?, dataDesbloqueio = ? WHERE CPF = ?',
+                        [hoje, multaDia, usuario.CPF]
+                    );
+                    next(new HttpException(496, 'Usuário bloqueado por perda ou dano'));
+                    return;
+                }
+
+                //ATRASO POR TEMPO
+                if (devolucao.dataPrevisao.getTime() <= hoje.getTime()) {
                     return updateEmprestimoHandler(connUpdateEmprestimo, devolucao, next);
                 } else {
                     const status = 1;
@@ -116,18 +148,23 @@ export async function updateEmprestimoDAO(req: Request, next: NextFunction): Pro
                     if (rows.affectedRows == 1) {
                         const deleteEmprestimo = updateEmprestimoHandler(connUpdateEmprestimo, devolucao, next);
                         next(new HttpException(492, 'Entrega Efetuada com bloqueio.'));
+                        return;
                     } else {
                         next(new HttpException(493, 'Erro bloqueio.'));
+                        return;
                     }
                 }
             } else {
                 next(new HttpException(490, 'Nenhum empréstimo encontrado.'));
+                return;
             }
         } else {
             next(new HttpException(491, 'Nenhum usuário encontrado.'));
+            return;
         }
     } catch {
         next(new HttpException(404, 'Erro de conexão com base de dados.'));
+        return;
     }
 }
 
@@ -135,15 +172,11 @@ async function updateEmprestimoHandler(connUpdateEmprestimo: any, devolucao: Emp
     const query = 'UPDATE emprestimo SET status = ? WHERE idEmprestimo = ?';
     const updateEmprestimo = await connUpdateEmprestimo.query(query,
         [devolucao.status, devolucao.idEmprestimo]);
-    if (updateEmprestimo[0]) {
-        const changeStatus = await connUpdateEmprestimo
-            .query('UPDATE exemplar SET status = 0, dataDevolucao = ? WHERE idExemplar = ?', 
+    if (updateEmprestimo.length >= 1) {
+        let changeStatus = await connUpdateEmprestimo
+            .query('UPDATE emprestimo SET status = 0, dataDevolucao = ? WHERE idExemplar = ?', 
                 [devolucao.dataDevolucao, devolucao.idExemplar]);
-        if (changeStatus[0]) {
-            return changeStatus;
-        } else {
-            next(new HttpException(404, 'Erro de conexão com base de dados.'));
-        }
+        return changeStatus;
     } else {
         next(new HttpException(404, 'Erro de conexão com base de dados.'));
     }
@@ -155,13 +188,3 @@ export async function getEmprestimoDAO(id: string): Promise<any> {
     const getEmprestimo = await connGetEmprestimo.query('SELECT * FROM emprestimo WHERE cpf = ?', [ getId ]);
     return getEmprestimo[0];
 }
-
-// export async function updateEmprestimoDAO(req: Request): Promise<any> {
-//     const upEmprestimo: Emprestimo = req.body;
-//     const upId = req.params.livroId;
-//     const upCodExemplar = req.params.codExemplar;
-//     const connUpdateEmprestimo = await openConnection();
-//     // tslint:disable-next-line: max-line-length
-//     const updateEmprestimo = await connUpdateEmprestimo.query('UPDATE emprestimo set ? WHERE cpf = ? AND codExemplar = ?', [upEmprestimo, upId, upCodExemplar]);
-//     return updateEmprestimo;
-// }

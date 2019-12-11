@@ -19,14 +19,8 @@ export async function pesquisaObrasDAO(req: Request): Promise<any> {
             AND ob.idTipo = ?`,
         [obraNome, obraNome, obraTipo]
     );
+    console.log(getObras[0])
     return getObras[0];
-}
-
-export async function emprestaObrasDAO(req: Request): Promise<any> {
-    // const newObras: Obras = req.body;
-    // const connCreateObras = await openConnection();
-    // const createObras = await connCreateObras.query('INSERT INTO Obras SET ?', [ newObras ]);
-    // return createObras;
 }
 
 async function openConnection(): Promise<Pool> {
@@ -88,4 +82,12 @@ export async function updateObrasDAO(req: Request): Promise<any> {
     const connUpdateObras = await openConnection();
     const updateObras = await connUpdateObras.query('UPDATE obra set ? WHERE identificador = ?', [upObras, upId]);
     return updateObras;
+}
+
+export async function updateExemplarDAO(req: Request): Promise<any> {
+    const upExemplar: Exemplar = req.body;
+    const upId = req.params.idExemplar;
+    const connUpdateObras = await openConnection();
+    const updateExemplar = await connUpdateObras.query('UPDATE exemplar set ? WHERE idExemplar = ?', [upExemplar, upId]);
+    return updateExemplar;
 }

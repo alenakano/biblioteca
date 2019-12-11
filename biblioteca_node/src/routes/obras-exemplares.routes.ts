@@ -7,7 +7,8 @@ import {
     createObra,
     getObra,
     deleteObra,
-    updateObra
+    updateObra,
+    updateExemplar
 } from '../controllers/obras-exemplares.controller';
 
 const router = Router();
@@ -21,6 +22,10 @@ router.route('/')
 
 router.route('/exemplares/:idObra')
     .get(getExemplar);
+
+router.route('/exemplar/:idExemplar')
+    .put(updateExemplar);
+
 
 router.route('/cadastrarExemplar')
     .post(cadastrarExemplar);

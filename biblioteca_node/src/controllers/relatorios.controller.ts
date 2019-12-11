@@ -92,16 +92,15 @@ export async function pesquisarAtrasos(req: Request, res: Response, next: NextFu
         header: {
             height: '30mm',
             contents: `
-            <h2>Relatório Biblioteca - Usuários bloqueados</h2>
+            <h2>Relatório Biblioteca - Exemplares atrasados</h2>
                 <table style="font-family: arial, sans-serif; table-layout: fixed; border-collapse: collapse; width: 100%;">
                 <tr>
                     <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">ID Exemplar</th>
                     <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">ID Obra</th>
                     <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Número do exemplar</th>
-                    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Título</th>
+                    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Tomo</th>
                     <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Autor</th>
-                    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Data do Bloqueio</th>
-                    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Data do Desbloqueio</th>
+                    <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Título</th>
                 </tr>
                 </table>
             `
@@ -114,13 +113,12 @@ export async function pesquisarAtrasos(req: Request, res: Response, next: NextFu
        let text = '';
        atrasoRelatorio.forEach( (row: any) => {
         text += "<tr>";
-        text += "<td>"+row.idUsuario+"</td>";
-        text += "<td>"+row.CPF+"</td>";
-        text += "<td>"+row.nomeUsuario+"</td>";
-        text += "<td>"+row.email+"</td>";
-        text += "<td>"+row.cidade+"</td>";
-        text += "<td>"+row.dataBloqueio+"</td>";
-        text += "<td>"+row.dataDesbloqueio+"</td>";
+        text += "<td>"+row.idExemplar+"</td>";
+        text += "<td>"+row.idObra+"</td>";
+        text += "<td>"+row.numExemplar+"</td>";
+        text += "<td>"+row.tomo+"</td>";
+        text += "<td>"+row.autor+"</td>";
+        text += "<td>"+row.titulo+"</td>";
         text += "</tr>";
     });
        const obj = templates.pdfLista(text);

@@ -7,9 +7,9 @@ import {
     getObraDAO,
     getObrasDAO,
     deleteObrasDAO,
+    updateExemplarDAO,
     updateObrasDAO,
     pesquisaObrasDAO,
-    emprestaObrasDAO,
 } from '../infrastructure/obras-exemplaresDAO';
 
 import HttpException from '../exceptions/httpException';
@@ -125,6 +125,26 @@ export async function updateObra(req: Request, res: Response, next: NextFunction
 
     } catch (error) {
         const id: string = req.params.ObraId;
+        // testando criação de outras exceptions
+        next(new ValidationException(id));
+    }
+}
+
+export async function updateExemplar(req: Request, res: Response, next: NextFunction) {
+    try {
+        const updateQueryResult = await updateExemplarDAO(req);
+        if (updateQueryResult[0].affectedRows) {
+            return res.json ({
+                message: 'Cadastro Atualizado com sucesso.'
+            });
+        } else {
+            return res.json ({
+                message: 'Falha ao atualizar.'
+            });
+        }
+
+    } catch (error) {
+        const id: string = req.params.idExemplar;
         // testando criação de outras exceptions
         next(new ValidationException(id));
     }
