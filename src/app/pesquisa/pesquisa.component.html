@@ -1,12 +1,12 @@
-<section class="pesquisa">
+<section class="pesquisa" *ngIf="!showEditarExemplar">
     <app-nova
         (obraPesquisa)="onObraValue($event)">
     </app-nova>
     <br>
-    <app-resultados [pesquisaInput]="pesquisaResponse"></app-resultados>
+    <app-resultados [pesquisaInput]="pesquisaResponse" (editarExemplar)="onEditarExemplar($event)"></app-resultados>
 </section>
     
-<section class="exemplares" fxLayout fxLayoutAlign="center">
+<section class="exemplares" fxLayout fxLayoutAlign="center" *ngIf="showEditarExemplar">
     <mat-card fxFlex.xs="100%" fxFlex="400px">
         <mat-card-title fxLayoutAlign="center">
             Dados do exemplar:
@@ -55,7 +55,7 @@
                     >
                     <mat-error>Preencha o campo</mat-error>            
                 </mat-form-field>
-                <mat-form-field *ngIf="tipoObra=='1'"> 
+                <mat-form-field *ngIf="elementoEdicao.tipoObra=='1'"> 
                     <input 
                         matInput
                         formControlName="tomo"
@@ -82,17 +82,8 @@
                         placeholder="Status de obra"
                     >
                         Selecione o status do exemplar:
-                        <mat-option value="0">
-                            Ativo
-                        </mat-option>
-                        <mat-option value="0">
-                            Emprestado
-                        </mat-option>
-                        <mat-option value="2">
-                            Exemplar perdido
-                        </mat-option>
-                        <mat-option value="3">
-                            Exemplar danificado
+                        <mat-option *ngFor="let cat of categorias" [value]="cat.id">
+                            {{cat.name}}
                         </mat-option>
                     </mat-select>
                     <mat-error>  
@@ -130,7 +121,7 @@
                         color="primary"
                         [disabled]="exemplarForm.invalid"
                     >
-                        Cadastrar
+                        Atualizar
                     </button>
                 </mat-card-actions>
             </mat-card-content>

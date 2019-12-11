@@ -65,6 +65,14 @@ export class DevolverComponent implements OnDestroy, OnInit {
         this.uiService.showSnackbar('Erro na entrega. Bloquear usuário e efetuar a devolução novamente', null, {duration: 3000});
         break;
       }
+      case 495: {
+        this.uiService.showSnackbar('Empréstimo não efetuado', null, {duration: 3000});
+        break;
+      }
+      case 496: {
+        this.uiService.showSnackbar('Usuário bloqueado por um ano ou até pagar por novo exemplar.', null, {duration: 3000});
+        break;
+      }
       default: this.uiService.showSnackbar('Dados incorretos. Tente novamente.', null, {duration: 3000});
     }
   }

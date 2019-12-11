@@ -75,9 +75,13 @@ export class EmprestarComponent implements OnDestroy, OnInit {
       error => {
         if (error.status === 494) {
           this.uiService.showSnackbar('Usuário está bloqueado. Verifique.', null, {duration: 3000});
-        } else {
-          this.uiService.showSnackbar('Falha ao realizar empréstimo. Verifique dados e se título já está emprestado', null, {duration: 3000});
+          return;
         }
+        if (error.status === 497) {
+          this.uiService.showSnackbar('Obra danificada ou extraviada. Verifique.', null, {duration: 3000});
+          return;
+        }
+        this.uiService.showSnackbar('Falha ao realizar empréstimo. Verifique dados e se título já está emprestado', null, {duration: 3000});
       }
     );
   }

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ObrasEnum } from './obras.enum';
 
 @Component({
   selector: 'app-obras',
@@ -9,7 +8,7 @@ import { ObrasEnum } from './obras.enum';
 export class ObrasComponent implements OnInit {
 
   public passo = 'opcoes';
-  public tipoObra: ObrasEnum;
+  public tipoObra: number;
 
   constructor() { }
 
@@ -20,7 +19,7 @@ export class ObrasComponent implements OnInit {
     this.passo = 'opcoes';
   }
 
-  onTypeSelected(tipo: ObrasEnum): void {
+  onTypeSelected(tipo: number): void {
     this.tipoObra = tipo;
     this.passo = 'cadastro';
   }

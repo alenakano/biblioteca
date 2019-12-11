@@ -10,7 +10,7 @@ import { ComumLibService } from './comumLib.service';
 import { ObraCadastro } from './obraCadastro';
 import { UIService } from 'src/app/util/ui.service';
 import * as fromCategoria from './comumLib.reducer';
-import { ObrasEnum } from '../obras.enum';
+import { ObrasEnum } from '../../../util/enums/obras.enum';
 
 
 @Component({

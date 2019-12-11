@@ -68,4 +68,10 @@ export class ComumLibService {
         return this.http.put(request, body);
     }
 
+    atualizarExemplar(exemplar: ExemplarCadastro): Observable<any> {
+        const body = exemplar;
+        const request = this.url + '/exemplar/' + exemplar.idExemplar;
+        return this.http.put(request, body);
+    }
+
 }

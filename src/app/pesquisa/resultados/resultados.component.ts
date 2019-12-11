@@ -1,14 +1,15 @@
-import { Component, OnInit, ViewChild, AfterViewInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { MatPaginator } from '@angular/material/paginator';
 import { Store } from '@ngrx/store';
 
-import { mockPesquisa } from './mockPesquisa';
-import { AuthService } from 'src/app/auth/auth.service';
 import * as fromRoot from '../../app.reducer';
 
 import { PesquisaResponse } from '../nova/pesquisaResponse';
 import { Observable } from 'rxjs';
+import { Resultados } from '../resultados';
+import { ObrasEnum } from 'src/app/util/enums/obras.enum';
+import { StatusExemplar } from 'src/app/util/enums/statusDevolucao.enum';
 
 @Component({
   selector: 'app-resultados',
@@ -17,12 +18,13 @@ import { Observable } from 'rxjs';
 })
 export class ResultadosComponent implements OnChanges, OnInit {
 
-  displayedColumns: string[] = ['id', 'title', 'author', 'location', 'exclude'];
-  @Input() pesquisaInput: PesquisaResponse[] = [];
+  displayedColumns: string[] = ['titulo', 'autor', 'identificador', 'numExemplar', 'local', 'status', 'edit'];
+  @Input() pesquisaInput: Resultados[] = [];
+  @Output() editarExemplar: EventEmitter<Resultados> = new EventEmitter<Resultados>();
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  public dataSource: MatTableDataSource<PesquisaResponse>;
+  public dataSource: MatTableDataSource<Resultados>;
   public showTable: boolean;
   isAuth$: Observable<boolean>;
 
@@ -35,9 +37,9 @@ export class ResultadosComponent implements OnChanges, OnInit {
       this.isAuth$.subscribe(
         value => {
           if (value) {
-            this.displayedColumns = ['id', 'title', 'author', 'location', 'exclude'];
+            this.displayedColumns = ['titulo', 'autor', 'identificador', 'numExemplar', 'local', 'status', 'edit'];
           } else {
-            this.displayedColumns = ['id', 'title', 'author', 'location'];
+            this.displayedColumns = ['titulo', 'autor', 'identificador', 'numExemplar', 'local', 'status'];
           }
         }
       );
@@ -62,11 +64,38 @@ export class ResultadosComponent implements OnChanges, OnInit {
   }
 
   onExcluirClick(event): void {
-    console.log(event);
+    this.editarExemplar.emit(event);
   }
 
   isAuth(): any {
     return this.store.select(fromRoot.getIsAuth);
   }
 
+  onIdentificadorName(): string {
+    switch (this.pesquisaInput[0].idTipo) {
+      case ObrasEnum.LIVROS:
+        return'ISBN';
+      case ObrasEnum.PERIODICOS:
+        return'ISSN';
+      case ObrasEnum.MÍDIA:
+        return'DOI';
+      default:
+        return 'Identificador';
+    }
+  }
+
+  onStatus(): string {
+    switch (this.pesquisaInput[0].status) {
+      case StatusExemplar.ATIVO:
+        return'Disponível';
+      case StatusExemplar.EMPRESTADO:
+        return'Emprestado';
+      case StatusExemplar.PERDIDO:
+        return'Inativo por perda';
+      case StatusExemplar.DANIFICADO:
+        return'Danificado';
+      default:
+        return 'Identificador';
+    }
+  }
 }

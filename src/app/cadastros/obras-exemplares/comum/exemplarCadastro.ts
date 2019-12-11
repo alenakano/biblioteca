@@ -1,5 +1,3 @@
-import { ObrasEnum } from '../obras.enum';
-
 export class ExemplarCadastro {
     idExemplar: number;
     idObra: number;
