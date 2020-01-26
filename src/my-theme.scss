@@ -1,0 +1,9 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$biblioteca-app-primary: mat-palette($mat-cyan, 800);
+$biblioteca-app-accent:  mat-palette($mat-pink, A200, A100, A400);
+$biblioteca-app-theme:   mat-light-theme($biblioteca-app-primary, $biblioteca-app-accent);
+
+@include angular-material-theme($biblioteca-app-theme);

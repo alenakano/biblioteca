@@ -1,0 +1,21 @@
+a {
+    text-decoration: none;
+    color: white;
+}
+
+a:hover,
+a:active{
+    color: lightgray;
+    cursor: pointer;
+}
+
+.navegacao {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.logo {
+    width: 4%;
+    height: auto;
+}

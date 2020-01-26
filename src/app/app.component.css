@@ -1,0 +1,9 @@
+/* Preenche as alturas dos elementos HTML para ficar com aparência melhor*/
+mat-sidenav-container, mat-sidenav-content, mat-sidenav {
+    height: 100%;
+}
+
+/* Tamanho interessante para menu lateral*/
+mat-sidenav {
+    width: 250px;
+}

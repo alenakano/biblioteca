@@ -1,0 +1,49 @@
+<section class="tabela" *ngIf="showTable">
+
+    <mat-form-field fxLayout fxLayoutAlign="end">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtre sua pesquisa">
+    </mat-form-field>
+    
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <ng-container matColumnDef="titulo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Título da obra </th>
+            <td mat-cell *matCellDef="let element"> {{element.titulo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="autor">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome do autor </th>
+            <td mat-cell *matCellDef="let element"> {{element.autor}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="identificador">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{onIdentificadorName()}}</th>
+            <td mat-cell *matCellDef="let element"> {{element.identificador}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="numExemplar">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="text-align:center"> Número do exemplar </th>
+            <td mat-cell *matCellDef="let element" style="text-align:center"> {{element.numExemplar}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="local">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Localização</th>
+            <td mat-cell *matCellDef="let element"> {{element.local}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+            <td mat-cell *matCellDef="let element"> {{onStatus()}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="edit" *ngIf="isAuth$ | async">
+            <th mat-header-cell *matHeaderCellDef>Editar exemplar</th>
+            <td mat-cell *matCellDef="let element"><button mat-raised-button color="primary" (click)="onExcluirClick(element)">Editar</button></td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</section>

@@ -1,0 +1,117 @@
+<section *ngIf="!hideForm" class="cadastro-form">
+<!-- fxLayout definido como padrão row, mas usaremos column pq queremos de cima para baixo -->
+<!-- fxLayoutAlign para centralizar. o primeiro center é na direção do main axis (no caso, column) p segundo é no crossAxis -->
+<!-- ngSubmit captura os dados guardados na variáverl f do ngForm que foram guardados pelo ngModel dos elementos com essa diretiva e os nomes dos elementos HTML -->    
+<form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <h3 class="mat-h2">Formulário de cadastro:</h3>
+    <mat-form-field hintLabel="Digite o nome completo.">
+        <input 
+            [(ngModel)]="cadastro.nomeUsuario"
+            matInput
+            required
+            name="nomeUsuario" 
+            type="text" 
+            placeholder="Digite o nome"
+        >
+    </mat-form-field>
+    <mat-form-field hintLabel="Deve ter 11 caracteres.">
+        <input 
+            [(ngModel)]="cadastro.CPF"
+            matInput
+            required
+            validaCPF
+            #cpfInput="ngModel"
+            minlength="11"
+            maxlength="11"
+            name="CPF" 
+            type="text" 
+            placeholder="Digite o CPF"
+            [disabled]="updateDB"
+        >
+        <!-- Não precisamos importar mat-hint pq é do mat-form-field -->
+        <mat-hint align="end">{{cpfInput.value?.length}}/11</mat-hint>
+        <mat-error *ngIf="cpfInput.hasError('required')">Deve possuir 11 dígitos</mat-error>
+        <mat-error *ngIf="!cpfInput.hasError('required')">Digite CPF válido</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <!--max serve para limitar a escolha de data na tela -->
+        <input
+            [(ngModel)]="cadastro.dataNascimento"
+            matInput
+            required
+            [matDatepicker]="picker"
+            name="dataNascimento"
+            placeholder="Data de nascimento"
+            >
+        <mat-datepicker-toggle 
+            matSuffix 
+            [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error>Selecione a data de nascimento.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <!-- Diretiva e-mail é do Angular -->
+        <input 
+            [(ngModel)]="cadastro.email"         
+            matInput 
+            email
+            required
+            name="email" 
+            type="email" 
+            placeholder="Digite o e-mail"
+            #emailInput="ngModel"
+        >
+        <mat-error *ngIf="emailInput.hasError('required')">Campo não pode estar vazio.</mat-error>
+        <mat-error *ngIf="!emailInput.hasError('required')">E-mail é inválido.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <input 
+            [(ngModel)]="cadastro.endereco"            
+            matInput
+            required
+            name="endereco" 
+            type="text" 
+            placeholder="Digite o endereço"
+        >
+        <mat-error>Digite um endereço válido.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <input 
+            [(ngModel)]="cadastro.complemento"                        
+            matInput 
+            name="complemento"  
+            type="text" 
+            placeholder="Complemento"
+        >
+    </mat-form-field>
+    <mat-form-field>
+        <input 
+            [(ngModel)]="cadastro.cidade"                        
+            matInput
+            required
+            name="cidade" 
+            type="text" 
+            placeholder="Cidade"
+        >
+        <mat-error>Digite a cidade.</mat-error>
+    </mat-form-field>
+
+    <button 
+        mat-raised-button 
+        type="submit" 
+        color="primary"
+        [disabled]="f.invalid"
+    >
+        Cadastrar
+    </button>
+</form>
+</section>
+
+<section>
+    <app-confirmacao
+        *ngIf="hideForm"
+        [mensagem]="'Usuário já cadastrado! Gostaria de editar o cadastro?'"
+        (confirmacao)="onConfirmacao($event)"
+    ></app-confirmacao>
+</section>

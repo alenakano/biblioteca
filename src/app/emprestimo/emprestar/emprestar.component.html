@@ -1,0 +1,90 @@
+<section class="emprestar" fxLayout fxLayoutAlign="center">
+    <mat-card class="mat-elevation-z3" fxFlex.xs="100%" fxFlex="400px">
+        <form #f="ngForm" (ngSubmit)="onSubmit(f.value); f.resetForm()"> 
+            <mat-card-title fxLayoutAlign="center">
+                Empréstimo:
+            </mat-card-title>
+            <mat-card-content fxLayout="column" fxLayoutAlign="center" fxLayoutGap="10px">
+                <mat-form-field>
+                    <input 
+                        matInput 
+                        #cpfInput
+                        validaCPF 
+                        ngModel 
+                        name="CPF" 
+                        placeholder="Digite CPF do usuário" 
+                        required
+                        minlength="11"
+                        maxlength="11"
+                    >
+                    <mat-error>Campo obrigatório</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
+                        matInput 
+                        ngModel 
+                        name="identificador" 
+                        placeholder="Identificador da obra" 
+                        required
+                    >
+                    <mat-error>Campo obrigatório</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
+                        matInput 
+                        ngModel 
+                        name="numExemplar" 
+                        placeholder="Digite o número do exemplar" 
+                        required
+                    >
+                    <mat-error>Campo obrigatório</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input
+                        matInput
+                        [ngModel]="emprestimo"
+                        required
+                        [min]="minDate"
+                        [matDatepicker]="picker"
+                        name="dataEmprestimo"
+                        placeholder="Data do empréstimo"
+                        >
+                    <mat-datepicker-toggle 
+                        matSuffix 
+                        [for]="picker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error>Selecione a data do empréstimo</mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input
+                        matInput
+                        [ngModel]="devolucao"
+                        required
+                        [matDatepicker]="picker2"
+                        [min]="minDate"
+                        name="dataPrevisao"
+                        placeholder="Data para devolução"
+                        >
+                    <mat-datepicker-toggle 
+                        matSuffix 
+                        [for]="picker2"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                    <mat-error>Selecione a data para devolução</mat-error>
+                </mat-form-field>
+                <mat-card-actions fxLayoutAlign="center">
+                    <button 
+                        [disabled]="f.invalid"
+                        mat-raised-button 
+                        type="submit" 
+                        color="primary"
+                    >
+                        Emprestar
+                </button>
+                </mat-card-actions>
+            </mat-card-content>
+        </form>    
+    </mat-card>
+</section>

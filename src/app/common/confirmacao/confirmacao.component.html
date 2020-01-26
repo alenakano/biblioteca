@@ -1,0 +1,31 @@
+<section class="pesquisa" fxLayout fxLayoutAlign="center">
+    <mat-card class="mat-elevation-z3" fxFlex.xs="100%" fxFlex="400px">
+        <form #f="ngForm" (ngSubmit)="onSubmit(f)"> 
+            <mat-card-title fxLayoutAlign="center">
+                <span style="text-align: center">
+                    {{mensagem}}
+                </span>
+            </mat-card-title>
+            <mat-card-content fxLayout="column" fxLayoutAlign="center" fxLayoutGap="10px">
+                <mat-card-actions fxLayoutAlign="center">
+                    <button 
+                        mat-raised-button 
+                        type="button" 
+                        color="primary"
+                        (click)="onSubmit(true)"
+                    >
+                        SIM
+                    </button>
+                    <button 
+                        mat-raised-button 
+                        type="button" 
+                        color="primary"
+                        (click)="onSubmit(false)"
+                    >
+                        NÃO
+                    </button>
+                </mat-card-actions>
+            </mat-card-content>
+        </form>    
+    </mat-card>
+</section>

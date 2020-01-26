@@ -1,0 +1,130 @@
+<section class="pesquisa" *ngIf="!showEditarExemplar">
+    <app-nova
+        (obraPesquisa)="onObraValue($event)">
+    </app-nova>
+    <br>
+    <app-resultados [pesquisaInput]="pesquisaResponse" (editarExemplar)="onEditarExemplar($event)"></app-resultados>
+</section>
+    
+<section class="exemplares" fxLayout fxLayoutAlign="center" *ngIf="showEditarExemplar">
+    <mat-card fxFlex.xs="100%" fxFlex="400px">
+        <mat-card-title fxLayoutAlign="center">
+            Dados do exemplar:
+        </mat-card-title>
+        <!--Se tirar o fxLayoutAlign abaixo, os campos ficam mais largos-->
+        <form fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup]="grupoExemplar" #exemplarForm="ngForm" (ngSubmit)="onFormExemplarSubmit(grupoExemplar.value)">
+            <mat-card-content fxLayout="column" fxLayoutAlign="center">
+                <mat-form-field>
+                    <input 
+                        matInput
+                        formControlName="identificador"
+                        name="identificador" 
+                        type="text" 
+                        [placeholder]="onIDValue()"
+                        disabled
+                    >
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
+                        matInput
+                        formControlName= "titulo"
+                        name="titulo" 
+                        type="text" 
+                        placeholder="Título"
+                        disabled
+                    >
+                </mat-form-field>
+                <mat-form-field >
+                    <input 
+                        matInput
+                        formControlName= "autor"
+                        name="autor" 
+                        type="text" 
+                        placeholder="Autor"
+                        disabled
+                    >
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
+                        matInput
+                        required
+                        formControlName="local"
+                        name="local" 
+                        type="text" 
+                        placeholder="Código de localização"
+                    >
+                    <mat-error>Preencha o campo</mat-error>            
+                </mat-form-field>
+                <mat-form-field *ngIf="elementoEdicao.tipoObra=='1'"> 
+                    <input 
+                        matInput
+                        formControlName="tomo"
+                        name="tomo" 
+                        type="text" 
+                        placeholder="Tomo"
+                    >
+                </mat-form-field>
+                <mat-form-field>
+                    <input 
+                        required 
+                        matInput
+                        formControlName="numExemplar"
+                        name="numExemplar" 
+                        type="text" 
+                        placeholder="Número do exemplar"
+                    >
+                    <mat-error>Preencha o campo</mat-error> 
+                </mat-form-field>         
+                <mat-form-field >
+                    <mat-select 
+                        formControlName="status" 
+                        name="status" 
+                        placeholder="Status de obra"
+                    >
+                        Selecione o status do exemplar:
+                        <mat-option *ngFor="let cat of categorias" [value]="cat.id">
+                            {{cat.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>  
+                        <span *ngIf="!grupoExemplar.get('status').valid && grupoExemplar.get('status').touched || grupoExemplar.submitted">Escolha uma opção</span>  
+                    </mat-error>  
+                </mat-form-field>
+                <mat-form-field>
+                    <input
+                        matInput
+                        required
+                        formControlName="dataAquisicao"
+                        [matDatepicker]="picker"
+                        name="dataAquisicao"
+                        placeholder="Data de aquisição"
+                        >
+                    <mat-datepicker-toggle 
+                        matSuffix 
+                        [for]="picker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error>Selecione a data de aquisição</mat-error>
+                </mat-form-field>
+                <mat-card-actions fxLayoutAlign="center" fxLayoutGap="20px">
+                    <button 
+                        mat-raised-button
+                        type="button" 
+                        color="primary"
+                        (click)="onVoltarExemplar()"
+                    >
+                        Voltar
+                    </button>
+                    <button
+                        mat-raised-button 
+                        type="submit" 
+                        color="primary"
+                        [disabled]="exemplarForm.invalid"
+                    >
+                        Atualizar
+                    </button>
+                </mat-card-actions>
+            </mat-card-content>
+        </form>
+    </mat-card>
+</section>
