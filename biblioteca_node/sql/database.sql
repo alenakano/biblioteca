@@ -1,145 +1,183 @@
--- MySQL Administrator dump 1.4
+-- phpMyAdmin SQL Dump
+-- version 4.8.5
+-- https://www.phpmyadmin.net/
 --
--- ------------------------------------------------------
--- Server version	5.1.73-community
+-- Host: localhost
+-- Tempo de geração: 26/01/2020 às 15:18
+-- Versão do servidor: 10.1.40-MariaDB
+-- Versão do PHP: 7.1.29
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Create schema biblioteca
+-- Banco de dados: `biblioteca2`
 --
 
-CREATE DATABASE IF NOT EXISTS biblioteca;
-USE biblioteca;
+-- --------------------------------------------------------
 
 --
--- Definition of table `exemplar`
+-- Estrutura para tabela `emprestimo`
+--
+-- Erro ao ler a estrutura para a tabela biblioteca2.emprestimo: #1932 - Table 'biblioteca2.emprestimo' doesn't exist in engine
+-- Erro ao ler dados para tabela biblioteca2.emprestimo: #1064 - Você tem um erro de sintaxe no seu SQL próximo a 'FROM `biblioteca2`.`emprestimo`' na linha 1
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `exemplar`
 --
 
-DROP TABLE IF EXISTS `exemplar`;
 CREATE TABLE `exemplar` (
-  `IdExemplar` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `IdObra` int(10) unsigned NOT NULL,
-  `NumExemplar` int(10) unsigned NOT NULL,
-  `Local` varchar(255) NOT NULL,
-  `DataAquisicao` datetime NOT NULL,
-  `DataCadastro` datetime NOT NULL,
-  `Status` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`IdExemplar`),
-  KEY `Unique` (`IdObra`,`NumExemplar`)
+  `idExemplar` int(10) UNSIGNED NOT NULL,
+  `idObra` int(10) UNSIGNED NOT NULL,
+  `numExemplar` int(10) UNSIGNED NOT NULL,
+  `local` varchar(255) NOT NULL,
+  `dataAquisicao` datetime NOT NULL,
+  `dataCadastro` datetime NOT NULL,
+  `status` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `tomo` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `exemplar`
+-- Despejando dados para a tabela `exemplar`
 --
 
-/*!40000 ALTER TABLE `exemplar` DISABLE KEYS */;
-/*!40000 ALTER TABLE `exemplar` ENABLE KEYS */;
+INSERT INTO `exemplar` (`idExemplar`, `idObra`, `numExemplar`, `local`, `dataAquisicao`, `dataCadastro`, `status`, `tomo`) VALUES
+(19, 6, 1, 'São Paulo', '2019-12-11 00:00:00', '2019-12-11 17:22:47', 0, NULL),
+(24, 7, 1, 'BLAH 1234', '2019-12-07 02:00:00', '2019-12-11 20:39:39', 0, NULL),
+(26, 9, 1, 'São Paulo', '2019-12-07 00:00:00', '2019-12-11 18:56:47', 3, NULL),
+(27, 10, 1, 'UYTRE', '2019-12-11 00:00:00', '2019-12-11 18:57:44', 0, NULL),
+(28, 9, 987654, 'XPTO', '2019-12-07 00:00:00', '2019-12-11 20:03:22', 3, NULL);
 
+-- --------------------------------------------------------
 
 --
--- Definition of table `obra`
+-- Estrutura para tabela `obra`
 --
 
-DROP TABLE IF EXISTS `obra`;
 CREATE TABLE `obra` (
-  `IdObra` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `IdTipo` int(10) unsigned NOT NULL,
-  `Identificador` varchar(30) NOT NULL,
-  `Titulo` varchar(255) NOT NULL,
-  `Autor` varchar(255) NOT NULL,
-  `Ano` datetime NOT NULL,
-  `Pais` varchar(255) NOT NULL,
-  `Editora` varchar(255) NOT NULL,
-  `Descricao` varchar(255) DEFAULT NULL,
-  `Idioma` varchar(255) NOT NULL,
+  `idObra` int(10) UNSIGNED NOT NULL,
+  `idTipo` int(10) UNSIGNED NOT NULL,
+  `identificador` varchar(30) NOT NULL,
+  `titulo` varchar(255) NOT NULL,
+  `autor` varchar(255) NOT NULL,
+  `ano` year(4) NOT NULL,
+  `pais` varchar(255) NOT NULL,
+  `editora` varchar(255) NOT NULL,
+  `descricao` varchar(255) DEFAULT NULL,
+  `idioma` varchar(255) NOT NULL,
   `CDD` varchar(30) NOT NULL,
-  `Status` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`IdObra`),
-  KEY `UNIQUE` (`Identificador`)
+  `status` int(10) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `obra`
+-- Despejando dados para a tabela `obra`
 --
 
-/*!40000 ALTER TABLE `obra` DISABLE KEYS */;
-/*!40000 ALTER TABLE `obra` ENABLE KEYS */;
+INSERT INTO `obra` (`idObra`, `idTipo`, `identificador`, `titulo`, `autor`, `ano`, `pais`, `editora`, `descricao`, `idioma`, `CDD`, `status`) VALUES
+(6, 1, '9788578887230', 'Dom Casmurro', 'Machado de Assis', 2019, 'Brasil', 'Panda Books', 'Clássico da literatura brasileira', 'Português', '869.3', 0),
+(7, 1, '9788577992287', 'As aventuras de Huckleberry Finn ', 'Mark Twain', 2011, 'Estados Unidos', 'Best Seller', 'Edição de bolso', 'Português', '813', 0),
+(8, 1, '9788536812670', 'Mundo Animal', 'Parragon Books', 2019, 'EUA', ' DCL - Difusão Cultural do Livro', NULL, 'Português', '456', 0),
+(9, 2, '123456', 'Super Interessante', 'Grupo Abril', 2019, 'Brasil', 'Editora Abril', NULL, 'Português', '123', 0),
+(10, 3, '0980980', 'Os melhores', 'Testando', 2013, 'Etiópia', 'HUH', 'Legal', 'Francês', '23434367', 0);
 
+-- --------------------------------------------------------
 
 --
--- Definition of table `usuario`
+-- Estrutura para tabela `usuario`
 --
 
-DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
-  `IdUsuario` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idUsuario` int(10) UNSIGNED NOT NULL,
   `CPF` varchar(11) NOT NULL,
-  `NomeUsuario` varchar(255) NOT NULL,
-  `DataNascimento` datetime NOT NULL,
-  `Email` varchar(255) NOT NULL,
-  `CEP` varchar(9) NOT NULL,
-  `Endereco` varchar(255) NOT NULL,
-  `Complemento` varchar(255) DEFAULT NULL,
-  `Bairro` varchar(255) NOT NULL,
-  `Cidade` varchar(255) NOT NULL,
-  `Status` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`IdUsuario`),
-  KEY `UNIQUE` (`CPF`)
+  `nomeUsuario` varchar(255) NOT NULL,
+  `dataNascimento` datetime NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `endereco` varchar(255) NOT NULL,
+  `complemento` varchar(255) DEFAULT NULL,
+  `cidade` varchar(255) NOT NULL,
+  `status` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `dataBloqueio` datetime DEFAULT NULL,
+  `dataDesbloqueio` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `usuario`
+-- Despejando dados para a tabela `usuario`
+--
+
+INSERT INTO `usuario` (`idUsuario`, `CPF`, `nomeUsuario`, `dataNascimento`, `email`, `endereco`, `complemento`, `cidade`, `status`, `dataBloqueio`, `dataDesbloqueio`) VALUES
+(1, '35094503880', 'Alexandre Nakano Marques', '2017-06-06 12:00:00', 'ale@ale.com', 'Rua do Teste, 1234', 'Vila Teste', 'São Paulo', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(4, '36699993887', 'José Teste', '2001-10-09 03:00:00', 'teste@gmail.com', 'Rua do Teste, 10000', 'casa', 'Teste', 0, NULL, NULL),
+(5, '40252249844', 'Maria do Teste', '1997-02-11 02:00:00', 'maria@teste.co', 'Rua do teste, 233', '', 'São Paulo', 0, NULL, NULL),
+(6, '40519065824', 'Anna Braz', '1993-03-01 03:00:00', 'anna@legal.com', 'rua teste', NULL, 'sao paulo', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+
+--
+-- Índices de tabelas apagadas
 --
 
 --
--- Definition of table `emprestimo`
+-- Índices de tabela `exemplar`
 --
-
-DROP TABLE IF EXISTS `emprestimo`;
-CREATE TABLE `emprestimo` (
-  `IdEmprestimo` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `IdExemplar` int(10) unsigned NOT NULL,
-  `IDUsuario` int(10) unsigned NOT NULL,
-  `DataEmprestimo` datetime NOT NULL,
-  `DataPrevisao` datetime NOT NULL,
-  `DataDevolucao` datetime NOT NULL,
-  `Status` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`IdEmprestimo`),
-  KEY `FK_EXEMPLAR` (`IdExemplar`),
-  KEY `FK_USUARIO` (`IDUsuario`),
-  CONSTRAINT `FK_EXEMPLAR` FOREIGN KEY (`IdExemplar`) REFERENCES `exemplar` (`IdExemplar`),
-  CONSTRAINT `FK_USUARIO` FOREIGN KEY (`IDUsuario`) REFERENCES `usuario` (`IdUsuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+ALTER TABLE `exemplar`
+  ADD PRIMARY KEY (`idExemplar`),
+  ADD UNIQUE KEY `Unique` (`idObra`,`numExemplar`) USING BTREE;
 
 --
--- Dumping data for table `emprestimo`
+-- Índices de tabela `obra`
+--
+ALTER TABLE `obra`
+  ADD PRIMARY KEY (`idObra`),
+  ADD UNIQUE KEY `UNIQUE` (`identificador`) USING BTREE;
+
+--
+-- Índices de tabela `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`idUsuario`),
+  ADD UNIQUE KEY `UNIQUE` (`CPF`) USING BTREE;
+
+--
+-- AUTO_INCREMENT de tabelas apagadas
 --
 
-/*!40000 ALTER TABLE `emprestimo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `emprestimo` ENABLE KEYS */;
+--
+-- AUTO_INCREMENT de tabela `exemplar`
+--
+ALTER TABLE `exemplar`
+  MODIFY `idExemplar` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
+--
+-- AUTO_INCREMENT de tabela `obra`
+--
+ALTER TABLE `obra`
+  MODIFY `idObra` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
+--
+-- AUTO_INCREMENT de tabela `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `idUsuario` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
-/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+--
+-- Restrições para dumps de tabelas
+--
 
+--
+-- Restrições para tabelas `exemplar`
+--
+ALTER TABLE `exemplar`
+  ADD CONSTRAINT `FK_Obra` FOREIGN KEY (`idObra`) REFERENCES `obra` (`idObra`);
+COMMIT;
 
-
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
