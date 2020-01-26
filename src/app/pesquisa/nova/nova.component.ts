@@ -31,7 +31,8 @@ export class NovaComponent implements OnInit, OnDestroy {
 
   onSubmit(form: Pesquisa): void {
     this.subscription = this.novaService.pesquisar(form).subscribe(
-      value => this.obraPesquisa.emit(value),
+      value => {
+        this.obraPesquisa.emit(value)},
       erro => this.uiService.showSnackbar(erro.message, null, {duration: 3000})
     );
   }

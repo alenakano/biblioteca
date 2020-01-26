@@ -114,8 +114,7 @@ export class ComumLibComponent implements OnInit, OnDestroy {
     this.exemplarCadastro = cad;
     this.exemplarCadastro.idObra = this.obraCadastro.idObra;
     this.exemplarCadastro.dataAquisicao = cad.dataAquisicao.format();
-
-    this.cadastroSubscription = this.comumLibService.cadastrarExemplar(this.exemplarCadastro).subscribe(
+    this.cadastroSubscription = this.comumLibService.cadastrarExemplar(this.exemplarCadastro, this.identificador).subscribe(
       res => {
         this.uiService.showSnackbar(res.message, null, {duration: 3000});
         this.voltar();

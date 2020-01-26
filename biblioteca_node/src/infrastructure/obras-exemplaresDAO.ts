@@ -9,17 +9,39 @@ export async function pesquisaObrasDAO(req: Request): Promise<any> {
     const connGetObras = await openConnection();
     const obraNome = '%' + req.params.obraNome + '%';
     const obraTipo = req.params.obraTipo;
+
+    console.log('OBRA TIPO', obraTipo);
+    console.log('OBRA NOME', obraNome);
+
     const getObras = await connGetObras.query(
-        `SELECT *
+        `SELECT
+        ob.CDD
+        ,ob.ano
+        ,ob.autor
+        ,ex.dataAquisicao
+        ,ex.dataCadastro
+        ,ob.descricao
+        ,ob.editora
+        ,ex.idExemplar
+        ,ob.idObra
+        ,ob.idTipo
+        ,ob.identificador
+        ,ob.idioma
+        ,ex.local
+        ,ex.numExemplar
+        ,ob.pais
+        ,ex.status
+        ,ob.titulo
+        ,ex.tomo
             FROM exemplar ex
-            INNER JOIN obra ob
+            LEFT JOIN obra ob
                 ON ex.idObra = ob.idObra
-        WHERE ob.titulo LIKE ?
-            OR ob.autor LIKE ?
+        WHERE (ob.titulo LIKE ?
+            OR ob.autor LIKE ?)
             AND ob.idTipo = ?`,
         [obraNome, obraNome, obraTipo]
     );
-    console.log(getObras[0])
+    console.log(getObras);
     return getObras[0];
 }
 
@@ -35,8 +57,11 @@ export async function getObrasDAO(): Promise<any> {
 
 export async function createExemplarDAO(req: Request): Promise<any> {
     const newExemplar: Exemplar = req.body;
+    const autenticador = req.params.autenticador;
     newExemplar.dataCadastro = new Date();
     const connCreateObras = await openConnection();
+    const [rows, fields] = await connCreateObras.execute('SELECT * FROM obra WHERE identificador = ?', [ autenticador ]);
+    newExemplar.idObra = rows[0].idObra;
     const createObras = await connCreateObras.query('INSERT INTO exemplar SET ?', [ newExemplar ]);
     return createObras;
 }

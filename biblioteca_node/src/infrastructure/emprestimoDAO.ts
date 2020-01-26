@@ -40,35 +40,38 @@ export async function createEmprestimoDAO(req: Request, next: NextFunction): Pro
             [newEmprestimo.idObra, newEmprestimo.numExemplar]
         );
         newEmprestimo.idExemplar = rows[0].idExemplar;
-        [rows, fields] = await connCreateEmprestimo.execute(
-            'SELECT * FROM emprestimo WHERE idExemplar = ? AND idUsuario = ?',
-            [newEmprestimo.idExemplar, newEmprestimo.idUsuario ]
-        );
+        newEmprestimo.status = rows[0].status;
 
-        if (rows[0].status >= 1) {
+        // [rows, fields] = await connCreateEmprestimo.execute(
+        //     'SELECT * FROM emprestimo WHERE idExemplar = ? AND idUsuario = ?',
+        //     [newEmprestimo.idExemplar, newEmprestimo.idUsuario ]
+        // );
+
+        if (newEmprestimo.status >= 1) {
             next(new HttpException(495, 'Empréstimo não efetuado'));
+            return;
         }
-        if (rows.length) {
-            newEmprestimo.idEmprestimo = rows[0].idEmprestimo;
-            const query = 'UPDATE emprestimo SET status = 1, dataDevolucao = NULL WHERE idEmprestimo = ?';
-            let createEmprestimo = await connCreateEmprestimo.query(query,
-                [newEmprestimo.idEmprestimo]);
-            createEmprestimo = await connCreateEmprestimo
-                .query('UPDATE exemplar SET status = 1 WHERE idExemplar = ?', [newEmprestimo.idExemplar]);
+        // if (rows.length) {
+        //     newEmprestimo.idEmprestimo = rows[0].idEmprestimo;
+        //     const query = 'UPDATE emprestimo SET status = 1, dataDevolucao = NULL WHERE idEmprestimo = ?';
+        //     let createEmprestimo = await connCreateEmprestimo.query(query,
+        //         [newEmprestimo.idEmprestimo]);
+        //     createEmprestimo = await connCreateEmprestimo
+        //         .query('UPDATE exemplar SET status = 1 WHERE idExemplar = ?', [newEmprestimo.idExemplar]);
             
-            return createEmprestimo;
-        } else {
+        //     return createEmprestimo;
+        // } else {
             const query = 'INSERT INTO emprestimo (idExemplar, idUsuario, dataEmprestimo, dataPrevisao) VALUES (?, ?, ?, ?)';
             [rows, fields] = await connCreateEmprestimo.execute(query,
                 [newEmprestimo.idExemplar, newEmprestimo.idUsuario, newEmprestimo.dataEmprestimo, newEmprestimo.dataPrevisao]);
 
             if (rows. affectedRows == 1) {
                 const createEmprestimo = await connCreateEmprestimo
-                    .query('UPDATE exemplar SET status = 1 WHERE idExemplar = ?', [newEmprestimo.idExemplar]);
+                    .query('UPDATE exemplar SET status = 0 WHERE idExemplar = ?', [newEmprestimo.idExemplar]);
                 return createEmprestimo;
             } else {
                 next(new HttpException(495, 'Empréstimo não efetuado'));
-            }
+            // }
         }
     }
 }
@@ -135,7 +138,7 @@ export async function updateEmprestimoDAO(req: Request, next: NextFunction): Pro
                 }
 
                 //ATRASO POR TEMPO
-                if (devolucao.dataPrevisao.getTime() <= hoje.getTime()) {
+                if (devolucao.dataPrevisao.getTime() >= hoje.getTime()) {
                     return updateEmprestimoHandler(connUpdateEmprestimo, devolucao, next);
                 } else {
                     const status = 1;

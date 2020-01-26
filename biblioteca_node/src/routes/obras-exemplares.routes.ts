@@ -27,7 +27,7 @@ router.route('/exemplar/:idExemplar')
     .put(updateExemplar);
 
 
-router.route('/cadastrarExemplar')
+router.route('/cadastrarExemplar/:autenticador')
     .post(cadastrarExemplar);
 
 router.route('/:obraId')

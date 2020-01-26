@@ -7,7 +7,7 @@ export async function connect() {
         port: 3307,
         user: 'root',
         password: '',
-        database: 'biblioteca',
+        database: 'biblioteca2',
         connectionLimit: 10
     });
 

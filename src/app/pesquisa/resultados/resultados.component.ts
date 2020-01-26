@@ -85,6 +85,7 @@ export class ResultadosComponent implements OnChanges, OnInit {
   }
 
   onStatus(): string {
+    console.log('ENTROU', this.pesquisaInput);
     switch (this.pesquisaInput[0].status) {
       case StatusExemplar.ATIVO:
         return'Disponível';
